@@ -1,0 +1,33 @@
+project:
+  type: book
+
+lang: de-DE
+
+book:
+  title: "Adaptive Lernverfahren: Systematisierung und didaktische Aufbereitung"
+  author: "Johannes Dankert"
+  date: today
+
+  chapters:
+    - index.qmd
+    - einleitung.qmd
+    - analyse.qmd
+    - konzeption.qmd
+    - umsetzung.qmd
+    - evaluation.qmd
+    - fazit.qmd
+    - references.qmd
+
+format:
+  html:
+    theme: cosmo
+
+  pdf:
+    documentclass: scrreprt
+    classoption: [twoside, openany]
+    toc: true
+    lof: true
+    lot: true
+    include-before-body: cover.tex
+
+bibliography: references.bib
