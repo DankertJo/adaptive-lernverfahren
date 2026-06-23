@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de-DE" xml:lang="de-DE"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Umsetzung einer Lernressource – Adaptive Lernverfahren: Systematisierung und didaktische Aufbereitung</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./evaluation.html" rel="next">
+<link href="./konzeption.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./umsetzung.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Umsetzung einer Lernressource</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Suchen" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Adaptive Lernverfahren: Systematisierung und didaktische Aufbereitung</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Suchen"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./einleitung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Einleitung</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analyse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Analyse adaptiver Lernverfahren</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./konzeption.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Eigene Klassifikation adaptiver Lernverfahren</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./umsetzung.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Umsetzung einer Lernressource</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">evaluation.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fazit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">fazit.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Inhaltsverzeichnis</h2>
+   
+  <ul>
+  <li><a href="#motivation-und-problemstellung" id="toc-motivation-und-problemstellung" class="nav-link active" data-scroll-target="#motivation-und-problemstellung"><span class="header-section-number">4.1</span> Motivation und Problemstellung</a></li>
+  <li><a href="#die-grundidee-des-elo-verfahrens" id="toc-die-grundidee-des-elo-verfahrens" class="nav-link" data-scroll-target="#die-grundidee-des-elo-verfahrens"><span class="header-section-number">4.2</span> Die Grundidee des Elo-Verfahrens</a></li>
+  <li><a href="#algorithmische-funktionsweise-des-elo-verfahrens" id="toc-algorithmische-funktionsweise-des-elo-verfahrens" class="nav-link" data-scroll-target="#algorithmische-funktionsweise-des-elo-verfahrens"><span class="header-section-number">4.3</span> Algorithmische Funktionsweise des Elo-Verfahrens</a></li>
+  <li><a href="#mathematische-grundlagen-des-elo-verfahrens" id="toc-mathematische-grundlagen-des-elo-verfahrens" class="nav-link" data-scroll-target="#mathematische-grundlagen-des-elo-verfahrens"><span class="header-section-number">4.4</span> Mathematische Grundlagen des Elo-Verfahrens</a>
+  <ul class="collapse">
+  <li><a href="#erwartete-erfolgswahrscheinlichkeit" id="toc-erwartete-erfolgswahrscheinlichkeit" class="nav-link" data-scroll-target="#erwartete-erfolgswahrscheinlichkeit"><span class="header-section-number">4.4.1</span> Erwartete Erfolgswahrscheinlichkeit</a></li>
+  <li><a href="#aktualisierung-der-bewertungen" id="toc-aktualisierung-der-bewertungen" class="nav-link" data-scroll-target="#aktualisierung-der-bewertungen"><span class="header-section-number">4.4.2</span> Aktualisierung der Bewertungen</a></li>
+  <li><a href="#beispiel-einer-aktualisierung" id="toc-beispiel-einer-aktualisierung" class="nav-link" data-scroll-target="#beispiel-einer-aktualisierung"><span class="header-section-number">4.4.3</span> Beispiel einer Aktualisierung</a></li>
+  </ul></li>
+  <li><a href="#implementierung-des-elo-verfahrens" id="toc-implementierung-des-elo-verfahrens" class="nav-link" data-scroll-target="#implementierung-des-elo-verfahrens"><span class="header-section-number">4.5</span> Implementierung des Elo-Verfahrens</a>
+  <ul class="collapse">
+  <li><a href="#repräsentation-von-lernenden-und-aufgaben" id="toc-repräsentation-von-lernenden-und-aufgaben" class="nav-link" data-scroll-target="#repräsentation-von-lernenden-und-aufgaben"><span class="header-section-number">4.5.1</span> Repräsentation von Lernenden und Aufgaben</a></li>
+  <li><a href="#berechnung-der-erwarteten-erfolgswahrscheinlichkeit" id="toc-berechnung-der-erwarteten-erfolgswahrscheinlichkeit" class="nav-link" data-scroll-target="#berechnung-der-erwarteten-erfolgswahrscheinlichkeit"><span class="header-section-number">4.5.2</span> Berechnung der erwarteten Erfolgswahrscheinlichkeit</a></li>
+  <li><a href="#aktualisierung-der-bewertungen-1" id="toc-aktualisierung-der-bewertungen-1" class="nav-link" data-scroll-target="#aktualisierung-der-bewertungen-1"><span class="header-section-number">4.5.3</span> Aktualisierung der Bewertungen</a></li>
+  <li><a href="#durchführung-einer-aktualisierung" id="toc-durchführung-einer-aktualisierung" class="nav-link" data-scroll-target="#durchführung-einer-aktualisierung"><span class="header-section-number">4.5.4</span> Durchführung einer Aktualisierung</a></li>
+  <li><a href="#zusammenspiel-der-einzelnen-schritte" id="toc-zusammenspiel-der-einzelnen-schritte" class="nav-link" data-scroll-target="#zusammenspiel-der-einzelnen-schritte"><span class="header-section-number">4.5.5</span> Zusammenspiel der einzelnen Schritte</a></li>
+  </ul></li>
+  <li><a href="#interaktive-simulation-des-elo-verfahrens" id="toc-interaktive-simulation-des-elo-verfahrens" class="nav-link" data-scroll-target="#interaktive-simulation-des-elo-verfahrens"><span class="header-section-number">4.6</span> Interaktive Simulation des Elo-Verfahrens</a>
+  <ul class="collapse">
+  <li><a href="#nutzung-der-simulation" id="toc-nutzung-der-simulation" class="nav-link" data-scroll-target="#nutzung-der-simulation"><span class="header-section-number">4.6.1</span> Nutzung der Simulation</a></li>
+  </ul></li>
+  <li><a href="#anwendungen-des-elo-verfahrens-in-adaptiven-lernsystemen" id="toc-anwendungen-des-elo-verfahrens-in-adaptiven-lernsystemen" class="nav-link" data-scroll-target="#anwendungen-des-elo-verfahrens-in-adaptiven-lernsystemen"><span class="header-section-number">4.7</span> Anwendungen des Elo-Verfahrens in adaptiven Lernsystemen</a>
+  <ul class="collapse">
+  <li><a href="#lernendenmodellierung" id="toc-lernendenmodellierung" class="nav-link" data-scroll-target="#lernendenmodellierung"><span class="header-section-number">4.7.1</span> Lernendenmodellierung</a></li>
+  <li><a href="#schätzung-von-aufgabenschwierigkeiten" id="toc-schätzung-von-aufgabenschwierigkeiten" class="nav-link" data-scroll-target="#schätzung-von-aufgabenschwierigkeiten"><span class="header-section-number">4.7.2</span> Schätzung von Aufgabenschwierigkeiten</a></li>
+  <li><a href="#grundlage-adaptiver-entscheidungen" id="toc-grundlage-adaptiver-entscheidungen" class="nav-link" data-scroll-target="#grundlage-adaptiver-entscheidungen"><span class="header-section-number">4.7.3</span> Grundlage adaptiver Entscheidungen</a></li>
+  <li><a href="#open-learner-models" id="toc-open-learner-models" class="nav-link" data-scroll-target="#open-learner-models"><span class="header-section-number">4.7.4</span> Open Learner Models</a></li>
+  </ul></li>
+  <li><a href="#grenzen-und-erweiterungen-des-elo-verfahrens" id="toc-grenzen-und-erweiterungen-des-elo-verfahrens" class="nav-link" data-scroll-target="#grenzen-und-erweiterungen-des-elo-verfahrens"><span class="header-section-number">4.8</span> Grenzen und Erweiterungen des Elo-Verfahrens</a>
+  <ul class="collapse">
+  <li><a href="#grenzen-des-standard-elo-verfahrens" id="toc-grenzen-des-standard-elo-verfahrens" class="nav-link" data-scroll-target="#grenzen-des-standard-elo-verfahrens"><span class="header-section-number">4.8.1</span> Grenzen des Standard-Elo-Verfahrens</a></li>
+  <li><a href="#unsicherheitsfunktionen" id="toc-unsicherheitsfunktionen" class="nav-link" data-scroll-target="#unsicherheitsfunktionen"><span class="header-section-number">4.8.2</span> Unsicherheitsfunktionen</a></li>
+  <li><a href="#multiple-choice-aufgaben-und-teilpunkte" id="toc-multiple-choice-aufgaben-und-teilpunkte" class="nav-link" data-scroll-target="#multiple-choice-aufgaben-und-teilpunkte"><span class="header-section-number">4.8.3</span> Multiple-Choice-Aufgaben und Teilpunkte</a></li>
+  <li><a href="#berücksichtigung-von-bearbeitungszeiten" id="toc-berücksichtigung-von-bearbeitungszeiten" class="nav-link" data-scroll-target="#berücksichtigung-von-bearbeitungszeiten"><span class="header-section-number">4.8.4</span> Berücksichtigung von Bearbeitungszeiten</a></li>
+  <li><a href="#multivariate-elo-modelle" id="toc-multivariate-elo-modelle" class="nav-link" data-scroll-target="#multivariate-elo-modelle"><span class="header-section-number">4.8.5</span> Multivariate Elo-Modelle</a></li>
+  <li><a href="#erweiterung-durch-lernmodellierung-pfae" id="toc-erweiterung-durch-lernmodellierung-pfae" class="nav-link" data-scroll-target="#erweiterung-durch-lernmodellierung-pfae"><span class="header-section-number">4.8.6</span> Erweiterung durch Lernmodellierung (PFAE)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Umsetzung einer Lernressource</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="motivation-und-problemstellung" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="motivation-und-problemstellung"><span class="header-section-number">4.1</span> Motivation und Problemstellung</h2>
+<p>Adaptive Lernsysteme verfolgen das Ziel, Lerninhalte an die individuellen Voraussetzungen und den aktuellen Wissensstand von Lernenden anzupassen. Um geeignete Aufgaben oder Lernressourcen auswählen zu können, müssen sie daher zunächst möglichst zuverlässig abschätzen, wie gut ein Lernender ein bestimmtes Themengebiet bereits beherrscht. Die Modellierung dieses aktuellen Leistungs- oder Wissensstands stellt eine zentrale Aufgabe adaptiver Lernsysteme dar <span class="citation" data-cites="Pelanek2017 Abdi2019">(<a href="references.html#ref-Pelanek2017" role="doc-biblioref">Pelánek 2017</a>; <a href="references.html#ref-Abdi2019" role="doc-biblioref">Abdi u.&nbsp;a. 2019</a>)</span>.</p>
+<p>Für diese Schätzung wurden unterschiedliche Verfahren entwickelt. Während einige Ansätze auf psychometrischen oder probabilistischen Modellen beruhen, existieren auch Verfahren, die ihre Schätzungen nach jeder neuen Interaktion kontinuierlich aktualisieren. Ein vergleichsweise einfaches und weit verbreitetes Verfahren dieser Art ist das Elo-Verfahren. Es wurde ursprünglich zur Bewertung von Schachspielern entwickelt <span class="citation" data-cites="Elo1978">(<a href="references.html#ref-Elo1978" role="doc-biblioref">Elo 1978</a>)</span> und später für verschiedene Anwendungsgebiete, darunter auch adaptive Lernsysteme, weiterentwickelt und eingesetzt <span class="citation" data-cites="Abdi2019">(<a href="references.html#ref-Abdi2019" role="doc-biblioref">Abdi u.&nbsp;a. 2019</a>)</span>.</p>
+<p>Im Vergleich zu vielen komplexeren Modellierungsansätzen zeichnet sich das Elo-Verfahren durch eine vergleichsweise einfache Struktur sowie die Möglichkeit einer kontinuierlichen Aktualisierung aus. Diese Eigenschaften machen es für den Einsatz in digitalen Lernumgebungen interessant und haben dazu geführt, dass Elo-basierte Verfahren in der Literatur als geeignete Ansätze zur Lernendenmodellierung diskutiert werden <span class="citation" data-cites="Pelanek2016 Abdi2019">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>; <a href="references.html#ref-Abdi2019" role="doc-biblioref">Abdi u.&nbsp;a. 2019</a>)</span>.</p>
+</section>
+<section id="die-grundidee-des-elo-verfahrens" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="die-grundidee-des-elo-verfahrens"><span class="header-section-number">4.2</span> Die Grundidee des Elo-Verfahrens</h2>
+<p>Die Grundidee des Elo-Verfahrens entstand ursprünglich im Schachsport. Ziel war es, die relative Spielstärke verschiedener Spieler möglichst objektiv abzuschätzen. Hierzu wird jedem Spieler eine numerische Bewertung, das sogenannte Rating, zugeordnet. Treffen zwei Spieler aufeinander, kann aus ihren Ratings abgeschätzt werden, welcher Spieler mit höherer Wahrscheinlichkeit gewinnen sollte <span class="citation" data-cites="Elo1978">(<a href="references.html#ref-Elo1978" role="doc-biblioref">Elo 1978</a>)</span>.</p>
+<p>Betrachtet man beispielsweise zwei Schachspieler mit einem Rating von 1600 beziehungsweise 1400 Punkten, so würde das Elo-Verfahren erwarten, dass der Spieler mit dem höheren Rating häufiger gewinnt. Das tatsächliche Ergebnis einer einzelnen Partie ist jedoch nicht sicher vorhersagbar. Auch ein schwächer eingeschätzter Spieler kann gewinnen und für eine Überraschung sorgen.</p>
+<p>Genau diese Kombination aus Erwartung und tatsächlichem Ergebnis bildet den Kern des Elo-Verfahrens. Vor jeder Begegnung wird zunächst abgeschätzt, wie wahrscheinlich ein bestimmter Ausgang ist. Nach dem Spiel wird das tatsächliche Ergebnis mit dieser Erwartung verglichen. Entspricht das Ergebnis der Erwartung, verändern sich die Bewertungen nur geringfügig. Tritt dagegen ein unerwartetes Ergebnis ein, werden die Bewertungen stärker angepasst <span class="citation" data-cites="Elo1978">(<a href="references.html#ref-Elo1978" role="doc-biblioref">Elo 1978</a>)</span>.</p>
+<p>Dieses Prinzip lässt sich auch auf adaptive Lernsysteme übertragen. Anstelle zweier Schachspieler treten hier ein Lernender und eine Aufgabe gegeneinander an. Dem Lernenden wird eine geschätzte Fähigkeit zugeordnet, während die Aufgabe durch einen Schwierigkeitswert beschrieben wird. Aus beiden Werten lässt sich ableiten, wie wahrscheinlich eine erfolgreiche Bearbeitung der Aufgabe ist. Nach jeder Interaktion werden die Schätzwerte anhand des tatsächlichen Ergebnisses aktualisiert, sodass sich die Einschätzung des Lernenden kontinuierlich an neue Informationen anpasst <span class="citation" data-cites="Abdi2019">(<a href="references.html#ref-Abdi2019" role="doc-biblioref">Abdi u.&nbsp;a. 2019</a>)</span>.</p>
+<p>Die grundlegende Idee des Elo-Verfahrens lässt sich somit auf drei einfache Schritte zurückführen:</p>
+<ol type="1">
+<li>Aus den vorhandenen Bewertungen wird eine Erwartung gebildet.</li>
+<li>Das tatsächliche Ergebnis wird beobachtet.</li>
+<li>Die Bewertungen werden entsprechend angepasst.</li>
+</ol>
+<p>Diese drei Schritte bilden den Kern des Elo-Verfahrens und werden im weiteren Verlauf der Lernressource zunächst algorithmisch und anschließend mathematisch genauer betrachtet.</p>
+</section>
+<section id="algorithmische-funktionsweise-des-elo-verfahrens" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="algorithmische-funktionsweise-des-elo-verfahrens"><span class="header-section-number">4.3</span> Algorithmische Funktionsweise des Elo-Verfahrens</h2>
+<p>Im vorherigen Abschnitt wurde die grundlegende Idee des Elo-Verfahrens vorgestellt. Dabei wurde deutlich, dass das Verfahren aus einer vorhandenen Bewertung zunächst eine Erwartung ableitet, das tatsächliche Ergebnis beobachtet und die Bewertung anschließend entsprechend anpasst. Dieser Ablauf wird nach jeder Interaktion erneut durchlaufen und bildet den Kern des Elo-Verfahrens <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Zu Beginn einer Interaktion liegen für den Lernenden und die Aufgabe jeweils aktuelle Schätzwerte vor. Der Lernende wird durch eine geschätzte Fähigkeit beschrieben, während für die Aufgabe ein Schwierigkeitswert angenommen wird. Beide Werte repräsentieren den aktuellen Kenntnisstand des Systems über den Lernenden beziehungsweise die Aufgabe <span class="citation" data-cites="Pelanek2016 Abdi2019">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>; <a href="references.html#ref-Abdi2019" role="doc-biblioref">Abdi u.&nbsp;a. 2019</a>)</span>.</p>
+<p>Im ersten Schritt wird aus diesen Schätzwerten eine Erwartung gebildet. Das System bestimmt, mit welcher Wahrscheinlichkeit ein Lernender die betrachtete Aufgabe erfolgreich bearbeiten sollte. Besitzt der Lernende im Vergleich zur Schwierigkeit der Aufgabe eine hohe geschätzte Fähigkeit, wird eine erfolgreiche Bearbeitung wahrscheinlicher eingeschätzt. Ist die Aufgabe schwieriger als die geschätzte Fähigkeit des Lernenden, fällt die erwartete Erfolgswahrscheinlichkeit entsprechend geringer aus <span class="citation" data-cites="Elo1978 Pelanek2016">(<a href="references.html#ref-Elo1978" role="doc-biblioref">Elo 1978</a>; <a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Im zweiten Schritt wird das tatsächliche Ergebnis der Bearbeitung beobachtet. Das System stellt fest, ob die Aufgabe erfolgreich gelöst wurde oder nicht. Dieses Ergebnis liefert neue Informationen über die Fähigkeit des Lernenden und gegebenenfalls auch über die Schwierigkeit der Aufgabe.</p>
+<p>Anschließend wird das beobachtete Ergebnis mit der zuvor berechneten Erwartung verglichen. Stimmen Erwartung und Ergebnis weitgehend überein, werden die Schätzwerte nur geringfügig angepasst. Treten dagegen unerwartete Ergebnisse auf, beispielsweise wenn ein Lernender eine schwierige Aufgabe erfolgreich bearbeitet oder an einer einfachen Aufgabe scheitert, erfolgt eine stärkere Aktualisierung der Bewertungen <span class="citation" data-cites="Elo1978 Pelanek2016">(<a href="references.html#ref-Elo1978" role="doc-biblioref">Elo 1978</a>; <a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Im letzten Schritt werden die Schätzwerte aktualisiert. Die neu berechnete Fähigkeit des Lernenden sowie gegebenenfalls die angepasste Schwierigkeit der Aufgabe bilden die Ausgangsbasis für die nächste Interaktion. Durch die wiederholte Anwendung dieses Ablaufs passt sich das Modell kontinuierlich an neue Beobachtungen an und verbessert fortlaufend seine Schätzung des aktuellen Leistungsstands <span class="citation" data-cites="Pelanek2016 Abdi2019">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>; <a href="references.html#ref-Abdi2019" role="doc-biblioref">Abdi u.&nbsp;a. 2019</a>)</span>.</p>
+<p>Der algorithmische Ablauf des Elo-Verfahrens lässt sich somit in fünf Schritte zusammenfassen:</p>
+<ol type="1">
+<li>Aktuelle Schätzwerte bestimmen.</li>
+<li>Erwartete Erfolgswahrscheinlichkeit berechnen.</li>
+<li>Tatsächliches Ergebnis beobachten.</li>
+<li>Erwartung und Ergebnis vergleichen.</li>
+<li>Schätzwerte aktualisieren.</li>
+</ol>
+<p>Diese fünf Schritte werden nach jeder bearbeiteten Aufgabe erneut durchlaufen und bilden den grundlegenden Arbeitsablauf des Elo-Verfahrens. Im nächsten Abschnitt wird betrachtet, wie die einzelnen Berechnungsschritte mathematisch beschrieben werden können.</p>
+</section>
+<section id="mathematische-grundlagen-des-elo-verfahrens" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="mathematische-grundlagen-des-elo-verfahrens"><span class="header-section-number">4.4</span> Mathematische Grundlagen des Elo-Verfahrens</h2>
+<p>Im vorherigen Abschnitt wurde die grundlegende Funktionsweise des Elo-Verfahrens beschrieben. Dabei wurde deutlich, dass das Verfahren aus der geschätzten Fähigkeit eines Lernenden und der Schwierigkeit einer Aufgabe zunächst eine Erwartung ableitet und diese nach jeder Interaktion aktualisiert.</p>
+<p>Um diesen Prozess mathematisch zu beschreiben, müssen zunächst geeignete Größen definiert werden. Im Elo-Verfahren wird jedem Lernenden eine numerische Bewertung zugeordnet, welche die aktuell geschätzte Fähigkeit repräsentiert. Analog erhält auch jede Aufgabe einen numerischen Schwierigkeitswert. Beide Bewertungen werden kontinuierlich angepasst und bilden die Grundlage für die weiteren Berechnungen <span class="citation" data-cites="Pelanek2016 Elo1978">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>; <a href="references.html#ref-Elo1978" role="doc-biblioref">Elo 1978</a>)</span>.</p>
+<p>Die zentrale Idee besteht darin, aus der Beziehung zwischen Fähigkeit und Aufgabenschwierigkeit die Wahrscheinlichkeit einer erfolgreichen Bearbeitung abzuleiten. Besitzt ein Lernender eine höhere geschätzte Fähigkeit als die Schwierigkeit einer Aufgabe, sollte die Erfolgswahrscheinlichkeit entsprechend größer ausfallen. Umgekehrt sinkt diese Wahrscheinlichkeit, wenn die Aufgabe schwieriger eingeschätzt wird als die Fähigkeit des Lernenden.</p>
+<section id="erwartete-erfolgswahrscheinlichkeit" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="erwartete-erfolgswahrscheinlichkeit"><span class="header-section-number">4.4.1</span> Erwartete Erfolgswahrscheinlichkeit</h3>
+<p>Der erste Berechnungsschritt des Elo-Verfahrens besteht darin, die Wahrscheinlichkeit zu bestimmen, mit der ein Lernender eine Aufgabe erfolgreich bearbeiten sollte. Diese Wahrscheinlichkeit wird als erwartete Erfolgswahrscheinlichkeit bezeichnet.</p>
+<p>Im Bildungsbereich wird die Erfolgswahrscheinlichkeit aus der Differenz zwischen der geschätzten Fähigkeit eines Lernenden und der Schwierigkeit einer Aufgabe berechnet. Besitzt ein Lernender eine höhere Fähigkeit als die Schwierigkeit der Aufgabe, wird eine erfolgreiche Bearbeitung wahrscheinlicher. Ist die Aufgabe schwieriger als die geschätzte Fähigkeit des Lernenden, fällt die erwartete Erfolgswahrscheinlichkeit entsprechend geringer aus <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die Berechnung erfolgt mithilfe einer logistischen Funktion:</p>
+<p><span class="math display">\[
+P_{si}
+=
+\frac{1}{1+e^{d_i-\theta_s}}
+\tag{1}
+\]</span></p>
+<p>Dabei bezeichnet</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(P_{si}\)</span></td>
+<td>Wahrscheinlichkeit einer korrekten Antwort</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\theta_s\)</span></td>
+<td>Fähigkeit des Lernenden</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(d_i\)</span></td>
+<td>Schwierigkeit der Aufgabe</td>
+</tr>
+</tbody>
+</table>
+<p>Der Wert von <span class="math inline">\(P_{si}\)</span> liegt stets zwischen 0 und 1. Werte nahe 1 deuten auf eine hohe Erfolgswahrscheinlichkeit hin, während Werte nahe 0 auf eine geringe Erfolgswahrscheinlichkeit hinweisen. Besitzen Lernender und Aufgabe denselben Bewertungswert, also <span class="math inline">\(\theta_s=d_i\)</span>, ergibt sich eine erwartete Erfolgswahrscheinlichkeit von 0,5. Das System geht in diesem Fall davon aus, dass eine korrekte und eine falsche Antwort gleichermaßen wahrscheinlich sind <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die ursprüngliche Elo-Formulierung im Schach verwendet statt der natürlichen Exponentialfunktion e eine Potenz zur Basis 10 sowie den Skalierungsfaktor 400. Beide Darstellungen beschreiben jedoch denselben grundlegenden Zusammenhang zwischen Fähigkeitsdifferenz und Erfolgswahrscheinlichkeit. Für Anwendungen im Bildungsbereich wird häufig die mathematisch einfachere Form mit der Standard-Logistikfunktion verwendet <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+</section>
+<section id="aktualisierung-der-bewertungen" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="aktualisierung-der-bewertungen"><span class="header-section-number">4.4.2</span> Aktualisierung der Bewertungen</h3>
+<p>Nachdem die erwartete Erfolgswahrscheinlichkeit berechnet wurde, wird sie mit dem tatsächlichen Ergebnis der Bearbeitung verglichen. Die zentrale Idee des Elo-Verfahrens besteht darin, die Schätzwerte für die Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe nach jeder Interaktion anzupassen. Auf diese Weise kann das Modell neue Informationen unmittelbar berücksichtigen und seine Vorhersagen fortlaufend verbessern <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die Anpassung basiert auf der Differenz zwischen dem beobachteten Ergebnis und der zuvor berechneten Erfolgswahrscheinlichkeit. Fällt das Ergebnis besser aus als erwartet, wird die Fähigkeit des Lernenden erhöht und die Schwierigkeit der Aufgabe reduziert. Fällt das Ergebnis schlechter aus als erwartet, erfolgt die Anpassung in die entgegengesetzte Richtung.</p>
+<p>Die Aktualisierung der Fähigkeit eines Lernenden erfolgt nach der Formel</p>
+<p><span class="math display">\[
+\theta_s' = \theta_s + K \left( correct_{si} - P_{si} \right)
+\tag{2}
+\]</span></p>
+<p>Die Schwierigkeit einer Aufgabe wird analog aktualisiert:</p>
+<p><span class="math display">\[
+d_i' = d_i - K \left( correct_{si} - P_{si} \right)
+\tag{3}
+\]</span></p>
+<p>Zum Start liegen dabei die Werte von <span class="math inline">\(\theta_s\)</span> und <span class="math inline">\(d_i\)</span> bei 0 <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.<br>
+<br>
+Dabei bezeichnet</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\theta_s'\)</span></td>
+<td>aktualisierte Fähigkeit des Lernenden</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(d_i'\)</span></td>
+<td>aktualisierte Schwierigkeit der Aufgabe</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(correct_{si}\)</span></td>
+<td>tatsächliches Ergebnis (0 = falsch, 1 = richtig)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(P_{si}\)</span></td>
+<td>erwartete Erfolgswahrscheinlichkeit</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(K\)</span></td>
+<td>Anpassungs- bzw. Lernrate</td>
+</tr>
+</tbody>
+</table>
+<p>Der Ausdruck</p>
+<p><span class="math display">\[
+correct_{si}-P_{si}
+\tag{4}
+\]</span></p>
+<p>beschreibt die Abweichung zwischen dem tatsächlichen und dem erwarteten Ergebnis. Dieser Wert wird häufig als Vorhersagefehler bezeichnet. Ist die Antwort korrekt und wurde dies zuvor nur mit einer geringen Wahrscheinlichkeit erwartet, ergibt sich ein positiver Vorhersagefehler. Wird eine Aufgabe dagegen falsch beantwortet, obwohl eine hohe Erfolgswahrscheinlichkeit vorhergesagt wurde, fällt der Vorhersagefehler negativ aus.</p>
+<p>Der Parameter <span class="math inline">\(K\)</span> bestimmt die Stärke der Aktualisierung. Große Werte führen zu schnelleren Anpassungen der Schätzwerte, während kleine Werte stabilere, aber langsamere Veränderungen bewirken. Die Wahl dieses Parameters beeinflusst daher maßgeblich, wie schnell das Modell auf neue Beobachtungen reagiert <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die Aktualisierungsregeln sorgen dafür, dass die Schätzwerte schrittweise an die tatsächlich beobachteten Leistungen angepasst werden. Im nächsten Abschnitt wird dieser Prozess anhand eines konkreten Zahlenbeispiels Schritt für Schritt nachvollzogen.</p>
+</section>
+<section id="beispiel-einer-aktualisierung" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="beispiel-einer-aktualisierung"><span class="header-section-number">4.4.3</span> Beispiel einer Aktualisierung</h3>
+<p>Die bisher vorgestellten Formeln lassen sich anhand eines konkreten Zahlenbeispiels veranschaulichen.</p>
+<p>Angenommen, die geschätzte Fähigkeit eines Lernenden beträgt</p>
+<p><span class="math display">\[
+\theta_s = 0.5
+\]</span></p>
+<p>während die Schwierigkeit einer Aufgabe mit</p>
+<p><span class="math display">\[
+d_i = 1.5
+\]</span></p>
+<p>eingeschätzt wird. Die Aufgabe gilt damit als deutlich schwieriger als das aktuelle Fähigkeitsniveau des Lernenden.</p>
+<p>Die erwartete Erfolgswahrscheinlichkeit ergibt sich gemäß Gleichung (1) zu</p>
+<p><span class="math display">\[
+\begin{aligned}
+P_{si}
+&amp;=
+\frac{1}{1+e^{1.5-0.5}} \\
+&amp;=
+\frac{1}{1+e^1} \\
+&amp;\approx 0.27
+\end{aligned}
+\]</span></p>
+<p>Das System geht somit davon aus, dass der Lernende die Aufgabe nur mit einer Wahrscheinlichkeit von etwa 27 % korrekt beantworten wird.</p>
+<p>Nun sei angenommen, dass der Lernende die Aufgabe dennoch richtig löst. Das beobachtete Ergebnis beträgt daher</p>
+<p><span class="math display">\[
+correct_{si}=1
+\]</span></p>
+<p>Für dieses Beispiel werde eine Lernrate von</p>
+<p><span class="math display">\[
+K=0.1
+\]</span></p>
+<p>verwendet.</p>
+<p>Zunächst wird der Vorhersagefehler mithilfe von Gleichung (4) berechnet:</p>
+<p><span class="math display">\[
+\begin{aligned}
+correct_{si}-P_{si}
+&amp;=
+1-0.27 \\
+&amp;=
+0.73
+\end{aligned}
+\]</span></p>
+<p>Da das tatsächliche Ergebnis deutlich besser ausfällt als erwartet, ergibt sich ein vergleichsweise großer positiver Vorhersagefehler.</p>
+<p>Die Fähigkeit des Lernenden wird anschließend gemäß Gleichung (2) zu</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_s'
+&amp;=
+\theta_s + K(correct_{si}-P_{si}) \\
+&amp;=
+0.5 + 0.1(1-0.27) \\
+&amp;=
+0.5 + 0.073 \\
+&amp;=
+0.573
+\end{aligned}
+\]</span></p>
+<p>aktualisiert.</p>
+<p>Für die Schwierigkeit der Aufgabe ergibt sich analog gemäß Gleichung (3)</p>
+<p><span class="math display">\[
+\begin{aligned}
+d_i'
+&amp;=
+d_i - K(correct_{si}-P_{si}) \\
+&amp;=
+1.5 - 0.1(1-0.27) \\
+&amp;=
+1.5 - 0.073 \\
+&amp;=
+1.427
+\end{aligned}
+\]</span></p>
+<p>Nach der Aktualisierung wird der Lernende somit etwas stärker und die Aufgabe etwas leichter eingeschätzt als zuvor. Das Elo-Verfahren berücksichtigt dadurch die neue Information, dass ein unerwartet gutes Ergebnis erzielt wurde.</p>
+<p>Je stärker ein tatsächliches Ergebnis von der zuvor berechneten Erwartung abweicht, desto größer fällt die Anpassung der Schätzwerte aus. Überraschende Ergebnisse führen daher zu stärkeren Aktualisierungen als Ergebnisse, die bereits erwartet wurden.</p>
+</section>
+</section>
+<section id="implementierung-des-elo-verfahrens" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="implementierung-des-elo-verfahrens"><span class="header-section-number">4.5</span> Implementierung des Elo-Verfahrens</h2>
+<p>Die mathematischen Grundlagen des Elo-Verfahrens wurden in den vorherigen Abschnitten vorgestellt. Für den praktischen Einsatz in adaptiven Lernsystemen müssen diese Berechnungsschritte jedoch algorithmisch umgesetzt werden. Die Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe sollen nach jeder Bearbeitung automatisch aktualisiert werden, sodass das System kontinuierlich neue Informationen berücksichtigen kann.<br>
+Im Rahmen dieser Lernressource wird das Elo-Verfahren exemplarisch in Python implementiert. Ziel ist nicht die Entwicklung eines vollständigen adaptiven Lernsystems, sondern die schrittweise Umsetzung der zuvor eingeführten mathematischen Konzepte. Dadurch wird deutlich, wie aus den Gleichungen des Elo-Verfahrens ein ausführbarer Algorithmus entsteht.</p>
+<section id="repräsentation-von-lernenden-und-aufgaben" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="repräsentation-von-lernenden-und-aufgaben"><span class="header-section-number">4.5.1</span> Repräsentation von Lernenden und Aufgaben</h3>
+<p>Für die Implementierung werden zunächst die beiden zentralen Größen des Elo-Verfahrens benötigt: die Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe. Diese können in Python zunächst als einfache numerische Variablen gespeichert werden:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> <span class="fl">0.5</span>      <span class="co"># Fähigkeit des Lernenden</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>difficulty <span class="op">=</span> <span class="fl">1.5</span> <span class="co"># Schwierigkeit der Aufgabe</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="berechnung-der-erwarteten-erfolgswahrscheinlichkeit" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="berechnung-der-erwarteten-erfolgswahrscheinlichkeit"><span class="header-section-number">4.5.2</span> Berechnung der erwarteten Erfolgswahrscheinlichkeit</h3>
+<p>Der erste Berechnungsschritt des Elo-Verfahrens besteht in der Bestimmung der erwarteten Erfolgswahrscheinlichkeit.</p>
+<p>Die im vorherigen Kapitel eingeführte Formel</p>
+<p><span class="math display">\[
+P_{si}
+=
+\frac{1}{1+e^{d_i-\theta_s}}
+\]</span></p>
+<p>lässt sich in Python direkt umsetzen:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> probability(theta, difficulty):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> math.exp(difficulty <span class="op">-</span> theta))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Die Funktion erhält die Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe als Eingabe und liefert die erwartete Erfolgswahrscheinlichkeit zurück.</p>
+<p>Für die Werte aus dem vorherigen Beispiel ergibt sich:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> probability(<span class="fl">0.5</span>, <span class="fl">1.5</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">round</span>(p, <span class="dv">2</span>))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ausgabe:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.27</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Das System erwartet somit eine korrekte Antwort mit einer Wahrscheinlichkeit von etwa 27 %.</p>
+</section>
+<section id="aktualisierung-der-bewertungen-1" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="aktualisierung-der-bewertungen-1"><span class="header-section-number">4.5.3</span> Aktualisierung der Bewertungen</h3>
+<p>Nach der Bearbeitung einer Aufgabe werden die Bewertungen aktualisiert. Hierzu werden die in Kapitel 5 eingeführten Aktualisierungsgleichungen verwendet.</p>
+<p>Die Aktualisierung kann in Python wie folgt implementiert werden:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update(theta, difficulty, result, k<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> probability(theta, difficulty)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    theta_new <span class="op">=</span> theta <span class="op">+</span> k <span class="op">*</span> (result <span class="op">-</span> p)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    difficulty_new <span class="op">=</span> difficulty <span class="op">-</span> k <span class="op">*</span> (result <span class="op">-</span> p)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta_new, difficulty_new</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Die Funktion erhält:</p>
+<ul>
+<li>die Fähigkeit des Lernenden,</li>
+<li>die Schwierigkeit der Aufgabe,</li>
+<li>das beobachtete Ergebnis (0 oder 1),</li>
+<li>sowie die Lernrate k.</li>
+</ul>
+<p>Als Ergebnis liefert sie die aktualisierten Werte zurück.</p>
+</section>
+<section id="durchführung-einer-aktualisierung" class="level3" data-number="4.5.4">
+<h3 data-number="4.5.4" class="anchored" data-anchor-id="durchführung-einer-aktualisierung"><span class="header-section-number">4.5.4</span> Durchführung einer Aktualisierung</h3>
+<p>Die zuvor implementierten Funktionen können nun kombiniert werden.</p>
+<p>Angenommen, ein Lernender beantwortet die betrachtete Aufgabe korrekt:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>difficulty <span class="op">=</span> <span class="fl">1.5</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>theta, difficulty <span class="op">=</span> update(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    theta,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    difficulty,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    result<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    k<span class="op">=</span><span class="fl">0.1</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">round</span>(theta, <span class="dv">3</span>))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">round</span>(difficulty, <span class="dv">3</span>))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ausgabe:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.573</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.427</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Die Werte entsprechen exakt den Ergebnissen des zuvor durchgerechneten Beispiels. Die Fähigkeit des Lernenden steigt an, während die Schwierigkeit der Aufgabe leicht reduziert wird.</p>
+</section>
+<section id="zusammenspiel-der-einzelnen-schritte" class="level3" data-number="4.5.5">
+<h3 data-number="4.5.5" class="anchored" data-anchor-id="zusammenspiel-der-einzelnen-schritte"><span class="header-section-number">4.5.5</span> Zusammenspiel der einzelnen Schritte</h3>
+<p>Der vollständige Elo-Algorithmus besteht somit aus einer wiederholten Folge von Berechnungsschritten:</p>
+<ol type="1">
+<li>Aktuelle Fähigkeit und Aufgabenschwierigkeit bestimmen.</li>
+<li>Erwartete Erfolgswahrscheinlichkeit berechnen.</li>
+<li>Tatsächliches Ergebnis beobachten.</li>
+<li>Vorhersagefehler bestimmen.</li>
+<li>Fähigkeit und Schwierigkeit aktualisieren.</li>
+<li>Mit der nächsten Aufgabe fortfahren.</li>
+</ol>
+<p>Durch die wiederholte Anwendung dieser Schritte entsteht ein dynamisches Modell des Lernenden, das sich kontinuierlich an neue Beobachtungen anpasst.</p>
+<p>Im nächsten Abschnitt wird dieser Prozess mithilfe einer interaktiven Simulation visualisiert, sodass die Auswirkungen unterschiedlicher Fähigkeiten, Aufgabenschwierigkeiten und Lernraten unmittelbar untersucht werden können.</p>
+</section>
+</section>
+<section id="interaktive-simulation-des-elo-verfahrens" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="interaktive-simulation-des-elo-verfahrens"><span class="header-section-number">4.6</span> Interaktive Simulation des Elo-Verfahrens</h2>
+<p>Die mathematischen Grundlagen und die Implementierung des Elo-Verfahrens wurden in den vorherigen Abschnitten erläutert. Viele Eigenschaften des Verfahrens lassen sich jedoch erst durch eigenes Experimentieren vollständig nachvollziehen. Insbesondere der Zusammenhang zwischen Fähigkeit, Aufgabenschwierigkeit, Erfolgswahrscheinlichkeit und Aktualisierung wird deutlicher, wenn die Auswirkungen von Parameteränderungen unmittelbar beobachtet werden können.<br>
+Aus diesem Grund wird das Elo-Verfahren im Rahmen dieser Lernressource durch eine interaktive Simulation ergänzt. Die Simulation ermöglicht es, zentrale Parameter des Verfahrens selbst zu verändern und die Auswirkungen auf die Schätzwerte unmittelbar zu beobachten. Dadurch soll das Verständnis der zugrunde liegenden Mechanismen unterstützt und die Verbindung zwischen den mathematischen Formeln und dem Verhalten des Algorithmus verdeutlicht werden.</p>
+<section id="nutzung-der-simulation" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="nutzung-der-simulation"><span class="header-section-number">4.6.1</span> Nutzung der Simulation</h3>
+<p>Verändern Sie die Werte für die Fähigkeit des Lernenden (<span class="math inline">\(\theta_s\)</span>), die Schwierigkeit der Aufgabe (<span class="math inline">\(d_i\)</span>), die Lernrate (<span class="math inline">\(K\)</span>) sowie das Ergebnis der Bearbeitung (<span class="math inline">\(correct_{si}\)</span>). Beobachten Sie anschließend, wie sich die erwartete Erfolgswahrscheinlichkeit und die aktualisierten Schätzwerte verändern.</p>
+<p>Führen Sie mehrere Aktualisierungsschritte nacheinander durch und vergleichen Sie die Entwicklung der Fähigkeits- und Schwierigkeitswerte. Achten Sie insbesondere darauf, wie stark sich die Bewertungen bei erwarteten und unerwarteten Ergebnissen verändern und welchen Einfluss die Wahl der Lernrate auf die Aktualisierung hat.</p>
+<style>
+.observablehq button {
+  background-color: #f2f2f2 !important;
+  color: #000 !important;
+  border: 1px solid #999 !important;
+  border-radius: 6px !important;
+  padding: 8px 14px !important;
+}
+</style>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="376" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 375;"><span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a>viewof thetaStart <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">3</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> {</span>
+<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
+<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"θₛ: Startfähigkeit des Lernenden"</span></span>
+<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-381"><a href="#cb8-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a>viewof difficultyStart <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">3</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> {</span>
+<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="fl">1.5</span><span class="op">,</span></span>
+<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
+<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"dᵢ: Startschwierigkeit der Aufgabe"</span></span>
+<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a>viewof k <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.01</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {</span>
+<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
+<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span></span>
+<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"K: Lernrate"</span></span>
+<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a>viewof resultText <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>(</span>
+<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"Korrekt = 1"</span><span class="op">,</span> <span class="st">"Falsch = 0"</span>]<span class="op">,</span></span>
+<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb8-397"><a href="#cb8-397" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> <span class="st">"Korrekt = 1"</span><span class="op">,</span></span>
+<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"correctₛᵢ: Ergebnis der Bearbeitung"</span></span>
+<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="406" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 405;"><span id="cb9-406"><a href="#cb9-406" aria-hidden="true" tabindex="-1"></a>mutable thetaCurrent <span class="op">=</span> thetaStart</span>
+<span id="cb9-407"><a href="#cb9-407" aria-hidden="true" tabindex="-1"></a>mutable difficultyCurrent <span class="op">=</span> difficultyStart</span>
+<span id="cb9-408"><a href="#cb9-408" aria-hidden="true" tabindex="-1"></a>mutable stepCount <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-409"><a href="#cb9-409" aria-hidden="true" tabindex="-1"></a>mutable history <span class="op">=</span> []</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="415" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 414;"><span id="cb10-415"><a href="#cb10-415" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> resultText <span class="op">===</span> <span class="st">"Korrekt = 1"</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb10-416"><a href="#cb10-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-417"><a href="#cb10-417" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(difficultyCurrent <span class="op">-</span> thetaCurrent))</span>
+<span id="cb10-418"><a href="#cb10-418" aria-hidden="true" tabindex="-1"></a>predictionError <span class="op">=</span> result <span class="op">-</span> p</span>
+<span id="cb10-419"><a href="#cb10-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-420"><a href="#cb10-420" aria-hidden="true" tabindex="-1"></a>thetaPreview <span class="op">=</span> thetaCurrent <span class="op">+</span> k <span class="op">*</span> predictionError</span>
+<span id="cb10-421"><a href="#cb10-421" aria-hidden="true" tabindex="-1"></a>difficultyPreview <span class="op">=</span> difficultyCurrent <span class="op">-</span> k <span class="op">*</span> predictionError</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="425" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 424;"><span id="cb11-425"><a href="#cb11-425" aria-hidden="true" tabindex="-1"></a>viewof applyUpdate <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>(<span class="st">"Aktualisierung durchführen"</span><span class="op">,</span> {</span>
+<span id="cb11-426"><a href="#cb11-426" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reduce</span><span class="op">:</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb11-427"><a href="#cb11-427" aria-hidden="true" tabindex="-1"></a>    mutable history <span class="op">=</span> [</span>
+<span id="cb11-428"><a href="#cb11-428" aria-hidden="true" tabindex="-1"></a>      <span class="op">...</span>history<span class="op">,</span></span>
+<span id="cb11-429"><a href="#cb11-429" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb11-430"><a href="#cb11-430" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Schritt</span><span class="op">:</span> stepCount <span class="op">+</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb11-431"><a href="#cb11-431" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Ergebnis</span><span class="op">:</span> result<span class="op">,</span></span>
+<span id="cb11-432"><a href="#cb11-432" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Pₛᵢ"</span><span class="op">:</span> <span class="bu">Number</span>(p<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>))<span class="op">,</span></span>
+<span id="cb11-433"><a href="#cb11-433" aria-hidden="true" tabindex="-1"></a>        <span class="st">"θₛ vorher"</span><span class="op">:</span> <span class="bu">Number</span>(thetaCurrent<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>))<span class="op">,</span></span>
+<span id="cb11-434"><a href="#cb11-434" aria-hidden="true" tabindex="-1"></a>        <span class="st">"θₛ nachher"</span><span class="op">:</span> <span class="bu">Number</span>(thetaPreview<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>))<span class="op">,</span></span>
+<span id="cb11-435"><a href="#cb11-435" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dᵢ nachher"</span><span class="op">:</span> <span class="bu">Number</span>(difficultyPreview<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>))</span>
+<span id="cb11-436"><a href="#cb11-436" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb11-437"><a href="#cb11-437" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb11-438"><a href="#cb11-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-439"><a href="#cb11-439" aria-hidden="true" tabindex="-1"></a>    mutable thetaCurrent <span class="op">=</span> thetaPreview</span>
+<span id="cb11-440"><a href="#cb11-440" aria-hidden="true" tabindex="-1"></a>    mutable difficultyCurrent <span class="op">=</span> difficultyPreview</span>
+<span id="cb11-441"><a href="#cb11-441" aria-hidden="true" tabindex="-1"></a>    mutable stepCount <span class="op">=</span> stepCount <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb11-442"><a href="#cb11-442" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-443"><a href="#cb11-443" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="449" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 448;"><span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a>viewof resetSimulation <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>(<span class="st">"Simulation zurücksetzen"</span><span class="op">,</span> {</span>
+<span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reduce</span><span class="op">:</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a>    mutable thetaCurrent <span class="op">=</span> thetaStart</span>
+<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a>    mutable difficultyCurrent <span class="op">=</span> difficultyStart</span>
+<span id="cb12-453"><a href="#cb12-453" aria-hidden="true" tabindex="-1"></a>    mutable stepCount <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-454"><a href="#cb12-454" aria-hidden="true" tabindex="-1"></a>    mutable history <span class="op">=</span> []</span>
+<span id="cb12-455"><a href="#cb12-455" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-456"><a href="#cb12-456" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="462" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 461;"><span id="cb13-462"><a href="#cb13-462" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb13-463"><a href="#cb13-463" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:15px;"&gt;</span></span>
+<span id="cb13-464"><a href="#cb13-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-465"><a href="#cb13-465" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="border:1px solid #ccc; padding:12px; border-radius:8px;"&gt;</span></span>
+<span id="cb13-466"><a href="#cb13-466" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;strong&gt;Schritt&lt;/strong&gt;&lt;br&gt;</span></span>
+<span id="cb13-467"><a href="#cb13-467" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>stepCount<span class="sc">}</span></span>
+<span id="cb13-468"><a href="#cb13-468" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb13-469"><a href="#cb13-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-470"><a href="#cb13-470" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="border:1px solid #ccc; padding:12px; border-radius:8px;"&gt;</span></span>
+<span id="cb13-471"><a href="#cb13-471" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;strong&gt;Pₛᵢ: Erwartete Erfolgswahrscheinlichkeit&lt;/strong&gt;&lt;br&gt;</span></span>
+<span id="cb13-472"><a href="#cb13-472" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>(p <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs"> %</span></span>
+<span id="cb13-473"><a href="#cb13-473" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb13-474"><a href="#cb13-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-475"><a href="#cb13-475" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="border:1px solid #ccc; padding:12px; border-radius:8px;"&gt;</span></span>
+<span id="cb13-476"><a href="#cb13-476" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;strong&gt;θₛ: Aktuelle Fähigkeit&lt;/strong&gt;&lt;br&gt;</span></span>
+<span id="cb13-477"><a href="#cb13-477" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>thetaCurrent<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span></span>
+<span id="cb13-478"><a href="#cb13-478" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb13-479"><a href="#cb13-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-480"><a href="#cb13-480" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="border:1px solid #ccc; padding:12px; border-radius:8px;"&gt;</span></span>
+<span id="cb13-481"><a href="#cb13-481" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;strong&gt;dᵢ: Aktuelle Schwierigkeit&lt;/strong&gt;&lt;br&gt;</span></span>
+<span id="cb13-482"><a href="#cb13-482" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>difficultyCurrent<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span></span>
+<span id="cb13-483"><a href="#cb13-483" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb13-484"><a href="#cb13-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-485"><a href="#cb13-485" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="border:1px solid #ccc; padding:12px; border-radius:8px;"&gt;</span></span>
+<span id="cb13-486"><a href="#cb13-486" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;strong&gt;Vorhersagefehler&lt;/strong&gt;&lt;br&gt;</span></span>
+<span id="cb13-487"><a href="#cb13-487" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>predictionError<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span></span>
+<span id="cb13-488"><a href="#cb13-488" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb13-489"><a href="#cb13-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-490"><a href="#cb13-490" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="border:1px solid #ccc; padding:12px; border-radius:8px;"&gt;</span></span>
+<span id="cb13-491"><a href="#cb13-491" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;strong&gt;Vorschau nach Aktualisierung&lt;/strong&gt;&lt;br&gt;</span></span>
+<span id="cb13-492"><a href="#cb13-492" aria-hidden="true" tabindex="-1"></a><span class="vs">    θₛ′ = </span><span class="sc">${</span>thetaPreview<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">&lt;br&gt;</span></span>
+<span id="cb13-493"><a href="#cb13-493" aria-hidden="true" tabindex="-1"></a><span class="vs">    dᵢ′ = </span><span class="sc">${</span>difficultyPreview<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span></span>
+<span id="cb13-494"><a href="#cb13-494" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb13-495"><a href="#cb13-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-496"><a href="#cb13-496" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb13-497"><a href="#cb13-497" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="503" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb14-503"><a href="#cb14-503" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb14-504"><a href="#cb14-504" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;h4&gt;Verlauf der Aktualisierungen&lt;/h4&gt;</span></span>
+<span id="cb14-505"><a href="#cb14-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-506"><a href="#cb14-506" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span>history<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span></span>
+<span id="cb14-507"><a href="#cb14-507" aria-hidden="true" tabindex="-1"></a>  <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;p&gt;Noch keine Aktualisierung durchgeführt.&lt;/p&gt;`</span></span>
+<span id="cb14-508"><a href="#cb14-508" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb14-509"><a href="#cb14-509" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;table style="border-collapse: collapse; width: 100%; margin-top: 10px;"&gt;</span></span>
+<span id="cb14-510"><a href="#cb14-510" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;thead&gt;</span></span>
+<span id="cb14-511"><a href="#cb14-511" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;tr&gt;</span></span>
+<span id="cb14-512"><a href="#cb14-512" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;th style="border:1px solid #ccc; padding:6px;"&gt;Schritt&lt;/th&gt;</span></span>
+<span id="cb14-513"><a href="#cb14-513" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;th style="border:1px solid #ccc; padding:6px;"&gt;Ergebnis&lt;/th&gt;</span></span>
+<span id="cb14-514"><a href="#cb14-514" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;th style="border:1px solid #ccc; padding:6px;"&gt;Pₛᵢ&lt;/th&gt;</span></span>
+<span id="cb14-515"><a href="#cb14-515" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;th style="border:1px solid #ccc; padding:6px;"&gt;θₛ vorher&lt;/th&gt;</span></span>
+<span id="cb14-516"><a href="#cb14-516" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;th style="border:1px solid #ccc; padding:6px;"&gt;θₛ nachher&lt;/th&gt;</span></span>
+<span id="cb14-517"><a href="#cb14-517" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;th style="border:1px solid #ccc; padding:6px;"&gt;dᵢ nachher&lt;/th&gt;</span></span>
+<span id="cb14-518"><a href="#cb14-518" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;/tr&gt;</span></span>
+<span id="cb14-519"><a href="#cb14-519" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/thead&gt;</span></span>
+<span id="cb14-520"><a href="#cb14-520" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;tbody&gt;</span></span>
+<span id="cb14-521"><a href="#cb14-521" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>history<span class="op">.</span><span class="fu">map</span>(row <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb14-522"><a href="#cb14-522" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;tr&gt;</span></span>
+<span id="cb14-523"><a href="#cb14-523" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;td style="border:1px solid #ccc; padding:6px;"&gt;</span><span class="sc">${</span>row<span class="op">.</span><span class="at">Schritt</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb14-524"><a href="#cb14-524" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;td style="border:1px solid #ccc; padding:6px;"&gt;</span><span class="sc">${</span>row<span class="op">.</span><span class="at">Ergebnis</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb14-525"><a href="#cb14-525" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;td style="border:1px solid #ccc; padding:6px;"&gt;</span><span class="sc">${</span>row[<span class="st">"Pₛᵢ"</span>]<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb14-526"><a href="#cb14-526" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;td style="border:1px solid #ccc; padding:6px;"&gt;</span><span class="sc">${</span>row[<span class="st">"θₛ vorher"</span>]<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb14-527"><a href="#cb14-527" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;td style="border:1px solid #ccc; padding:6px;"&gt;</span><span class="sc">${</span>row[<span class="st">"θₛ nachher"</span>]<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb14-528"><a href="#cb14-528" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;td style="border:1px solid #ccc; padding:6px;"&gt;</span><span class="sc">${</span>row[<span class="st">"dᵢ nachher"</span>]<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb14-529"><a href="#cb14-529" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;/tr&gt;</span></span>
+<span id="cb14-530"><a href="#cb14-530" aria-hidden="true" tabindex="-1"></a><span class="vs">        `</span>)<span class="sc">}</span></span>
+<span id="cb14-531"><a href="#cb14-531" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/tbody&gt;</span></span>
+<span id="cb14-532"><a href="#cb14-532" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/table&gt;</span></span>
+<span id="cb14-533"><a href="#cb14-533" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span><span class="sc">}</span></span>
+<span id="cb14-534"><a href="#cb14-534" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Die Simulation zeigt, dass die Bewertungen nicht nur vom tatsächlichen Ergebnis abhängen, sondern auch von der zuvor erwarteten Erfolgswahrscheinlichkeit. Wird eine Aufgabe korrekt gelöst, obwohl die Erfolgswahrscheinlichkeit gering war, steigt die Fähigkeit stärker an. Wird eine Aufgabe falsch beantwortet, obwohl eine hohe Erfolgswahrscheinlichkeit erwartet wurde, sinkt die Fähigkeit entsprechend. Die Lernrate (K) bestimmt dabei, wie stark diese Anpassungen ausfallen.</p>
+</section>
+</section>
+<section id="anwendungen-des-elo-verfahrens-in-adaptiven-lernsystemen" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="anwendungen-des-elo-verfahrens-in-adaptiven-lernsystemen"><span class="header-section-number">4.7</span> Anwendungen des Elo-Verfahrens in adaptiven Lernsystemen</h2>
+<p>Das Elo-Verfahren wird in adaptiven Lernsystemen vor allem zur Schätzung von Fähigkeits- und Schwierigkeitswerten eingesetzt. Dabei wird jede Interaktion zwischen einem Lernenden und einer Aufgabe als Beobachtung genutzt, um die zugrunde liegenden Parameter fortlaufend zu aktualisieren. Durch diese kontinuierliche Aktualisierung eignet sich das Verfahren insbesondere für Systeme, die den Wissensstand von Lernenden während des Lernprozesses modellieren möchten. <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span></p>
+<section id="lernendenmodellierung" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="lernendenmodellierung"><span class="header-section-number">4.7.1</span> Lernendenmodellierung</h3>
+<p>Eine zentrale Anwendung des Elo-Verfahrens besteht in der Schätzung der Fähigkeiten von Lernenden. Nach jeder bearbeiteten Aufgabe wird die Fähigkeitsbewertung anhand des beobachteten Ergebnisses aktualisiert. Dadurch entsteht ein dynamisches Modell des aktuellen Wissensstands, das sich kontinuierlich an neue Beobachtungen anpasst. <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span></p>
+</section>
+<section id="schätzung-von-aufgabenschwierigkeiten" class="level3" data-number="4.7.2">
+<h3 data-number="4.7.2" class="anchored" data-anchor-id="schätzung-von-aufgabenschwierigkeiten"><span class="header-section-number">4.7.2</span> Schätzung von Aufgabenschwierigkeiten</h3>
+<p>Neben der Modellierung von Lernenden können auch Schwierigkeitswerte für Aufgaben geschätzt werden. Neue Aufgaben erhalten zunächst einen Startwert, der im Laufe der Nutzung anhand der Antworten vieler Lernender angepasst wird. Auf diese Weise kann ein System automatisch Informationen über die Schwierigkeit einzelner Aufgaben gewinnen. <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span></p>
+</section>
+<section id="grundlage-adaptiver-entscheidungen" class="level3" data-number="4.7.3">
+<h3 data-number="4.7.3" class="anchored" data-anchor-id="grundlage-adaptiver-entscheidungen"><span class="header-section-number">4.7.3</span> Grundlage adaptiver Entscheidungen</h3>
+<p>Die geschätzten Fähigkeits- und Schwierigkeitswerte können anschließend als Grundlage adaptiver Entscheidungen dienen. Beispielsweise können Lernsysteme Aufgaben auswählen, deren Schwierigkeit zum aktuellen Leistungsstand eines Lernenden passt. Die eigentliche Aufgabenwahl ist dabei nicht Bestandteil des Elo-Verfahrens selbst, sondern nutzt die durch das Verfahren bereitgestellten Schätzwerte. <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span></p>
+</section>
+<section id="open-learner-models" class="level3" data-number="4.7.4">
+<h3 data-number="4.7.4" class="anchored" data-anchor-id="open-learner-models"><span class="header-section-number">4.7.4</span> Open Learner Models</h3>
+<p>Eine weitere Anwendung besteht in sogenannten Open Learner Models. Dabei werden die durch das System geschätzten Fähigkeitswerte nicht ausschließlich intern verwendet, sondern den Lernenden direkt zugänglich gemacht. Die Lernenden erhalten dadurch Einblick in die Einschätzung ihres aktuellen Wissensstands und können ihre Stärken und Schwächen besser nachvollziehen. Abdi et al.&nbsp;beschreiben einen solchen Ansatz auf Basis eines mehrdimensionalen Elo-Modells (M-Elo), bei dem Fähigkeitswerte für verschiedene Themengebiete visualisiert werden. Die Autoren argumentieren, dass transparente Darstellungen des Lernendenmodells die Reflexion des eigenen Lernfortschritts unterstützen und das Vertrauen in die Empfehlungen eines adaptiven Systems fördern können <span class="citation" data-cites="Abdi2019">(<a href="references.html#ref-Abdi2019" role="doc-biblioref">Abdi u.&nbsp;a. 2019</a>)</span>.</p>
+<p>Die dargestellten Anwendungsbereiche verdeutlichen, dass das Elo-Verfahren nicht nur zur Schätzung von Fähigkeiten eingesetzt werden kann, sondern auch die Grundlage verschiedener adaptiver Funktionen in modernen Lernsystemen bildet. Trotz dieser Vorteile besitzt das Verfahren jedoch auch mehrere Einschränkungen, die im nächsten Kapitel betrachtet werden.</p>
+</section>
+</section>
+<section id="grenzen-und-erweiterungen-des-elo-verfahrens" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="grenzen-und-erweiterungen-des-elo-verfahrens"><span class="header-section-number">4.8</span> Grenzen und Erweiterungen des Elo-Verfahrens</h2>
+<section id="grenzen-des-standard-elo-verfahrens" class="level3" data-number="4.8.1">
+<h3 data-number="4.8.1" class="anchored" data-anchor-id="grenzen-des-standard-elo-verfahrens"><span class="header-section-number">4.8.1</span> Grenzen des Standard-Elo-Verfahrens</h3>
+<p>Das Elo-Verfahren bietet eine vergleichsweise einfache und effiziente Möglichkeit zur Modellierung von Lernenden und Aufgaben. Insbesondere die kontinuierliche Aktualisierung nach jeder Interaktion sowie die geringe Anzahl benötigter Parameter machen das Verfahren für adaptive Lernsysteme attraktiv <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>. Dennoch weist das Standard-Elo-Verfahren mehrere Einschränkungen auf, die seine Aussagekraft in komplexen Bildungsszenarien begrenzen können.</p>
+<p>Eine erste Einschränkung besteht darin, dass die Fähigkeit eines Lernenden durch einen einzigen Fähigkeitswert beschrieben wird. Das Verfahren geht somit implizit davon aus, dass sich der Wissensstand einer Person durch eine einzige Dimension repräsentieren lässt. In realen Lernumgebungen setzt sich Wissen jedoch häufig aus mehreren Teilgebieten zusammen. Ein Lernender kann beispielsweise in einem Themenbereich sehr gute Kenntnisse besitzen, während gleichzeitig Defizite in anderen Bereichen bestehen. Solche Unterschiede können durch einen einzelnen Elo-Wert nur eingeschränkt abgebildet werden <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Darüber hinaus verwendet das Standard-Elo-Verfahren einen konstanten Aktualisierungsparameter (K). Die Wahl dieses Parameters beeinflusst das Verhalten des Modells maßgeblich. Kleine Werte führen zu einer langsamen Anpassung der Schätzwerte, während große Werte zwar schneller auf neue Beobachtungen reagieren, jedoch zu instabilen Schätzungen führen können. Die Verwendung eines festen Parameters stellt daher einen Kompromiss zwischen Stabilität und Anpassungsgeschwindigkeit dar <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Eine weitere Einschränkung besteht darin, dass das Standard-Elo-Modell keine Unsicherheit der Schätzwerte berücksichtigt. Neue Lernende und Aufgaben werden mit derselben Aktualisierungsstärke behandelt wie Objekte, für die bereits viele Beobachtungen vorliegen. Intuitiv erscheint dies problematisch, da die Schätzungen bei wenigen verfügbaren Daten deutlich unsicherer sind als nach einer großen Anzahl von Interaktionen <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Schließlich basiert das Standard-Elo-Verfahren in seiner einfachsten Form auf binären Ergebnissen. Antworten werden lediglich als korrekt oder inkorrekt betrachtet. In realen Bildungssystemen treten jedoch häufig komplexere Situationen auf, beispielsweise Multiple-Choice-Aufgaben mit Ratewahrscheinlichkeit, Teilpunktebewertungen, Hinweissysteme oder die Berücksichtigung von Bearbeitungszeiten. Diese Informationen können durch das Grundmodell nur eingeschränkt genutzt werden <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Aus diesen Gründen wurden verschiedene Erweiterungen des Elo-Verfahrens entwickelt, die versuchen, einzelne Schwächen des Standardmodells zu adressieren. Im folgenden Abschnitt wird zunächst die Verwendung von Unsicherheitsfunktionen als Alternative zu einem konstanten Aktualisierungsparameter betrachtet.</p>
+</section>
+<section id="unsicherheitsfunktionen" class="level3" data-number="4.8.2">
+<h3 data-number="4.8.2" class="anchored" data-anchor-id="unsicherheitsfunktionen"><span class="header-section-number">4.8.2</span> Unsicherheitsfunktionen</h3>
+<p>Im Standard-Elo-Verfahren wird die Stärke der Aktualisierung durch den konstanten Parameter <span class="math inline">\(K\)</span>bestimmt. Dieser Parameter beeinflusst, wie stark neue Beobachtungen die Bewertungen verändern. Die Wahl eines geeigneten Wertes stellt dabei einen Kompromiss dar: Kleine Werte führen zu stabilen, aber langsamen Anpassungen, während große Werte schnelle Reaktionen ermöglichen, jedoch zu stärkeren Schwankungen der Schätzwerte führen können. Eine wesentliche Einschränkung eines konstanten Aktualisierungsparameters besteht darin, dass die Unsicherheit der Schätzwerte nicht berücksichtigt wird. Zu Beginn liegen für einen Lernenden oder eine Aufgabe nur wenige Informationen vor. Die Schätzungen sind daher zunächst mit einer hohen Unsicherheit verbunden. Mit zunehmender Anzahl beobachteter Interaktionen steigt dagegen das Vertrauen in die geschätzten Werte <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Aus diesem Grund verwenden viele Erweiterungen des Elo-Verfahrens anstelle eines konstanten Parameters <span class="math inline">\(K\)</span> eine sogenannte Unsicherheitsfunktion. Die Grundidee besteht darin, die Stärke der Aktualisierung von der Anzahl bereits beobachteter Interaktionen abhängig zu machen. Bei wenigen verfügbaren Daten fallen die Aktualisierungen zunächst groß aus, sodass das Modell schnell auf neue Informationen reagieren kann. Mit zunehmender Anzahl von Beobachtungen wird die Aktualisierung schrittweise reduziert, wodurch die Schätzwerte stabiler werden <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<div id="fig-uncertainty" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Quellen/Grafiken/Pelanek2016-unsicherheitK.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Abbildung&nbsp;4.1: Vergleich eines konstanten Aktualisierungsparameters <span class="math inline">\(K\)</span> mit verschiedenen Unsicherheitsfunktionen. Die gestrichelte Linie kennzeichnet den tatsächlichen Schwierigkeitswert. Quelle: <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-uncertainty" class="quarto-xref">Abbildung&nbsp;<span>4.1</span></a> verdeutlicht den Einfluss des Aktualisierungsparameters auf die Schätzung der Aufgabenschwierigkeit. Während große konstante Werte zu deutlichen Schwankungen führen können, ermöglichen Unsicherheitsfunktionen zunächst schnelle grobe Schätzungen und anschließend eine zunehmend stabile Annäherung an den tatsächlichen Parameterwert <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Anschaulich entspricht dieses Vorgehen dem intuitiven Umgang mit Unsicherheit. Bei einem neu registrierten Lernenden liegen zunächst kaum Informationen über dessen Leistungsstand vor. Bereits wenige Antworten können daher einen erheblichen Einfluss auf die Schätzung haben. Nach einer großen Anzahl bearbeiteter Aufgaben erscheint eine einzelne zusätzliche Beobachtung dagegen deutlich weniger aussagekräftig.</p>
+<p>Pelánek verweist in diesem Zusammenhang auf verschiedene Ansätze zur Modellierung von Unsicherheit. Neben einfachen Unsicherheitsfunktionen existieren auch komplexere Verfahren wie das Glicko-System oder TrueSkill, die Unsicherheit explizit modellieren. Für viele Anwendungen im Bildungsbereich zeigen Untersuchungen jedoch, dass bereits einfache Unsicherheitsfunktionen zu einer deutlichen Verbesserung gegenüber einem konstanten Aktualisierungsparameter führen können <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die Verwendung von Unsicherheitsfunktionen stellt somit eine vergleichsweise einfache Erweiterung des Elo-Verfahrens dar, die insbesondere in frühen Phasen der Schätzung eine schnellere Anpassung ermöglicht und gleichzeitig langfristig stabilere Bewertungen erzeugt.</p>
+</section>
+<section id="multiple-choice-aufgaben-und-teilpunkte" class="level3" data-number="4.8.3">
+<h3 data-number="4.8.3" class="anchored" data-anchor-id="multiple-choice-aufgaben-und-teilpunkte"><span class="header-section-number">4.8.3</span> Multiple-Choice-Aufgaben und Teilpunkte</h3>
+<p>Eine weitere Einschränkung des Standard-Elo-Verfahrens besteht darin, dass Antworten in ihrer einfachsten Form ausschließlich als korrekt oder inkorrekt bewertet werden. Die Erfolgsvariable nimmt somit lediglich die Werte 0 oder 1 an. Diese Annahme ist für viele Anwendungsszenarien ausreichend, bildet jedoch zahlreiche Situationen realer Lernumgebungen nur unzureichend ab. In adaptiven Lernsystemen kommen häufig Multiple-Choice-Aufgaben, Aufgaben mit Teilpunkten oder Lernumgebungen mit Hinweissystemen zum Einsatz. In solchen Fällen liefern Lerninteraktionen oftmals mehr Informationen als eine reine Richtig-Falsch-Bewertung erfassen kann <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Ein Beispiel hierfür sind Multiple-Choice-Aufgaben. Bei diesen Aufgaben besteht grundsätzlich die Möglichkeit, dass eine korrekte Antwort durch Raten zustande kommt. Bei vier Antwortmöglichkeiten liegt die Wahrscheinlichkeit einer zufällig richtigen Antwort bereits bei 25 %. Das Standard-Elo-Verfahren behandelt jedoch jede korrekte Antwort gleich und unterscheidet nicht zwischen tatsächlich vorhandenem Wissen und einem zufälligen Treffer. Dadurch kann insbesondere bei kurzen Tests oder wenigen Beobachtungen eine Überschätzung der Fähigkeit auftreten.</p>
+<p>Pelánek beschreibt eine einfache Erweiterung des Elo-Verfahrens zur Berücksichtigung von Ratewahrscheinlichkeiten bei Multiple-Choice-Aufgaben. Hierzu wird die Berechnung der erwarteten Erfolgswahrscheinlichkeit angepasst. Für eine Aufgabe mit <span class="math inline">\(k\)</span> Antwortmöglichkeiten ergibt sich die Wahrscheinlichkeit einer korrekten Antwort zu</p>
+<p><span class="math display">\[
+P(\text{korrekt})
+=
+\frac{1}{k}
++
+\frac{1-\frac{1}{k}}
+{1+e^{-(\theta-d)}}
+\tag{5}
+\]</span></p>
+<p>Der erste Term berücksichtigt die Wahrscheinlichkeit eines zufälligen Treffers, während der zweite Term den eigentlichen Einfluss von Fähigkeit und Aufgabenschwierigkeit beschreibt <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>. Dadurch wird die Erfolgswahrscheinlichkeit insbesondere bei sehr schwierigen Aufgaben realistischer modelliert.</p>
+<p>Neben Ratewahrscheinlichkeiten stellen Teilpunkte eine weitere Herausforderung für das Standard-Elo-Verfahren dar. Viele Aufgaben liefern nicht nur die Information, ob eine Lösung richtig oder falsch ist, sondern erlauben eine abgestufte Bewertung. Dies betrifft beispielsweise Programmieraufgaben, mathematische Aufgaben mit mehreren Zwischenschritten oder komplexe Problemlöseaufgaben. Ein Lernender kann dabei einen Teil der Aufgabe erfolgreich bearbeiten, ohne die vollständige Lösung zu erreichen. Da das Elo-Verfahren ursprünglich nicht auf binäre Ergebnisse beschränkt ist, können solche Teilbewertungen vergleichsweise einfach integriert werden. Anstelle der Werte 0 oder 1 wird die Erfolgsvariable als kontinuierlicher Wert zwischen 0 und 1 interpretiert. Eine Aufgabe, bei der 75 % der möglichen Punkte erreicht werden, kann beispielsweise mit einem Erfolgswert von</p>
+<p><span class="math display">\[
+S = 0.75
+\]</span></p>
+<p>in die Aktualisierung eingehen. Die grundlegende Struktur der Elo-Gleichungen bleibt dabei unverändert. Lediglich die Definition des beobachteten Ergebnisses wird erweitert <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Ein ähnlicher Ansatz kann bei der Verwendung von Hinweissystemen eingesetzt werden. Viele intelligente Tutorensysteme erlauben es Lernenden, während der Bearbeitung zusätzliche Hinweise anzufordern. Eine korrekte Lösung nach mehreren Hilfestellungen besitzt jedoch eine andere Aussagekraft als eine vollständig selbstständig gefundene Lösung. Deshalb können korrekte Antworten abhängig von der Anzahl verwendeter Hinweise mit reduzierten Erfolgswerten bewertet werden. Eine vollständig selbstständig gelöste Aufgabe könnte beispielsweise den Wert 1 erhalten, während eine korrekte Lösung nach mehreren Hinweisen lediglich mit einem geringeren Wert in die Aktualisierung eingeht <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die beschriebenen Erweiterungen zeigen, dass das Elo-Verfahren deutlich flexibler eingesetzt werden kann, als die binäre Grundform vermuten lässt. Durch die Berücksichtigung von Ratewahrscheinlichkeiten, Teilpunkten und Hinweisen können zusätzliche Informationen aus Lerninteraktionen genutzt werden, ohne die grundlegende Struktur des Verfahrens verändern zu müssen. Dennoch beziehen sich diese Erweiterungen weiterhin ausschließlich auf das Antwortergebnis selbst. Weitere Informationen über den Lösungsprozess, beispielsweise die benötigte Bearbeitungszeit, bleiben unberücksichtigt. Aus diesem Grund wurden zusätzliche Elo-Varianten entwickelt, die auch zeitbezogene Informationen in die Modellierung einbeziehen.</p>
+</section>
+<section id="berücksichtigung-von-bearbeitungszeiten" class="level3" data-number="4.8.4">
+<h3 data-number="4.8.4" class="anchored" data-anchor-id="berücksichtigung-von-bearbeitungszeiten"><span class="header-section-number">4.8.4</span> Berücksichtigung von Bearbeitungszeiten</h3>
+<p>Die bisher betrachteten Erweiterungen des Elo-Verfahrens beziehen sich ausschließlich auf das Ergebnis einer Aufgabe. Dabei wird bewertet, ob eine Antwort korrekt oder inkorrekt ist beziehungsweise welcher Teil einer Aufgabe erfolgreich gelöst wurde. Informationen über den eigentlichen Lösungsprozess bleiben jedoch unberücksichtigt. Insbesondere die Bearbeitungszeit einer Aufgabe kann zusätzliche Hinweise auf den Wissensstand eines Lernenden liefern und stellt daher eine potenziell wertvolle Informationsquelle für adaptive Lernsysteme dar.</p>
+<p>Betrachtet man zwei Lernende, die dieselbe Aufgabe korrekt beantworten, erscheint eine identische Bewertung nicht immer angemessen. Ein Lernender kann die Lösung innerhalb weniger Sekunden finden, während ein anderer deutlich mehr Zeit benötigt. Obwohl beide Antworten korrekt sind, deutet die längere Bearbeitungszeit möglicherweise auf Unsicherheit, langsameres Abrufen von Wissen oder einen höheren kognitiven Aufwand hin. Umgekehrt können sehr schnelle Fehlantworten auf unüberlegtes Raten hindeuten. Das Standard-Elo-Verfahren berücksichtigt solche Unterschiede nicht, da ausschließlich die Korrektheit der Antwort in die Aktualisierung eingeht <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Aus diesem Grund wurden verschiedene Erweiterungen entwickelt, die Bearbeitungszeiten in die Modellierung einbeziehen. Ein erster Ansatz besteht darin, die Bearbeitungszeit selbst als Leistungsmaß zu verwenden. Dies eignet sich insbesondere für Aufgabentypen, bei denen die Lösung grundsätzlich eindeutig überprüfbar ist und die benötigte Zeit den entscheidenden Leistungsunterschied darstellt. Beispiele hierfür sind Sudoku-Rätsel oder Programmieraufgaben, bei denen die Zeit bis zur korrekten Lösung betrachtet wird <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Analog zum klassischen Elo-Verfahren besitzt jeder Lernende einen Fähigkeitsparameter <span class="math inline">\(\theta_s\)</span> und jede Aufgabe einen Schwierigkeitsparameter <span class="math inline">\(d_p\)</span>. Anstelle einer Erfolgswahrscheinlichkeit wird jedoch die erwartete logarithmierte Bearbeitungszeit modelliert:</p>
+<p><span class="math display">\[
+E(t \mid s,p)=d_p-\theta_s
+\tag{6}
+\]</span></p>
+<p>Dabei bezeichnet <span class="math inline">\(E(t \mid s,p)\)</span> die erwartete Bearbeitungszeit eines Lernenden <span class="math inline">\(s\)</span> für die Aufgabe <span class="math inline">\(p\)</span>. Hohe Fähigkeitswerte führen zu kürzeren erwarteten Bearbeitungszeiten, während hohe Schwierigkeitswerte längere Bearbeitungszeiten erwarten lassen.</p>
+<p>Nachdem die tatsächliche Bearbeitungszeit <span class="math inline">\(t_{sp}\)</span> beobachtet wurde, können die Parameter ähnlich wie im klassischen Elo-Verfahren aktualisiert werden:</p>
+<p><span class="math display">\[
+\theta_{s,\text{neu}}
+=
+\theta_{s,\text{alt}}
++
+K\bigl(E(t \mid s,p)-t_{sp}\bigr)
+\tag{7}
+\]</span></p>
+<p><span class="math display">\[
+d_{p,\text{neu}}
+=
+d_{p,\text{alt}}
++
+K\bigl(t_{sp}-E(t \mid s,p)\bigr)
+\tag{8}
+\]</span></p>
+<p>Bearbeitet ein Lernender eine Aufgabe schneller als vom Modell erwartet, erhöht sich seine geschätzte Fähigkeit. Gleichzeitig sinkt die geschätzte Schwierigkeit der Aufgabe. Bei längeren Bearbeitungszeiten erfolgt die Aktualisierung entsprechend in die entgegengesetzte Richtung. Das Verfahren nutzt somit dieselbe Grundidee wie das klassische Elo-Modell, ersetzt jedoch die Antwortkorrektheit durch die Bearbeitungszeit als beobachtete Leistungsgröße <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>In vielen Anwendungen erweist sich jedoch die alleinige Betrachtung der Bearbeitungszeit als unzureichend. Häufig liefern sowohl die Korrektheit einer Antwort als auch die benötigte Bearbeitungszeit relevante Informationen über den Lernprozess. Aus diesem Grund wurden Modelle entwickelt, die beide Informationsquellen gemeinsam berücksichtigen. Ein bekanntes Beispiel ist die von <span class="citation" data-cites="Klinkenberg2011">Klinkenberg u.&nbsp;a. (<a href="references.html#ref-Klinkenberg2011" role="doc-biblioref">2011</a>)</span> vorgeschlagene <em>“high speed, high stakes”</em>-Regel. Dabei wird die Bewertung einer Antwort nicht nur von ihrer Korrektheit, sondern zusätzlich von der Bearbeitungszeit beeinflusst. Schnelle Antworten besitzen einen stärkeren Einfluss auf die Bewertung, während der Einfluss mit zunehmender Bearbeitungsdauer abnimmt <span class="citation" data-cites="Klinkenberg2011">(<a href="references.html#ref-Klinkenberg2011" role="doc-biblioref">Klinkenberg u.&nbsp;a. 2011</a>)</span>.</p>
+<p>Der Nutzen solcher Erweiterungen hängt jedoch stark vom jeweiligen Anwendungskontext ab. In Lernsystemen, die Zeitlimits oder sichtbare Zeitinformationen verwenden, kann die Bearbeitungszeit ein aussagekräftiger Leistungsindikator sein. In anderen Anwendungen wird die Bearbeitungszeit zwar erfasst, den Lernenden jedoch nicht explizit angezeigt. In diesen Fällen kann sie ebenfalls zusätzliche Informationen liefern, erfordert jedoch angepasste Bewertungsverfahren <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die Berücksichtigung von Bearbeitungszeiten erweitert das Elo-Verfahren somit um eine zusätzliche Dimension der Leistungsbewertung. Anstatt ausschließlich das Ergebnis einer Aufgabe zu betrachten, können nun auch Informationen über den Lösungsprozess in die Modellierung einfließen. Dennoch bleibt die Fähigkeit eines Lernenden weiterhin durch einen einzelnen Wert beschrieben. In vielen Lerngebieten reicht eine solche eindimensionale Darstellung jedoch nicht aus, da Wissen aus mehreren Teilkompetenzen besteht. Aus diesem Grund wurden mehrdimensionale Erweiterungen entwickelt, die mehrere Wissenskomponenten gleichzeitig modellieren.</p>
+</section>
+<section id="multivariate-elo-modelle" class="level3" data-number="4.8.5">
+<h3 data-number="4.8.5" class="anchored" data-anchor-id="multivariate-elo-modelle"><span class="header-section-number">4.8.5</span> Multivariate Elo-Modelle</h3>
+<p>Die bisher betrachteten Erweiterungen des Elo-Verfahrens verändern vor allem die Art und Weise, wie Informationen aus Lerninteraktionen verarbeitet werden. Unsicherheitsfunktionen, Teilpunkte oder Bearbeitungszeiten können die Schätzung von Fähigkeiten verbessern, ändern jedoch nichts an einer grundlegenden Annahme des Standard-Elo-Modells: Die Fähigkeit eines Lernenden wird durch einen einzigen Wert beschrieben.</p>
+<p>In vielen Lerngebieten erweist sich diese Annahme als problematisch. Wissen besteht häufig aus mehreren Teilkompetenzen, die unterschiedlich stark ausgeprägt sein können. Ein Lernender kann beispielsweise sehr gute Kenntnisse in Algebra besitzen, gleichzeitig jedoch Schwierigkeiten in der Geometrie haben. Ein einzelner Fähigkeitswert kann solche Unterschiede nur eingeschränkt erfassen. Werden alle Leistungen auf einer gemeinsamen Skala zusammengefasst, gehen Informationen über die Struktur des Wissens teilweise verloren <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Aus diesem Grund wurden multivariate Erweiterungen des Elo-Verfahrens entwickelt. Anstelle eines einzelnen Fähigkeitsparameters wird die Kompetenz eines Lernenden durch mehrere Werte beschrieben. Jeder dieser Parameter repräsentiert einen bestimmten Wissensbereich oder eine einzelne Kompetenz. Im Bereich der Mathematik könnten dies beispielsweise Bruchrechnung, Polynome oder trigonometrische Funktionen sein <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Ein wesentlicher Gedanke multivariater Modelle besteht darin, dass verschiedene Wissenskomponenten häufig nicht unabhängig voneinander sind. Kenntnisse in einem Themengebiet können mit Fähigkeiten in anderen Bereichen zusammenhängen. Antworten auf Aufgaben liefern daher nicht nur Informationen über das unmittelbar geprüfte Konzept, sondern unter Umständen auch über verwandte Wissensbereiche.</p>
+<p>Zur Modellierung dieser Zusammenhänge werden Korrelationen zwischen den einzelnen Wissenskomponenten bestimmt. Beantwortet ein Lernender eine Aufgabe zu einer bestimmten Wissenskomponente, wird nicht ausschließlich die zugehörige Fähigkeit aktualisiert. Stattdessen können auch die Fähigkeitswerte verwandter Konzepte angepasst werden. Pelánek beschreibt diesen Ansatz durch die folgende Aktualisierungsregel:</p>
+<p><span class="math display">\[
+\theta_{sj,\text{neu}}
+=
+\theta_{sj,\text{alt}}
++
+c_{ij} K
+\bigl(
+correct - P(correct = 1)
+\bigr)
+\tag{9}
+\]</span></p>
+<p>Dabei bezeichnet <span class="math inline">\(\theta_{sj}\)</span> die Fähigkeit des Lernenden <span class="math inline">\(s\)</span> im Wissensbereich <span class="math inline">\(j\)</span>. Der Faktor <span class="math inline">\(c_{ij}\)</span> beschreibt die Korrelation zwischen den Wissenskomponenten <span class="math inline">\(i\)</span> und <span class="math inline">\(j\)</span>. Eine korrekte oder inkorrekte Antwort auf eine Aufgabe des Konzepts <span class="math inline">\(i\)</span> beeinflusst somit nicht nur die Schätzung für dieses Konzept selbst, sondern gegebenenfalls auch die Bewertungen verwandter Wissensbereiche <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Anschaulich bedeutet dies, dass Lernfortschritte in einem Themengebiet Hinweise auf den Wissensstand in verwandten Bereichen liefern können. Beherrscht ein Lernender beispielsweise grundlegende algebraische Verfahren, lässt dies häufig auch Rückschlüsse auf Kompetenzen in verwandten mathematischen Themen zu. Multivariate Elo-Modelle nutzen solche Zusammenhänge, um differenziertere Fähigkeitsprofile zu erzeugen als das eindimensionale Standard-Elo-Verfahren.</p>
+<p>Der zusätzliche Informationsgewinn geht jedoch mit einer höheren Modellkomplexität einher. Neben den einzelnen Fähigkeitswerten müssen nun auch die Beziehungen zwischen den Wissenskomponenten modelliert werden. Zudem setzt der Ansatz voraus, dass Aufgaben bestimmten Wissensbereichen zugeordnet werden können und geeignete Informationen über deren Zusammenhänge vorliegen <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Multivariate Elo-Modelle stellen damit einen wichtigen Schritt von einer eindimensionalen Leistungsbewertung hin zu einer strukturierten Repräsentation von Wissen dar.</p>
+</section>
+<section id="erweiterung-durch-lernmodellierung-pfae" class="level3" data-number="4.8.6">
+<h3 data-number="4.8.6" class="anchored" data-anchor-id="erweiterung-durch-lernmodellierung-pfae"><span class="header-section-number">4.8.6</span> Erweiterung durch Lernmodellierung (PFAE)</h3>
+<p>Die bisher betrachteten Erweiterungen des Elo-Verfahrens verbessern vor allem die Schätzung des aktuellen Wissensstands von Lernenden. Dabei bleibt jedoch eine grundlegende Annahme des klassischen Elo-Modells bestehen: Antworten werden ausschließlich als Beobachtungen bereits vorhandenen Wissens interpretiert. Eine korrekte Antwort liefert Hinweise auf eine hohe Fähigkeit, während eine falsche Antwort auf Wissensdefizite hindeutet.</p>
+<p>In Bildungsszenarien greift diese Sichtweise jedoch häufig zu kurz. Die Bearbeitung einer Aufgabe dient nicht nur der Messung von Wissen, sondern stellt zugleich eine Lerngelegenheit dar. Lernende können bereits durch die Auseinandersetzung mit einer Aufgabe neue Kenntnisse erwerben oder bestehendes Wissen festigen. Eine Antwort liefert daher nicht nur Informationen über den aktuellen Wissensstand, sondern kann selbst einen Lernprozess auslösen <span class="citation" data-cites="Papousek2014 Pelanek2016">(<a href="references.html#ref-Papousek2014" role="doc-biblioref">Papoušek u.&nbsp;a. 2014</a>; <a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Aus diesem Grund schlagen Papoušek et al.&nbsp;sowie Pelánek eine Erweiterung des Elo-Verfahrens vor, die unter der Bezeichnung Performance Factor Analysis Extended Elo (PFAE) beschrieben wird. Die Grundidee besteht darin, korrekte und inkorrekte Antworten unterschiedlich zu behandeln. Während das klassische Elo-Verfahren für beide Fälle denselben Aktualisierungsparameter verwendet, nutzt PFAE getrennte Lernraten für erfolgreiche und nicht erfolgreiche Bearbeitungen <span class="citation" data-cites="Papousek2014 Pelanek2015 Pelanek2016">(<a href="references.html#ref-Papousek2014" role="doc-biblioref">Papoušek u.&nbsp;a. 2014</a>; <a href="references.html#ref-Pelanek2015" role="doc-biblioref">Pelánek 2015</a>, <a href="references.html#ref-Pelanek2016" role="doc-biblioref">2016</a>)</span>.</p>
+<p>Die Aktualisierung erfolgt dabei nach den folgenden Regeln:</p>
+<p><span class="math display">\[
+\theta_{si,\text{neu}}
+=
+\begin{cases}
+\theta_{si,\text{alt}}+\gamma(1-P_i),
+&amp; \text{falls die Antwort korrekt war}\\[4pt]
+\theta_{si,\text{alt}}+\delta P_i,
+&amp; \text{falls die Antwort inkorrekt war}
+\end{cases}
+\]</span> <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span></p>
+<p>Dabei beschreiben <span class="math inline">\(\gamma\)</span> und <span class="math inline">\(\delta\)</span> unterschiedliche Lernraten für korrekte beziehungsweise inkorrekte Antworten. Die Parameter erlauben es, den erwarteten Wissenszuwachs abhängig vom Ergebnis einer Aufgabe unterschiedlich zu modellieren <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Die Motivation hinter diesem Ansatz liegt in der Beobachtung, dass Lernende auch aus Fehlern lernen können. Eine inkorrekte Antwort muss daher nicht zwangsläufig zu einer Verringerung der geschätzten Fähigkeit führen. Stattdessen kann sie als Hinweis darauf interpretiert werden, dass während der Bearbeitung ein Lernprozess stattgefunden hat. Das Modell versucht somit nicht nur den aktuellen Wissensstand abzuschätzen, sondern berücksichtigt zusätzlich mögliche Wissenszuwächse durch die Interaktion mit Lernaufgaben <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+<p>Während das ursprüngliche Elo-Verfahren primär der Leistungsbewertung dient, rückt bei PFAE zunehmend die Modellierung von Lernprozessen in den Mittelpunkt. Die Erweiterung verdeutlicht damit eine zentrale Entwicklung adaptiver Lernsysteme: den Übergang von der reinen Wissensschätzung hin zur expliziten Modellierung individueller Lernverläufe <span class="citation" data-cites="Pelanek2016">(<a href="references.html#ref-Pelanek2016" role="doc-biblioref">Pelánek 2016</a>)</span>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Abdi2019" class="csl-entry" role="listitem">
+Abdi, Solmaz, Hassan Khosravi, Shazia Sadiq, und Dragan Gašević. 2019. <span>„A Multivariate Elo-based Learner Model for Adaptive Educational Systems“</span>. <em>arXiv preprint arXiv:1910.12581</em>. <a href="https://arxiv.org/abs/1910.12581">https://arxiv.org/abs/1910.12581</a>.
+</div>
+<div id="ref-Elo1978" class="csl-entry" role="listitem">
+Elo, Arpad E. 1978. <em>The Rating of Chessplayers, Past and Present</em>. Arco Publishing.
+</div>
+<div id="ref-Klinkenberg2011" class="csl-entry" role="listitem">
+Klinkenberg, S., M. Straatemeier, und Han L. J. van der Maas. 2011. <span>„Computer Adaptive Practice of Maths Ability Using a New Item Response Model for On the Fly Ability and Difficulty Estimation“</span>. <em>Computers &amp; Education</em> 57 (2): 1813–24. <a href="https://doi.org/10.1016/j.compedu.2011.02.003">https://doi.org/10.1016/j.compedu.2011.02.003</a>.
+</div>
+<div id="ref-Papousek2014" class="csl-entry" role="listitem">
+Papoušek, Jan, Radek Pelánek, und Vít Stanislav. 2014. <span>„Adaptive Practice Assignment in Geography Learning“</span>. <em>Proceedings of the 7th International Conference on Educational Data Mining (EDM 2014)</em>, 260–63. <a href="https://educationaldatamining.org/EDM2014/uploads/procs2014/long%20papers/6_EDM-2014-Full.pdf">https://educationaldatamining.org/EDM2014/uploads/procs2014/long%20papers/6_EDM-2014-Full.pdf</a>.
+</div>
+<div id="ref-Pelanek2015" class="csl-entry" role="listitem">
+Pelánek, Radek. 2015. <em>Modeling Students’ Memory for Application in Adaptive Educational Systems</em>. Masaryk University. <a href="https://eric.ed.gov/?id=ED560907">https://eric.ed.gov/?id=ED560907</a>.
+</div>
+<div id="ref-Pelanek2016" class="csl-entry" role="listitem">
+Pelánek, Radek. 2016. <span>„Applications of the Elo Rating System in Adaptive Educational Systems“</span>. <em>Computers &amp; Education</em> 98: 169–79. <a href="https://doi.org/10.1016/j.compedu.2016.03.017">https://doi.org/10.1016/j.compedu.2016.03.017</a>.
+</div>
+<div id="ref-Pelanek2017" class="csl-entry" role="listitem">
+Pelánek, Radek. 2017. <span>„Bayesian knowledge tracing, logistic models, and beyond: an overview of learner modeling techniques“</span>. <em>User Modeling and User-Adapted Interaction</em> 27: 313–50. <a href="https://doi.org/10.1007/s11257-017-9193-2">https://doi.org/10.1007/s11257-017-9193-2</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ilxudmlld29mIHRoZXRhU3RhcnQgPSBJbnB1dHMucmFuZ2UoWy0zLCAzXSwge1xuICB2YWx1ZTogMC41LFxuICBzdGVwOiAwLjEsXG4gIGxhYmVsOiBcIs644oKbOiBTdGFydGbDpGhpZ2tlaXQgZGVzIExlcm5lbmRlblwiXG59KVxuXG52aWV3b2YgZGlmZmljdWx0eVN0YXJ0ID0gSW5wdXRzLnJhbmdlKFstMywgM10sIHtcbiAgdmFsdWU6IDEuNSxcbiAgc3RlcDogMC4xLFxuICBsYWJlbDogXCJk4bWiOiBTdGFydHNjaHdpZXJpZ2tlaXQgZGVyIEF1ZmdhYmVcIlxufSlcblxudmlld29mIGsgPSBJbnB1dHMucmFuZ2UoWzAuMDEsIDFdLCB7XG4gIHZhbHVlOiAwLjEsXG4gIHN0ZXA6IDAuMDEsXG4gIGxhYmVsOiBcIks6IExlcm5yYXRlXCJcbn0pXG5cbnZpZXdvZiByZXN1bHRUZXh0ID0gSW5wdXRzLnJhZGlvKFxuICBbXCJLb3JyZWt0ID0gMVwiLCBcIkZhbHNjaCA9IDBcIl0sXG4gIHtcbiAgICB2YWx1ZTogXCJLb3JyZWt0ID0gMVwiLFxuICAgIGxhYmVsOiBcImNvcnJlY3TigpvhtaI6IEVyZ2VibmlzIGRlciBCZWFyYmVpdHVuZ1wiXG4gIH1cbilcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxubXV0YWJsZSB0aGV0YUN1cnJlbnQgPSB0aGV0YVN0YXJ0XG5tdXRhYmxlIGRpZmZpY3VsdHlDdXJyZW50ID0gZGlmZmljdWx0eVN0YXJ0XG5tdXRhYmxlIHN0ZXBDb3VudCA9IDBcbm11dGFibGUgaGlzdG9yeSA9IFtdXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbnJlc3VsdCA9IHJlc3VsdFRleHQgPT09IFwiS29ycmVrdCA9IDFcIiA/IDEgOiAwXG5cbnAgPSAxIC8gKDEgKyBNYXRoLmV4cChkaWZmaWN1bHR5Q3VycmVudCAtIHRoZXRhQ3VycmVudCkpXG5wcmVkaWN0aW9uRXJyb3IgPSByZXN1bHQgLSBwXG5cbnRoZXRhUHJldmlldyA9IHRoZXRhQ3VycmVudCArIGsgKiBwcmVkaWN0aW9uRXJyb3JcbmRpZmZpY3VsdHlQcmV2aWV3ID0gZGlmZmljdWx0eUN1cnJlbnQgLSBrICogcHJlZGljdGlvbkVycm9yXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbnZpZXdvZiBhcHBseVVwZGF0ZSA9IElucHV0cy5idXR0b24oXCJBa3R1YWxpc2llcnVuZyBkdXJjaGbDvGhyZW5cIiwge1xuICByZWR1Y2U6ICgpID0+IHtcbiAgICBtdXRhYmxlIGhpc3RvcnkgPSBbXG4gICAgICAuLi5oaXN0b3J5LFxuICAgICAge1xuICAgICAgICBTY2hyaXR0OiBzdGVwQ291bnQgKyAxLFxuICAgICAgICBFcmdlYm5pczogcmVzdWx0LFxuICAgICAgICBcIlDigpvhtaJcIjogTnVtYmVyKHAudG9GaXhlZCgzKSksXG4gICAgICAgIFwizrjigpsgdm9yaGVyXCI6IE51bWJlcih0aGV0YUN1cnJlbnQudG9GaXhlZCgzKSksXG4gICAgICAgIFwizrjigpsgbmFjaGhlclwiOiBOdW1iZXIodGhldGFQcmV2aWV3LnRvRml4ZWQoMykpLFxuICAgICAgICBcImThtaIgbmFjaGhlclwiOiBOdW1iZXIoZGlmZmljdWx0eVByZXZpZXcudG9GaXhlZCgzKSlcbiAgICAgIH1cbiAgICBdXG5cbiAgICBtdXRhYmxlIHRoZXRhQ3VycmVudCA9IHRoZXRhUHJldmlld1xuICAgIG11dGFibGUgZGlmZmljdWx0eUN1cnJlbnQgPSBkaWZmaWN1bHR5UHJldmlld1xuICAgIG11dGFibGUgc3RlcENvdW50ID0gc3RlcENvdW50ICsgMVxuICB9XG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG52aWV3b2YgcmVzZXRTaW11bGF0aW9uID0gSW5wdXRzLmJ1dHRvbihcIlNpbXVsYXRpb24genVyw7xja3NldHplblwiLCB7XG4gIHJlZHVjZTogKCkgPT4ge1xuICAgIG11dGFibGUgdGhldGFDdXJyZW50ID0gdGhldGFTdGFydFxuICAgIG11dGFibGUgZGlmZmljdWx0eUN1cnJlbnQgPSBkaWZmaWN1bHR5U3RhcnRcbiAgICBtdXRhYmxlIHN0ZXBDb3VudCA9IDBcbiAgICBtdXRhYmxlIGhpc3RvcnkgPSBbXVxuICB9XG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG5odG1sYFxuPGRpdiBzdHlsZT1cImRpc3BsYXk6Z3JpZDsgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAxZnIgMWZyOyBnYXA6MTJweDsgbWFyZ2luLXRvcDoxNXB4O1wiPlxuXG4gIDxkaXYgc3R5bGU9XCJib3JkZXI6MXB4IHNvbGlkICNjY2M7IHBhZGRpbmc6MTJweDsgYm9yZGVyLXJhZGl1czo4cHg7XCI+XG4gICAgPHN0cm9uZz5TY2hyaXR0PC9zdHJvbmc+PGJyPlxuICAgICR7c3RlcENvdW50fVxuICA8L2Rpdj5cblxuICA8ZGl2IHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjEycHg7IGJvcmRlci1yYWRpdXM6OHB4O1wiPlxuICAgIDxzdHJvbmc+UOKCm+G1ojogRXJ3YXJ0ZXRlIEVyZm9sZ3N3YWhyc2NoZWlubGljaGtlaXQ8L3N0cm9uZz48YnI+XG4gICAgJHsocCAqIDEwMCkudG9GaXhlZCgxKX0gJVxuICA8L2Rpdj5cblxuICA8ZGl2IHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjEycHg7IGJvcmRlci1yYWRpdXM6OHB4O1wiPlxuICAgIDxzdHJvbmc+zrjigps6IEFrdHVlbGxlIEbDpGhpZ2tlaXQ8L3N0cm9uZz48YnI+XG4gICAgJHt0aGV0YUN1cnJlbnQudG9GaXhlZCgzKX1cbiAgPC9kaXY+XG5cbiAgPGRpdiBzdHlsZT1cImJvcmRlcjoxcHggc29saWQgI2NjYzsgcGFkZGluZzoxMnB4OyBib3JkZXItcmFkaXVzOjhweDtcIj5cbiAgICA8c3Ryb25nPmThtaI6IEFrdHVlbGxlIFNjaHdpZXJpZ2tlaXQ8L3N0cm9uZz48YnI+XG4gICAgJHtkaWZmaWN1bHR5Q3VycmVudC50b0ZpeGVkKDMpfVxuICA8L2Rpdj5cblxuICA8ZGl2IHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjEycHg7IGJvcmRlci1yYWRpdXM6OHB4O1wiPlxuICAgIDxzdHJvbmc+Vm9yaGVyc2FnZWZlaGxlcjwvc3Ryb25nPjxicj5cbiAgICAke3ByZWRpY3Rpb25FcnJvci50b0ZpeGVkKDMpfVxuICA8L2Rpdj5cblxuICA8ZGl2IHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjEycHg7IGJvcmRlci1yYWRpdXM6OHB4O1wiPlxuICAgIDxzdHJvbmc+Vm9yc2NoYXUgbmFjaCBBa3R1YWxpc2llcnVuZzwvc3Ryb25nPjxicj5cbiAgICDOuOKCm+KAsiA9ICR7dGhldGFQcmV2aWV3LnRvRml4ZWQoMyl9PGJyPlxuICAgIGThtaLigLIgPSAke2RpZmZpY3VsdHlQcmV2aWV3LnRvRml4ZWQoMyl9XG4gIDwvZGl2PlxuXG48L2Rpdj5cbmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxuaHRtbGBcbjxoND5WZXJsYXVmIGRlciBBa3R1YWxpc2llcnVuZ2VuPC9oND5cblxuJHtoaXN0b3J5Lmxlbmd0aCA9PT0gMFxuICA/IGh0bWxgPHA+Tm9jaCBrZWluZSBBa3R1YWxpc2llcnVuZyBkdXJjaGdlZsO8aHJ0LjwvcD5gXG4gIDogaHRtbGBcbiAgICA8dGFibGUgc3R5bGU9XCJib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlOyB3aWR0aDogMTAwJTsgbWFyZ2luLXRvcDogMTBweDtcIj5cbiAgICAgIDx0aGVhZD5cbiAgICAgICAgPHRyPlxuICAgICAgICAgIDx0aCBzdHlsZT1cImJvcmRlcjoxcHggc29saWQgI2NjYzsgcGFkZGluZzo2cHg7XCI+U2Nocml0dDwvdGg+XG4gICAgICAgICAgPHRoIHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjZweDtcIj5FcmdlYm5pczwvdGg+XG4gICAgICAgICAgPHRoIHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjZweDtcIj5Q4oKb4bWiPC90aD5cbiAgICAgICAgICA8dGggc3R5bGU9XCJib3JkZXI6MXB4IHNvbGlkICNjY2M7IHBhZGRpbmc6NnB4O1wiPs644oKbIHZvcmhlcjwvdGg+XG4gICAgICAgICAgPHRoIHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjZweDtcIj7OuOKCmyBuYWNoaGVyPC90aD5cbiAgICAgICAgICA8dGggc3R5bGU9XCJib3JkZXI6MXB4IHNvbGlkICNjY2M7IHBhZGRpbmc6NnB4O1wiPmThtaIgbmFjaGhlcjwvdGg+XG4gICAgICAgIDwvdHI+XG4gICAgICA8L3RoZWFkPlxuICAgICAgPHRib2R5PlxuICAgICAgICAke2hpc3RvcnkubWFwKHJvdyA9PiBodG1sYFxuICAgICAgICAgIDx0cj5cbiAgICAgICAgICAgIDx0ZCBzdHlsZT1cImJvcmRlcjoxcHggc29saWQgI2NjYzsgcGFkZGluZzo2cHg7XCI+JHtyb3cuU2Nocml0dH08L3RkPlxuICAgICAgICAgICAgPHRkIHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjZweDtcIj4ke3Jvdy5FcmdlYm5pc308L3RkPlxuICAgICAgICAgICAgPHRkIHN0eWxlPVwiYm9yZGVyOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nOjZweDtcIj4ke3Jvd1tcIlDigpvhtaJcIl19PC90ZD5cbiAgICAgICAgICAgIDx0ZCBzdHlsZT1cImJvcmRlcjoxcHggc29saWQgI2NjYzsgcGFkZGluZzo2cHg7XCI+JHtyb3dbXCLOuOKCmyB2b3JoZXJcIl19PC90ZD5cbiAgICAgICAgICAgIDx0ZCBzdHlsZT1cImJvcmRlcjoxcHggc29saWQgI2NjYzsgcGFkZGluZzo2cHg7XCI+JHtyb3dbXCLOuOKCmyBuYWNoaGVyXCJdfTwvdGQ+XG4gICAgICAgICAgICA8dGQgc3R5bGU9XCJib3JkZXI6MXB4IHNvbGlkICNjY2M7IHBhZGRpbmc6NnB4O1wiPiR7cm93W1wiZOG1oiBuYWNoaGVyXCJdfTwvdGQ+XG4gICAgICAgICAgPC90cj5cbiAgICAgICAgYCl9XG4gICAgICA8L3Rib2R5PlxuICAgIDwvdGFibGU+XG4gIGB9XG5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3RoZXRhU3RhcnQnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnZGlmZmljdWx0eVN0YXJ0JykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2snKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncmVzdWx0VGV4dCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhcHBseVVwZGF0ZScpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdyZXNldFNpbXVsYXRpb24nKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./konzeption.html" class="pagination-link" aria-label="Eigene Klassifikation adaptiver Lernverfahren">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Eigene Klassifikation adaptiver Lernverfahren</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./evaluation.html" class="pagination-link" aria-label="evaluation.html">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">evaluation.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
