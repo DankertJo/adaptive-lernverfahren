@@ -1,0 +1,314 @@
+# Interaktivität: PFAE
+
+Diese Datei enthält den OJS-Quellcode der Interaktivität zur PFAE-Erweiterung mit getrennten Lernraten für korrekte und inkorrekte Antworten.
+
+## 1. PFAE-Aktualisierung
+
+Dieser Block erzeugt Antwortauswahl, Lernraten-Slider, Vorher-Nachher-Anzeige und berechnet intern den PFAE-Änderungswert.
+
+```{ojs}
+//| echo: false
+
+{
+const pfaeDemoContainer = html`
+<style>
+.pfae-demo {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  color: #172033;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem;
+}
+.pfae-demo * {
+  box-sizing: border-box;
+}
+.pfae-demo h4 {
+  margin: 0 0 0.35rem;
+}
+.pfae-demo p {
+  color: #475569;
+  margin: 0;
+}
+.pfae-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  margin-top: 0.9rem;
+}
+.pfae-card {
+  background: #ffffff;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 0.85rem;
+}
+.pfae-card h5 {
+  color: #1e293b;
+  font-size: 1rem;
+  margin: 0 0 0.65rem;
+}
+.pfae-answer-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 0.85rem;
+}
+.pfae-answer {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  font-weight: 900;
+  gap: 0.45rem;
+  justify-content: center;
+  padding: 0.55rem 0.65rem;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+.pfae-answer input {
+  accent-color: #2563eb;
+  margin: 0;
+}
+.pfae-answer.correct.active {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+.pfae-answer.incorrect.active {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+.pfae-answer.incorrect.active input {
+  accent-color: #dc2626;
+}
+.pfae-slider-group {
+  display: grid;
+  gap: 0.7rem;
+}
+.pfae-slider-row {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.65rem;
+}
+.pfae-slider-row label {
+  align-items: center;
+  color: #1e293b;
+  display: flex;
+  font-weight: 850;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+.pfae-slider-row output {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+  color: #3730a3;
+  font-weight: 900;
+  min-width: 4rem;
+  padding: 0.12rem 0.5rem;
+  text-align: center;
+}
+.pfae-slider-row input[type="range"] {
+  accent-color: #2563eb;
+  width: 100%;
+}
+.pfae-probability-note {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  color: #1e3a8a;
+  font-size: 0.9rem;
+  font-weight: 850;
+  margin-top: 0.75rem;
+  padding: 0.55rem 0.65rem;
+}
+.pfae-estimate-title {
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 900;
+  margin-bottom: 0.55rem;
+}
+.pfae-flow {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.7rem;
+}
+.pfae-value-box {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 0.65rem;
+}
+.pfae-value-box span {
+  color: #64748b;
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 850;
+  margin-bottom: 0.18rem;
+}
+.pfae-value-box strong {
+  color: #0f172a;
+  font-size: 1.35rem;
+  font-weight: 950;
+  line-height: 1;
+}
+.pfae-arrow {
+  color: #94a3b8;
+  font-size: 1.15rem;
+  font-weight: 950;
+  line-height: 1;
+  text-align: center;
+}
+.pfae-delta {
+  background: #dbeafe;
+  border-radius: 999px;
+  color: #1d4ed8;
+  display: inline-flex;
+  font-size: 1.05rem;
+  font-weight: 950;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+  padding: 0.28rem 0.7rem;
+}
+.pfae-delta span {
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+.pfae-bar {
+  background: #e2e8f0;
+  border-radius: 999px;
+  height: 0.85rem;
+  overflow: hidden;
+}
+.pfae-bar-fill {
+  background: linear-gradient(90deg, #2563eb, #16a34a);
+  border-radius: 999px;
+  height: 100%;
+  transition: width 180ms ease;
+}
+.pfae-feedback {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  color: #1e3a8a;
+  font-weight: 800;
+  line-height: 1.45;
+  margin-top: 0.85rem;
+  padding: 0.65rem 0.75rem;
+}
+@media (max-width: 820px) {
+  .pfae-grid,
+  .pfae-answer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+<div class="pfae-demo">
+  <h4>Wie verändert PFAE die Fähigkeitsschätzung?</h4>
+  <p>Lisa bearbeitet eine Aufgabe. Wählen Sie aus, ob ihre Antwort korrekt oder inkorrekt war, und verändern Sie die Lernraten für beide Fälle. Beobachten Sie, wie sich die Fähigkeitsschätzung von Lisa nach der Lerninteraktion verändert und vergleichen Sie die Auswirkungen beider Antwortmöglichkeiten.</p>
+
+  <div class="pfae-grid">
+    <div class="pfae-card">
+      <h5>Lisas Antwort auswählen</h5>
+      <div class="pfae-answer-grid" aria-label="Antwort auswählen">
+        <label class="pfae-answer correct active">
+          <input class="pfae-answer-input" type="radio" name="pfae-answer" value="correct" checked>
+          <span>✓ korrekt</span>
+        </label>
+        <label class="pfae-answer incorrect">
+          <input class="pfae-answer-input" type="radio" name="pfae-answer" value="incorrect">
+          <span>✗ inkorrekt</span>
+        </label>
+      </div>
+
+      <div class="pfae-slider-group">
+        <div class="pfae-slider-row">
+          <label>
+            <span>Lernrate γ bei korrekter Antwort</span>
+            <output class="pfae-gamma-output">0,25</output>
+          </label>
+          <input class="pfae-gamma-slider" type="range" min="0" max="0.5" step="0.01" value="0.25">
+        </div>
+        <div class="pfae-slider-row">
+          <label>
+            <span>Lernrate δ bei inkorrekter Antwort</span>
+            <output class="pfae-delta-rate-output">0,10</output>
+          </label>
+          <input class="pfae-delta-slider" type="range" min="0" max="0.5" step="0.01" value="0.10">
+        </div>
+      </div>
+      <div class="pfae-probability-note">Angenommene Erfolgswahrscheinlichkeit: P = 0,60</div>
+    </div>
+
+    <div class="pfae-card">
+      <h5>Aktualisierung beobachten</h5>
+      <div class="pfae-estimate-title">Fähigkeitsschätzung von Lisa</div>
+      <div class="pfae-flow">
+        <div class="pfae-value-box"><span>vorher</span><strong>0,50</strong></div>
+        <div class="pfae-arrow">↓</div>
+        <div class="pfae-value-box"><span>nachher</span><strong class="pfae-after-output">0,60</strong></div>
+      </div>
+      <div class="pfae-delta"><span>Änderungswert</span><strong class="pfae-change-output">+0,10</strong></div>
+      <div class="pfae-bar"><div class="pfae-bar-fill"></div></div>
+      <div class="pfae-feedback">Bei einer korrekten Antwort steigt die Fähigkeitsschätzung von Lisa entsprechend der Lernrate γ.</div>
+    </div>
+  </div>
+</div>
+`
+
+const pfaeAnswerInputs = Array.from(pfaeDemoContainer.querySelectorAll(".pfae-answer-input"))
+const pfaeAnswerLabels = Array.from(pfaeDemoContainer.querySelectorAll(".pfae-answer"))
+const pfaeGammaSlider = pfaeDemoContainer.querySelector(".pfae-gamma-slider")
+const pfaeDeltaSlider = pfaeDemoContainer.querySelector(".pfae-delta-slider")
+const pfaeGammaOutput = pfaeDemoContainer.querySelector(".pfae-gamma-output")
+const pfaeDeltaRateOutput = pfaeDemoContainer.querySelector(".pfae-delta-rate-output")
+const pfaeAfterOutput = pfaeDemoContainer.querySelector(".pfae-after-output")
+const pfaeChangeOutput = pfaeDemoContainer.querySelector(".pfae-change-output")
+const pfaeBarFill = pfaeDemoContainer.querySelector(".pfae-bar-fill")
+const pfaeMessage = pfaeDemoContainer.querySelector(".pfae-feedback")
+
+const pfaeThetaBefore = 0.5
+const pfaeExpectedSuccess = 0.6
+
+const formatPfaeNumber = value =>
+  value.toFixed(2).replace(".", ",")
+
+const updatePfaeDemo = () => {
+  const selectedAnswer = pfaeAnswerInputs.find(input => input.checked)?.value ?? "correct"
+  const gamma = Number(pfaeGammaSlider.value)
+  const delta = Number(pfaeDeltaSlider.value)
+  const change = selectedAnswer === "correct"
+    ? gamma * (1 - pfaeExpectedSuccess)
+    : delta * pfaeExpectedSuccess
+  const thetaAfter = pfaeThetaBefore + change
+
+  pfaeAnswerLabels.forEach(label => {
+    const input = label.querySelector("input")
+    label.classList.toggle("active", input.checked)
+  })
+
+  pfaeGammaOutput.value = formatPfaeNumber(gamma)
+  pfaeDeltaRateOutput.value = formatPfaeNumber(delta)
+  pfaeAfterOutput.textContent = formatPfaeNumber(thetaAfter)
+  pfaeChangeOutput.textContent = `+${formatPfaeNumber(change)}`
+  pfaeBarFill.style.width = `${Math.min(100, thetaAfter * 100)}%`
+  pfaeMessage.textContent = selectedAnswer === "correct"
+    ? "Bei einer korrekten Antwort steigt die Fähigkeitsschätzung von Lisa entsprechend der Lernrate γ."
+    : "Auch eine inkorrekte Antwort kann in PFAE zu einem Anstieg von Lisas Fähigkeitsschätzung führen, wenn die Bearbeitung als Lerngelegenheit modelliert wird."
+}
+
+pfaeAnswerInputs.forEach(input => input.addEventListener("change", updatePfaeDemo))
+pfaeGammaSlider.addEventListener("input", updatePfaeDemo)
+pfaeDeltaSlider.addEventListener("input", updatePfaeDemo)
+updatePfaeDemo()
+
+return pfaeDemoContainer
+}
+```

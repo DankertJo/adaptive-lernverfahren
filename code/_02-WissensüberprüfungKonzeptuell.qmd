@@ -1,0 +1,337 @@
+# Wissensüberprüfung: Konzeptueller Zugang
+
+Diese Datei enthält den OJS-Quellcode des Multiple-Choice-Selbsttests am Ende des konzeptuellen Zugangs.
+
+## 1. CSS-Definitionen
+
+Die folgenden CSS-Regeln gestalten die Quizkarten, Antwortoptionen und Rückmeldungen.
+
+```{ojs}
+//| echo: false
+
+html`<style>
+.elo-quiz {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem;
+}
+.elo-quiz h4 {
+  margin: 0 0 0.8rem;
+}
+.elo-quiz-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+.elo-quiz-card {
+  background: #ffffff;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 0.85rem;
+}
+.elo-quiz-card .observablehq {
+  margin: 0;
+}
+.elo-quiz-card form {
+  display: grid;
+  gap: 0.45rem;
+}
+.elo-quiz-question {
+  color: #111827;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+.elo-quiz-card label {
+  align-items: flex-start;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  display: flex;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.5rem 0.6rem;
+}
+.elo-quiz-card input {
+  margin-top: 0.2rem;
+}
+.elo-quiz-result {
+  border-radius: 8px;
+  margin-top: 1rem;
+  padding: 0.85rem;
+}
+.elo-quiz-result.pending {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+}
+.elo-quiz-summary {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.elo-quiz-score {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #111827;
+  padding: 0.85rem;
+}
+.elo-quiz-score strong {
+  display: block;
+  font-size: 1.05rem;
+}
+.elo-quiz-message {
+  border-radius: 8px;
+  padding: 0.85rem;
+}
+.elo-quiz-message.reached {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  color: #166534;
+}
+.elo-quiz-message.partial {
+  background: #ffedd5;
+  border: 1px solid #fdba74;
+  color: #9a3412;
+}
+.elo-quiz-message.open {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+.elo-quiz-feedback {
+  border-top: 1px solid #d8e0ea;
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.25rem 0 0;
+  padding-top: 0.75rem;
+}
+.elo-quiz-feedback div {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.55rem 0.65rem;
+}
+</style>`
+```
+
+## 2. Fragen und Antwortoptionen
+
+Dieser Block definiert die Fragen, Antwortoptionen, korrekten Lösungen und individuellen Rückmeldungen.
+
+```{ojs}
+//| echo: false
+
+eloQuizQuestions = [
+  {
+    id: "q1",
+    title: "Frage 1 – Ziel des Elo-Verfahrens",
+    prompt: "Welches Ziel verfolgt das Elo-Verfahren in adaptiven Lernsystemen?",
+    correct: "q1-b",
+    options: [
+      {id: "q1-a", text: "Es erstellt automatisch neue Aufgaben."},
+      {id: "q1-b", text: "Es schätzt kontinuierlich den Wissensstand von Lernenden und die Schwierigkeit von Aufgaben."},
+      {id: "q1-c", text: "Es ordnet Lernende dauerhaft festen Leistungsgruppen zu."},
+      {id: "q1-d", text: "Es bewertet ausschließlich Aufgaben."}
+    ]
+  },
+  {
+    id: "q2",
+    title: "Frage 2 – Grundidee",
+    prompt: "Welche Aussage beschreibt die Grundidee des Elo-Verfahrens am besten?",
+    correct: "q2-b",
+    options: [
+      {id: "q2-a", text: "Der Wissensstand wird nur einmal zu Beginn bestimmt."},
+      {id: "q2-b", text: "Das System passt seine bisherigen Schätzungen nach jeder Interaktion anhand neuer Beobachtungen an."},
+      {id: "q2-c", text: "Nach jeder Aufgabe werden alle bisherigen Werte verworfen."},
+      {id: "q2-d", text: "Die Schwierigkeit einer Aufgabe bleibt immer konstant."}
+    ]
+  },
+  {
+    id: "q3",
+    title: "Frage 3 – Verständnis des Experiments",
+    prompt: "Lisa löst eine Aufgabe, die das System als sehr schwierig eingeschätzt hat. Wie reagiert das System typischerweise?",
+    correct: "q3-a",
+    options: [
+      {id: "q3-a", text: "Es schätzt Lisa stärker ein und die Aufgabe etwas leichter."},
+      {id: "q3-b", text: "Es schätzt Lisa schwächer ein und die Aufgabe schwieriger."},
+      {id: "q3-c", text: "Nur die Schwierigkeit der Aufgabe wird verändert."},
+      {id: "q3-d", text: "Es erfolgt keine Anpassung."}
+    ]
+  },
+  {
+    id: "q4",
+    title: "Frage 4 – Verständnis des Algorithmus",
+    prompt: "Welche Reihenfolge beschreibt den grundlegenden Ablauf des Elo-Verfahrens?",
+    correct: "q4-b",
+    options: [
+      {id: "q4-a", text: "Tatsächliches Ergebnis beobachten → Schätzwerte aktualisieren → Erwartung bilden"},
+      {id: "q4-b", text: "Erwartung bilden → tatsächliches Ergebnis beobachten → Schätzwerte aktualisieren"},
+      {id: "q4-c", text: "Schätzwerte aktualisieren → Erwartung bilden → tatsächliches Ergebnis beobachten"},
+      {id: "q4-d", text: "Tatsächliches Ergebnis beobachten → Erwartung bilden → Schätzwerte aktualisieren"}
+    ]
+  },
+  {
+    id: "q5",
+    title: "Frage 5 – Anwendungsszenario",
+    prompt: "Für welches Szenario eignet sich das Elo-Verfahren besonders gut?",
+    correct: "q5-a",
+    options: [
+      {id: "q5-a", text: "Ein Mathematik-Lernsystem soll nach jeder bearbeiteten Aufgabe die Fähigkeit der Lernenden neu einschätzen und anschließend passende Aufgaben auswählen."},
+      {id: "q5-b", text: "Ein Lernsystem soll allen Lernenden dieselben Aufgaben in einer festen Reihenfolge anzeigen."},
+      {id: "q5-c", text: "Ein Prüfungssystem soll ausschließlich die Gesamtpunktzahl einer Abschlussklausur berechnen."},
+      {id: "q5-d", text: "Ein Lernsystem soll Aufgaben zufällig auswählen, ohne den bisherigen Lernfortschritt zu berücksichtigen."}
+    ]
+  }
+]
+```
+
+## 3. Eingabeelemente
+
+Dieser Block erzeugt die Radio-Button-Eingaben für einzelne Multiple-Choice-Fragen.
+
+```{ojs}
+//| echo: false
+
+eloQuizInput = question => {
+  const form = document.createElement("form")
+  form.value = null
+
+  const questionText = document.createElement("div")
+  questionText.className = "elo-quiz-question"
+  questionText.textContent = `${question.title}: ${question.prompt}`
+  form.append(questionText)
+
+  question.options.forEach(option => {
+    const label = document.createElement("label")
+    const input = document.createElement("input")
+    const text = document.createElement("span")
+
+    input.type = "radio"
+    input.name = `elo-${question.id}`
+    input.value = option.id
+    text.textContent = option.text
+
+    input.addEventListener("change", () => {
+      form.value = input.value
+      form.dispatchEvent(new Event("input", {bubbles: true}))
+    })
+
+    label.append(input, text)
+    form.append(label)
+  })
+
+  return form
+}
+
+viewof eloQuizQ1 = eloQuizInput(eloQuizQuestions[0])
+
+viewof eloQuizQ2 = eloQuizInput(eloQuizQuestions[1])
+
+viewof eloQuizQ3 = eloQuizInput(eloQuizQuestions[2])
+
+viewof eloQuizQ4 = eloQuizInput(eloQuizQuestions[3])
+
+viewof eloQuizQ5 = eloQuizInput(eloQuizQuestions[4])
+```
+
+## 4. Auswertung
+
+Dieser Block sammelt die Antworten, berechnet den Punktestand und erzeugt Gesamt- und Detailfeedback.
+
+```{ojs}
+//| echo: false
+
+eloQuizAnswers = [eloQuizQ1, eloQuizQ2, eloQuizQ3, eloQuizQ4, eloQuizQ5]
+eloQuizComplete = eloQuizAnswers.every(answer => answer !== null && answer !== undefined)
+eloQuizScore = eloQuizComplete
+  ? eloQuizAnswers.filter((answer, index) => answer === eloQuizQuestions[index].correct).length
+  : 0
+eloQuizEvaluations = [
+  {
+    level: "open",
+    title: "↺ Lernziel noch nicht erreicht.",
+    text: "Bearbeiten Sie das Kapitel einschließlich des Experiments erneut und wiederholen Sie anschließend den Abschlusstest."
+  },
+  {
+    level: "partial",
+    title: "↺ Lernziel noch nicht vollständig erreicht.",
+    text: "Es empfiehlt sich, das Kapitel einschließlich des Experiments noch einmal zu bearbeiten und anschließend den Test zu wiederholen."
+  },
+  {
+    level: "partial",
+    title: "↺ Lernziel noch nicht vollständig erreicht.",
+    text: "Einige grundlegende Konzepte sind noch nicht vollständig verstanden. Wiederholen Sie insbesondere die Grundidee des Elo-Verfahrens sowie den grundlegenden Ablauf und bearbeiten Sie den Test anschließend erneut."
+  },
+  {
+    level: "partial",
+    title: "↺ Lernziel noch nicht vollständig erreicht.",
+    text: "Die Grundidee ist teilweise verstanden. Wiederholen Sie bei Bedarf die Abschnitte zur Anwendung des Elo-Verfahrens in adaptiven Lernsystemen und zum grundlegenden Ablauf."
+  },
+  {
+    level: "reached",
+    title: "✅ Lernziel erreicht.",
+    text: "Sie haben die wichtigsten Konzepte des Elo-Verfahrens verstanden. Lesen Sie bei Bedarf die Rückmeldung zur falsch beantworteten Frage und fahren Sie anschließend mit dem nächsten Kapitel fort."
+  },
+  {
+    level: "reached",
+    title: "✅ Lernziel erreicht.",
+    text: "Sie haben die grundlegenden Konzepte des Elo-Verfahrens verstanden und können mit dem nächsten Kapitel zur mathematischen Beschreibung fortfahren."
+  }
+]
+eloQuizEvaluation = eloQuizEvaluations[eloQuizScore]
+eloQuizFeedback = eloQuizQuestions.map((question, index) => {
+  const answer = eloQuizAnswers[index]
+  const correct = question.options.find(option => option.id === question.correct)
+  return {
+    title: question.title,
+    ok: answer === question.correct,
+    correct: correct.text
+  }
+})
+```
+
+## 5. Benutzeroberfläche
+
+Dieser Block setzt die Fragen und Rückmeldungen zur sichtbaren Quizoberfläche zusammen.
+
+```{ojs}
+//| echo: false
+
+html`
+<div class="elo-quiz">
+  <h4>Kurzer Selbsttest</h4>
+  <div class="elo-quiz-grid">
+    <div class="elo-quiz-card">${viewof eloQuizQ1}</div>
+    <div class="elo-quiz-card">${viewof eloQuizQ2}</div>
+    <div class="elo-quiz-card">${viewof eloQuizQ3}</div>
+    <div class="elo-quiz-card">${viewof eloQuizQ4}</div>
+    <div class="elo-quiz-card">${viewof eloQuizQ5}</div>
+  </div>
+  ${!eloQuizComplete
+    ? html`<div class="elo-quiz-result pending">Beantworten Sie alle fünf Fragen, um eine Rückmeldung zu erhalten.</div>`
+    : html`
+      <div class="elo-quiz-summary">
+        <div class="elo-quiz-score">
+          <strong>Ergebnis: ${eloQuizScore} von 5 Fragen richtig</strong>
+        </div>
+        <div class=${`elo-quiz-message ${eloQuizEvaluation.level}`}>
+          <strong>${eloQuizEvaluation.title}</strong><br>
+          ${eloQuizEvaluation.text}
+        </div>
+        <div class="elo-quiz-feedback">
+          ${eloQuizFeedback.map(item => html`
+            <div>
+              <strong>${item.ok ? "✅ Richtig" : "❌ Noch einmal ansehen"}: ${item.title}</strong>
+              ${item.ok
+                ? html`<br>Diese Antwort passt zum jeweiligen Lernziel.`
+                : html`<br>Richtige Antwort: ${item.correct}`}
+            </div>
+          `)}
+        </div>
+      </div>
+    `}
+</div>
+`
+```

@@ -1,0 +1,319 @@
+# Programmieraufgabe: Wahrscheinlichkeit in Python
+
+Diese Datei enthält den OJS-Quellcode der interaktiven Codeergänzung zur Python-Funktion für die erwartete Erfolgswahrscheinlichkeit.
+
+## 1. Codeergänzung mit Hinweisen
+
+Dieser Block erzeugt das Eingabefeld, prüft die ergänzte Return-Zeile, gibt spezifisches Feedback und verwaltet Hinweise sowie Lösung.
+
+```{ojs}
+//| echo: false
+
+{
+const probabilityReturnHints = [
+  {
+    title: "Hinweis 1",
+    text: "Die Funktion soll die erwartete Erfolgswahrscheinlichkeit zurückgeben. Überlegen Sie zunächst, welche mathematische Beziehung zwischen theta und difficulty modelliert werden soll."
+  },
+  {
+    title: "Hinweis 2",
+    text: "Die Rückgabe ist ein Bruch. Der Zähler ist 1. Im Nenner steht 1 + ...."
+  },
+  {
+    title: "Hinweis 3",
+    text: "Die mathematische Schreibweise <em>e<sup>x</sup></em> wird in Python mit <code>math.exp(x)</code> umgesetzt. Der Exponent enthält die Differenz zwischen <code>difficulty</code> und <code>theta</code>."
+  }
+]
+
+const probabilityExercise = html`
+<style>
+.python-return-exercise {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem;
+}
+.python-return-exercise h4 {
+  margin: 0 0 0.7rem;
+}
+.python-return-code {
+  background: #0f172a;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0;
+  overflow-x: auto;
+  padding: 0.9rem;
+  white-space: pre;
+}
+.python-return-input {
+  background: #ffffff;
+  border: 2px solid #93c5fd;
+  border-radius: 6px;
+  color: #0f172a;
+  font: inherit;
+  min-width: min(32rem, 92%);
+  padding: 0.2rem 0.35rem;
+}
+.python-return-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+.python-return-actions button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.55rem 0.75rem;
+}
+.python-return-check {
+  background: #15803d;
+  color: #ffffff;
+}
+.python-return-reset {
+  background: #475569;
+  color: #ffffff;
+}
+.python-return-hint {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+.python-return-next {
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+.python-return-panel,
+.python-return-feedback {
+  border-radius: 8px;
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+}
+.python-return-panel {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+}
+.python-return-panel ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.python-return-panel li + li {
+  margin-top: 0.5rem;
+}
+.python-return-feedback {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+.python-return-feedback.correct {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+.python-return-feedback.retry {
+  background: #ffedd5;
+  border-color: #fdba74;
+  color: #9a3412;
+}
+</style>
+<div class="python-return-exercise">
+  <h4>Python-Code ergänzen</h4>
+  <pre class="python-return-code"><code>import math
+
+def probability(theta, difficulty):
+    return <input class="python-return-input" aria-label="Ausdruck hinter return ergänzen" placeholder="Ausdruck ergänzen"></code></pre>
+
+  <div class="python-return-actions">
+    <button class="python-return-check" type="button">Eingabe prüfen</button>
+    <button class="python-return-reset" type="button">Zurücksetzen</button>
+    <button class="python-return-hint" type="button">Hinweis 1 anzeigen</button>
+  </div>
+  <div class="python-return-next">Nächster Klick: Hinweis 1</div>
+  <div class="python-return-panel" hidden></div>
+  <div class="python-return-feedback" role="status">Ergänzen Sie den Ausdruck hinter <code>return</code> und prüfen Sie Ihre Eingabe.</div>
+</div>
+`
+
+const input = probabilityExercise.querySelector(".python-return-input")
+const feedback = probabilityExercise.querySelector(".python-return-feedback")
+const hintPanel = probabilityExercise.querySelector(".python-return-panel")
+const checkButton = probabilityExercise.querySelector(".python-return-check")
+const resetButton = probabilityExercise.querySelector(".python-return-reset")
+const hintButton = probabilityExercise.querySelector(".python-return-hint")
+const nextHintInfo = probabilityExercise.querySelector(".python-return-next")
+let revealedProbabilityHints = 0
+
+const probabilitySolution = "1 / (1 + math.exp(difficulty - theta))"
+
+const showFeedback = (message, state = "") => {
+  feedback.className = `python-return-feedback ${state}`.trim()
+  feedback.innerHTML = message
+}
+
+const updateProbabilityHintButtonText = () => {
+  if (revealedProbabilityHints < probabilityReturnHints.length) {
+    const nextHint = probabilityReturnHints[revealedProbabilityHints]
+    hintButton.textContent = `Hinweis ${revealedProbabilityHints + 1} anzeigen`
+    nextHintInfo.textContent = `Nächster Klick: ${nextHint.title}`
+    return
+  }
+
+  hintButton.textContent = "Lösung anzeigen"
+  nextHintInfo.textContent = "Nächster Klick: Lösung"
+}
+
+const renderProbabilityHints = solutionVisible => {
+  hintPanel.hidden = false
+  const shownHints = probabilityReturnHints.slice(0, revealedProbabilityHints)
+  const hintList = shownHints
+    .map(hint => `<li><strong>${hint.title}:</strong> ${hint.text}</li>`)
+    .join("")
+  const solution = solutionVisible
+    ? `<p><strong>Lösung:</strong><br><code>${probabilitySolution}</code></p>`
+    : ""
+  hintPanel.innerHTML = `<ol>${hintList}</ol>${solution}`
+}
+
+const expectedProbability = (theta, difficulty) =>
+  1 / (1 + Math.exp(difficulty - theta))
+
+const expressionMatchesFormula = expression => {
+  const trimmedExpression = expression.trim()
+  if (trimmedExpression.length === 0) return null
+
+  if (!/^[0-9+\-*/().,\sA-Za-z_]+$/.test(trimmedExpression)) {
+    return false
+  }
+
+  const compactExpression = trimmedExpression.replace(/\s+/g, "")
+  const identifiers = compactExpression.match(/[A-Za-z_][A-Za-z0-9_.]*/g) ?? []
+  const allowedIdentifiers = new Set(["theta", "difficulty", "math.exp"])
+
+  if (identifiers.some(identifier => !allowedIdentifiers.has(identifier.toLowerCase()))) {
+    return false
+  }
+
+  const jsExpression = trimmedExpression
+    .replace(/\bmath\s*\.\s*exp\b/gi, "Math.exp")
+    .replace(/\btheta\b/gi, "theta")
+    .replace(/\bdifficulty\b/gi, "difficulty")
+
+  try {
+    const evaluate = Function("theta", "difficulty", "Math", `"use strict"; return (${jsExpression});`)
+    const examples = [
+      {theta: 0.5, difficulty: 1.5},
+      {theta: 1.2, difficulty: -0.4},
+      {theta: -1.1, difficulty: 0.8},
+      {theta: 0, difficulty: 0}
+    ]
+
+    return examples.every(({theta, difficulty}) => {
+      const actual = evaluate(theta, difficulty, Math)
+      const expected = expectedProbability(theta, difficulty)
+      return Number.isFinite(actual) && Math.abs(actual - expected) < 1e-8
+    })
+  } catch {
+    return false
+  }
+}
+
+const diagnoseProbabilityExpression = expression => {
+  const trimmedExpression = expression.trim()
+
+  if (!/^[0-9+\-*/().,\sA-Za-z_]+$/.test(trimmedExpression)) {
+    return "Die Eingabe enthält Zeichen, die in diesem Python-Ausdruck nicht benötigt werden."
+  }
+
+  const compactExpression = trimmedExpression.replace(/\s+/g, "")
+  const lowerExpression = compactExpression.toLowerCase()
+  const identifiers = compactExpression.match(/[A-Za-z_][A-Za-z0-9_.]*/g) ?? []
+  const allowedIdentifiers = new Set(["theta", "difficulty", "math.exp"])
+
+  if (identifiers.some(identifier => !allowedIdentifiers.has(identifier.toLowerCase()))) {
+    return "Prüfen Sie die verwendeten Namen. In der Funktion heißen die beiden Variablen <code>theta</code> und <code>difficulty</code>."
+  }
+
+  if (!/math\s*\.\s*exp\s*\(/i.test(trimmedExpression)) {
+    return "Prüfen Sie den Exponentialterm: <em>e<sup>x</sup></em> wird in Python mit <code>math.exp(...)</code> geschrieben."
+  }
+
+  if (!/\btheta\b/i.test(trimmedExpression) || !/\bdifficulty\b/i.test(trimmedExpression)) {
+    return "Prüfen Sie den Exponenten: Dort werden sowohl <code>difficulty</code> als auch <code>theta</code> verwendet."
+  }
+
+  const expStart = lowerExpression.indexOf("math.exp(")
+  const exponentExpression = expStart >= 0
+    ? lowerExpression.slice(expStart + "math.exp(".length, lowerExpression.lastIndexOf(")"))
+    : ""
+
+  if (
+    exponentExpression.includes("theta") &&
+    exponentExpression.includes("difficulty") &&
+    exponentExpression.indexOf("theta") < exponentExpression.indexOf("difficulty")
+  ) {
+    return "Prüfen Sie die Reihenfolge der Differenz im Exponenten. In der Formel steht die Schwierigkeit minus die Fähigkeit."
+  }
+
+  if (!lowerExpression.startsWith("1/") || !lowerExpression.includes("1+")) {
+    return "Prüfen Sie die Bruchstruktur. Die Formel besteht aus einem Bruch mit <code>1</code> im Zähler und einem Nenner mit <code>1 + ...</code>."
+  }
+
+  return "Die Gleichung stimmt noch nicht. Vergleichen Sie die Struktur noch einmal mit der Formel oberhalb des Codefeldes und prüfen Sie, ob alle Klammern gesetzt sind."
+}
+
+const checkProbabilityExpression = () => {
+  const result = expressionMatchesFormula(input.value)
+
+  if (result === null) {
+    showFeedback("Ergänzen Sie zuerst den Ausdruck hinter <code>return</code>.", "retry")
+    return
+  }
+
+  if (result) {
+    showFeedback("Sehr gut, die mathematische Formel wurde korrekt in Python übertragen.", "correct")
+    return
+  }
+
+  showFeedback(diagnoseProbabilityExpression(input.value), "retry")
+}
+
+hintButton.addEventListener("click", () => {
+  if (revealedProbabilityHints < probabilityReturnHints.length) {
+    revealedProbabilityHints += 1
+    renderProbabilityHints(false)
+    updateProbabilityHintButtonText()
+    return
+  }
+
+  renderProbabilityHints(true)
+})
+
+checkButton.addEventListener("click", checkProbabilityExpression)
+input.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    event.preventDefault()
+    checkProbabilityExpression()
+  }
+})
+resetButton.addEventListener("click", () => {
+  input.value = ""
+  revealedProbabilityHints = 0
+  hintPanel.hidden = true
+  hintPanel.innerHTML = ""
+  updateProbabilityHintButtonText()
+  showFeedback("Ergänzen Sie den Ausdruck hinter <code>return</code> und prüfen Sie Ihre Eingabe.")
+  input.focus()
+})
+
+updateProbabilityHintButtonText()
+
+return probabilityExercise
+}
+```

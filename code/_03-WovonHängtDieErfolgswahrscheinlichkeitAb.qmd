@@ -1,0 +1,234 @@
+# Interaktivität: Wovon hängt die Erfolgswahrscheinlichkeit ab?
+
+Diese Datei enthält den OJS-Quellcode der vorbereitenden Simulation zur Erfolgswahrscheinlichkeit vor der mathematischen Formel.
+
+## 1. CSS-Definitionen
+
+Die folgenden CSS-Regeln definieren das Layout, die Karten und die Balkendarstellung der Simulation.
+
+```{ojs}
+//| echo: false
+
+html`<style>
+.elo-expect-sim {
+  --expect-bg: #f6f8fb;
+  --expect-card: #ffffff;
+  --expect-ink: #172033;
+  --expect-muted: #64748b;
+  --expect-line: #d8e0ea;
+  --expect-blue: #2563eb;
+  --expect-blue-soft: #dbeafe;
+  --expect-green: #15803d;
+  background: var(--expect-bg);
+  border: 1px solid var(--expect-line);
+  border-radius: 10px;
+  color: var(--expect-ink);
+  margin: 1rem 0 1.25rem;
+  overflow: hidden;
+}
+.elo-expect-sim * {
+  box-sizing: border-box;
+}
+.elo-expect-head {
+  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 58%, #f5f3ff 100%);
+  border-bottom: 1px solid var(--expect-line);
+  padding: 1rem 1.1rem;
+}
+.elo-expect-kicker {
+  color: var(--expect-blue);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+.elo-expect-head h4 {
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  margin: 0;
+}
+.elo-expect-head p {
+  color: var(--expect-muted);
+  margin: 0.55rem 0 0;
+}
+.elo-expect-body {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(260px, 1.1fr);
+  padding: 1rem;
+}
+.elo-expect-card {
+  background: var(--expect-card);
+  border: 1px solid var(--expect-line);
+  border-radius: 10px;
+  min-width: 0;
+  padding: 0.9rem;
+}
+.elo-expect-card h5 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+}
+.elo-expect-controls {
+  display: grid;
+  gap: 0.8rem;
+}
+.elo-expect-slider {
+  background: #f8fafc;
+  border: 1px solid var(--expect-line);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+}
+.elo-expect-slider strong {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+.elo-expect-slider input {
+  accent-color: var(--expect-blue);
+  display: block;
+  width: 100%;
+}
+.elo-expect-slider-scale {
+  color: var(--expect-muted);
+  display: flex;
+  font-size: 0.78rem;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+}
+.elo-expect-bar-wrap {
+  display: grid;
+  gap: 0.65rem;
+}
+.elo-expect-bar-title {
+  color: var(--expect-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.elo-expect-scale {
+  align-items: center;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+.elo-expect-track {
+  background: #e2e8f0;
+  border-radius: 999px;
+  height: 22px;
+  overflow: hidden;
+}
+.elo-expect-fill {
+  background: linear-gradient(90deg, #38bdf8, #2563eb, #15803d);
+  border-radius: 999px;
+  height: 100%;
+  transition: width 180ms ease;
+}
+.elo-expect-scale span {
+  color: var(--expect-muted);
+  font-weight: 800;
+}
+.elo-expect-prompt {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-left: 5px solid var(--expect-blue);
+  border-radius: 8px;
+  color: #1e3a8a;
+  margin: 0.8rem 0 0;
+  padding: 0.75rem 0.85rem;
+}
+.elo-expect-prompt p {
+  margin: 0 0 0.5rem;
+}
+.elo-expect-prompt ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+@media (max-width: 780px) {
+  .elo-expect-body {
+    grid-template-columns: 1fr;
+  }
+}
+</style>`
+```
+
+## 2. Benutzeroberfläche und Update-Logik
+
+Dieser Block erzeugt die Slider, berechnet die angezeigte Einschätzung und aktualisiert Text und Balken.
+
+```{ojs}
+//| echo: false
+
+{
+const expectationRoot = html`
+<div class="elo-expect-sim">
+  <section class="elo-expect-head">
+    <div class="elo-expect-kicker">Vor der Formel</div>
+    <h4>Wovon hängt die Erfolgswahrscheinlichkeit ab?</h4>
+    <p>Wann schätzt das System eine richtige Lösung als eher wahrscheinlich ein?</p>
+  </section>
+
+  <section class="elo-expect-body">
+    <div class="elo-expect-card">
+      <h5>Werte verschieben</h5>
+      <div class="elo-expect-controls">
+        <div class="elo-expect-slider">
+          <strong>θ: Einschätzung von Lisa</strong>
+          <input data-expectation-theta type="range" min="-2" max="2" step="0.1" value="0">
+          <div class="elo-expect-slider-scale">
+            <span>-2</span>
+            <span>+2</span>
+          </div>
+        </div>
+        <div class="elo-expect-slider">
+          <strong>d: Einschätzung der Aufgabe</strong>
+          <input data-expectation-difficulty type="range" min="-2" max="2" step="0.1" value="0">
+          <div class="elo-expect-slider-scale">
+            <span>-2</span>
+            <span>+2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="elo-expect-card">
+      <h5>Wie wahrscheinlich hält das System eine richtige Lösung?</h5>
+      <div class="elo-expect-bar-wrap">
+        <div class="elo-expect-bar-title">Erwartung des Systems: Wahrscheinlichkeit, dass Lisa die Aufgabe löst</div>
+        <div class="elo-expect-scale">
+          <span>0&nbsp;%</span>
+          <div class="elo-expect-track">
+            <div class="elo-expect-fill" style="width: 50%"></div>
+          </div>
+          <span>100&nbsp;%</span>
+        </div>
+      </div>
+      <div class="elo-expect-prompt">
+        <p>Verschieben Sie die beiden Werte. Welche Beziehung erkennen Sie?</p>
+        <p>Probieren Sie insbesondere folgende Situationen aus:</p>
+        <ul>
+          <li>θ größer als d</li>
+          <li>θ kleiner als d</li>
+          <li>θ = d</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+`
+
+const thetaSlider = expectationRoot.querySelector("[data-expectation-theta]")
+const difficultySlider = expectationRoot.querySelector("[data-expectation-difficulty]")
+const expectationFill = expectationRoot.querySelector(".elo-expect-fill")
+
+const updateExpectationBar = () => {
+  const thetaValue = Number(thetaSlider.value)
+  const difficultyValue = Number(difficultySlider.value)
+  const expectation = 1 / (1 + Math.exp(difficultyValue - thetaValue))
+  expectationFill.style.width = `${Math.round(expectation * 100)}%`
+}
+
+thetaSlider.addEventListener("input", updateExpectationBar)
+difficultySlider.addEventListener("input", updateExpectationBar)
+updateExpectationBar()
+
+return expectationRoot
+}
+```

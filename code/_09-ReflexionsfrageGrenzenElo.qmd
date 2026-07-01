@@ -1,0 +1,156 @@
+# Reflexionsfrage: Grenzen des Standard-Elo-Verfahrens
+
+Diese Datei enthält den OJS-Quellcode der Reflexionsfrage zu Situationen, die das Standard-Elo-Verfahren nur eingeschränkt abbilden kann.
+
+## 1. Reflexionsfrage
+
+Dieser Block erzeugt die Checkbox-Aufgabe, wertet die Auswahl aus und zeigt eine passende Rückmeldung an.
+
+```{ojs}
+//| echo: false
+
+{
+const eloLimitsReflection = html`
+<style>
+.elo-limits-reflection {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem;
+}
+.elo-limits-reflection h4 {
+  margin: 0 0 0.55rem;
+}
+.elo-limits-reflection p {
+  color: #334155;
+  margin: 0 0 0.8rem;
+}
+.elo-limits-options {
+  display: grid;
+  gap: 0.55rem;
+}
+.elo-limits-option {
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+}
+.elo-limits-option:has(input:checked) {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+.elo-limits-option input {
+  margin-top: 0.2rem;
+}
+.elo-limits-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+.elo-limits-actions button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.55rem 0.75rem;
+}
+.elo-limits-check {
+  background: #15803d;
+  color: #ffffff;
+}
+.elo-limits-reset {
+  background: #475569;
+  color: #ffffff;
+}
+.elo-limits-feedback {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #334155;
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+}
+.elo-limits-feedback.correct {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+.elo-limits-feedback.retry {
+  background: #ffedd5;
+  border-color: #fdba74;
+  color: #9a3412;
+}
+</style>
+<div class="elo-limits-reflection">
+  <h4>Reflexionsfrage</h4>
+  <p>Welche der folgenden Situationen kann das Standard-Elo-Verfahren nicht oder nur eingeschränkt abbilden?</p>
+  <div class="elo-limits-options"></div>
+  <div class="elo-limits-actions">
+    <button class="elo-limits-check" type="button">Antwort prüfen</button>
+    <button class="elo-limits-reset" type="button">Zurücksetzen</button>
+  </div>
+  <div class="elo-limits-feedback" role="status">Wählen Sie eine oder mehrere Situationen aus und prüfen Sie Ihre Antwort.</div>
+</div>
+`
+
+const limitsOptions = [
+  "Ein Lernender besitzt unterschiedliche Stärken in Algebra und Geometrie.",
+  "Eine Aufgabe vergibt Teilpunkte.",
+  "Neue Lernende wurden erst wenige Male beobachtet.",
+  "Zwei Lernende beantworten dieselbe Aufgabe korrekt, benötigen aber unterschiedlich viel Zeit."
+]
+
+const optionsContainer = eloLimitsReflection.querySelector(".elo-limits-options")
+const feedback = eloLimitsReflection.querySelector(".elo-limits-feedback")
+const checkButton = eloLimitsReflection.querySelector(".elo-limits-check")
+const resetButton = eloLimitsReflection.querySelector(".elo-limits-reset")
+
+const setLimitsFeedback = (message, state = "") => {
+  feedback.className = `elo-limits-feedback ${state}`.trim()
+  feedback.textContent = message
+}
+
+limitsOptions.forEach((option, index) => {
+  const label = document.createElement("label")
+  label.className = "elo-limits-option"
+  label.innerHTML = `
+    <input type="checkbox" value="${index}">
+    <span>${option}</span>
+  `
+  optionsContainer.append(label)
+})
+
+checkButton.addEventListener("click", () => {
+  const selected = Array.from(
+    eloLimitsReflection.querySelectorAll('.elo-limits-option input:checked')
+  )
+
+  if (selected.length === 0) {
+    setLimitsFeedback("Wählen Sie zunächst mindestens eine Situation aus.", "retry")
+    return
+  }
+
+  if (selected.length === limitsOptions.length) {
+    setLimitsFeedback("Richtig. Alle vier Situationen sind Grenzen des Standard-Elo-Verfahrens.", "correct")
+    return
+  }
+
+  setLimitsFeedback("Noch nicht vollständig. Das Standard-Elo-Verfahren stößt in mehreren der genannten Situationen an Grenzen.", "retry")
+})
+
+resetButton.addEventListener("click", () => {
+  eloLimitsReflection
+    .querySelectorAll('.elo-limits-option input')
+    .forEach(input => input.checked = false)
+  setLimitsFeedback("Wählen Sie eine oder mehrere Situationen aus und prüfen Sie Ihre Antwort.")
+})
+
+return eloLimitsReflection
+}
+```

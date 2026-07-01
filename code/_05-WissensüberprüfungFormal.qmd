@@ -1,0 +1,217 @@
+# Wissensüberprüfung: Formaler Zugang
+
+Diese Datei enthält den OJS-Quellcode des Multiple-Choice-Selbsttests zum formalen Zugang.
+
+## 1. Fragen und Antwortoptionen
+
+Dieser Block definiert die Fragen, Antwortoptionen, korrekten Lösungen und Rückmeldungen.
+
+```{ojs}
+//| echo: false
+
+eloMathQuizQuestions = [
+  {
+    id: "mq1",
+    title: "Frage 1 – Erfolgswahrscheinlichkeit",
+    prompt: "Wovon hängt die erwartete Erfolgswahrscheinlichkeit im Elo-Verfahren hauptsächlich ab?",
+    correct: "mq1-c",
+    options: [
+      {id: "mq1-a", text: "Nur von der Fähigkeit des Lernenden."},
+      {id: "mq1-b", text: "Nur von der Schwierigkeit der Aufgabe."},
+      {id: "mq1-c", text: "Von der Differenz zwischen Fähigkeit und Aufgabenschwierigkeit."},
+      {id: "mq1-d", text: "Von der Anzahl bereits bearbeiteter Aufgaben."}
+    ]
+  },
+  {
+    id: "mq2",
+    title: "Frage 2 – Vorhersagefehler",
+    prompt: "Wann ist der Vorhersagefehler besonders groß?",
+    correct: "mq2-b",
+    options: [
+      {id: "mq2-a", text: "Wenn Erwartung und Ergebnis nahezu übereinstimmen."},
+      {id: "mq2-b", text: "Wenn das tatsächliche Ergebnis deutlich von der erwarteten Erfolgswahrscheinlichkeit abweicht."},
+      {id: "mq2-c", text: "Immer bei einer falschen Antwort."},
+      {id: "mq2-d", text: "Immer bei einer richtigen Antwort."}
+    ]
+  },
+  {
+    id: "mq3",
+    title: "Frage 3 – Lernrate K",
+    prompt: "Welche Aussage beschreibt den Einfluss der Lernrate K richtig?",
+    correct: "mq3-a",
+    options: [
+      {id: "mq3-a", text: "Ein größeres K führt zu stärkeren Aktualisierungen der Schätzwerte."},
+      {id: "mq3-b", text: "Ein größeres K verändert nur die Erfolgswahrscheinlichkeit."},
+      {id: "mq3-c", text: "K beeinflusst nur die Schwierigkeit einer Aufgabe."},
+      {id: "mq3-d", text: "K bestimmt die Startwerte von Fähigkeit und Schwierigkeit."}
+    ]
+  },
+  {
+    id: "mq4",
+    title: "Frage 4 – Aktualisierung",
+    prompt: "Ein Lernender löst eine Aufgabe korrekt, obwohl die erwartete Erfolgswahrscheinlichkeit sehr gering war. Welche Aussage trifft typischerweise zu?",
+    correct: "mq4-a",
+    options: [
+      {id: "mq4-a", text: "Die Fähigkeit steigt deutlich und die Schwierigkeit sinkt."},
+      {id: "mq4-b", text: "Die Fähigkeit sinkt und die Schwierigkeit steigt."},
+      {id: "mq4-c", text: "Nur die Schwierigkeit wird angepasst."},
+      {id: "mq4-d", text: "Es erfolgt keine Aktualisierung."}
+    ]
+  }
+]
+```
+
+## 2. Eingabeelemente
+
+Dieser Block erzeugt die Radio-Button-Eingaben für die einzelnen Fragen.
+
+```{ojs}
+//| echo: false
+
+eloMathQuizInput = question => {
+  const form = document.createElement("form")
+  form.value = null
+
+  const questionText = document.createElement("div")
+  questionText.className = "elo-quiz-question"
+  questionText.textContent = `${question.title}: ${question.prompt}`
+  form.append(questionText)
+
+  question.options.forEach(option => {
+    const label = document.createElement("label")
+    const input = document.createElement("input")
+    const text = document.createElement("span")
+
+    input.type = "radio"
+    input.name = `elo-${question.id}`
+    input.value = option.id
+    text.textContent = option.text
+
+    input.addEventListener("change", () => {
+      form.value = input.value
+      form.dispatchEvent(new Event("input", {bubbles: true}))
+    })
+
+    label.append(input, text)
+    form.append(label)
+  })
+
+  return form
+}
+
+viewof eloMathQuizQ1 = eloMathQuizInput(eloMathQuizQuestions[0])
+
+viewof eloMathQuizQ2 = eloMathQuizInput(eloMathQuizQuestions[1])
+
+viewof eloMathQuizQ3 = eloMathQuizInput(eloMathQuizQuestions[2])
+
+viewof eloMathQuizQ4 = eloMathQuizInput(eloMathQuizQuestions[3])
+```
+
+## 3. Auswertung
+
+Dieser Block sammelt die Antworten, berechnet das Ergebnis und erzeugt Gesamt- und Detailfeedback.
+
+```{ojs}
+//| echo: false
+
+eloMathQuizAnswers = [eloMathQuizQ1, eloMathQuizQ2, eloMathQuizQ3, eloMathQuizQ4]
+eloMathQuizComplete = eloMathQuizAnswers.every(answer => answer !== null && answer !== undefined)
+eloMathQuizScore = eloMathQuizComplete
+  ? eloMathQuizAnswers.filter((answer, index) => answer === eloMathQuizQuestions[index].correct).length
+  : 0
+eloMathQuizFeedback = eloMathQuizQuestions.map((question, index) => {
+  const answer = eloMathQuizAnswers[index]
+  const correct = question.options.find(option => option.id === question.correct)
+  const topic = question.title.split("–").slice(1).join("–").trim()
+  return {
+    title: question.title,
+    topic: topic || question.title,
+    ok: answer === question.correct,
+    correct: correct.text
+  }
+})
+eloMathQuizWrongTopics = eloMathQuizFeedback
+  .filter(item => !item.ok)
+  .map(item => item.topic)
+eloMathQuizTopicHint = eloMathQuizWrongTopics.length === 0
+  ? ""
+  : `Schauen Sie sich insbesondere ${eloMathQuizWrongTopics.length === 1 ? "diesen Bereich" : "diese Bereiche"} noch einmal an: ${eloMathQuizWrongTopics.join(", ")}.`
+eloMathQuizEvaluations = [
+  {
+    level: "open",
+    title: "↺ Lernziel noch nicht erreicht.",
+    text: "Bearbeiten Sie den Abschnitt zur mathematischen Modellierung einschließlich der interaktiven Simulation erneut und wiederholen Sie anschließend den Test."
+  },
+  {
+    level: "partial",
+    title: "↺ Lernziel noch nicht vollständig erreicht.",
+    text: "Mehrere zentrale Zusammenhänge sind noch nicht vollständig gefestigt."
+  },
+  {
+    level: "partial",
+    title: "↺ Lernziel noch nicht vollständig erreicht.",
+    text: "Einige zentrale Zusammenhänge sind noch nicht vollständig gefestigt."
+  },
+  {
+    level: "reached",
+    title: "✅ Lernziel erreicht.",
+    text: "Sie haben die wichtigsten Zusammenhänge der mathematischen Modellierung verstanden. Lesen Sie bei Bedarf die Rückmeldung zur falsch beantworteten Frage und fahren Sie anschließend fort."
+  },
+  {
+    level: "reached",
+    title: "✅ Lernziel erreicht.",
+    text: "Sie haben die zentralen Konzepte der mathematischen Modellierung des Elo-Verfahrens verstanden und können mit der Implementierung fortfahren."
+  }
+]
+eloMathQuizEvaluationBase = eloMathQuizEvaluations[eloMathQuizScore]
+eloMathQuizEvaluation = ({
+  ...eloMathQuizEvaluationBase,
+  text: eloMathQuizScore === 4
+    ? eloMathQuizEvaluationBase.text
+    : `${eloMathQuizEvaluationBase.text} ${eloMathQuizTopicHint}`
+})
+```
+
+## 4. Benutzeroberfläche
+
+Dieser Block setzt Fragen und Rückmeldungen zur sichtbaren Quizoberfläche zusammen.
+
+```{ojs}
+//| echo: false
+
+html`
+<div class="elo-quiz">
+  <h4>Kurzer Selbsttest</h4>
+  <div class="elo-quiz-grid">
+    <div class="elo-quiz-card">${viewof eloMathQuizQ1}</div>
+    <div class="elo-quiz-card">${viewof eloMathQuizQ2}</div>
+    <div class="elo-quiz-card">${viewof eloMathQuizQ3}</div>
+    <div class="elo-quiz-card">${viewof eloMathQuizQ4}</div>
+  </div>
+  ${!eloMathQuizComplete
+    ? html`<div class="elo-quiz-result pending">Beantworten Sie alle vier Fragen, um eine Rückmeldung zu erhalten.</div>`
+    : html`
+      <div class="elo-quiz-summary">
+        <div class="elo-quiz-score">
+          <strong>Ergebnis: ${eloMathQuizScore} von 4 Fragen richtig</strong>
+        </div>
+        <div class=${`elo-quiz-message ${eloMathQuizEvaluation.level}`}>
+          <strong>${eloMathQuizEvaluation.title}</strong><br>
+          ${eloMathQuizEvaluation.text}
+        </div>
+        <div class="elo-quiz-feedback">
+          ${eloMathQuizFeedback.map(item => html`
+            <div>
+              <strong>${item.ok ? "✅ Richtig" : "❌ Noch einmal ansehen"}: ${item.title}</strong>
+              ${item.ok
+                ? html`<br>Diese Antwort passt zum jeweiligen Lernziel.`
+                : html`<br>Richtige Antwort: ${item.correct}`}
+            </div>
+          `)}
+        </div>
+      </div>
+    `}
+</div>
+`
+```

@@ -1,0 +1,476 @@
+# Programmieraufgabe: Aktualisierung ausführen und Ausgabe bestimmen
+
+Diese Datei enthält den OJS-Quellcode der interaktiven Codeergänzung zum Aufruf der Update-Funktion und zur anschließenden Ausgabeprüfung.
+
+## 1. Codeergänzung und Ausgabeprüfung
+
+Dieser Block erzeugt die Lückenaufgabe, Hinweise, Prüfung der Variablenzuordnung und die Single-Choice-Frage zur Programmausgabe.
+
+```{ojs}
+//| echo: false
+
+{
+const runUpdateHints = [
+  {
+    title: "Hinweis 1",
+    text: "Welche Werte sollen durch den Aufruf der Funktion aktualisiert werden?"
+  },
+  {
+    title: "Hinweis 2",
+    text: "Die Funktion <code>update(...)</code> erhält die aktuellen Werte der Fähigkeit und der Aufgabenschwierigkeit als Eingabe."
+  },
+  {
+    title: "Hinweis 3",
+    text: "Die Funktion liefert zwei aktualisierte Werte zurück: die neue Fähigkeit und die neue Aufgabenschwierigkeit."
+  },
+  {
+    title: "Hinweis 4",
+    text: "Verwenden Sie sowohl bei der Übergabe als auch bei der Rückgabe die Variablen <code>theta</code> und <code>difficulty</code>."
+  }
+]
+
+const runUpdateExercise = html`
+<style>
+.run-update-exercise {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem;
+}
+.run-update-exercise h4 {
+  margin: 0 0 0.7rem;
+}
+.run-update-task {
+  color: #334155;
+  margin: 0 0 0.75rem;
+}
+.run-update-code {
+  background: #0f172a;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0;
+  overflow-x: auto;
+  padding: 0.9rem;
+  white-space: pre;
+}
+.run-update-input {
+  background: #ffffff;
+  border: 2px solid #93c5fd;
+  border-radius: 6px;
+  color: #0f172a;
+  font: inherit;
+  padding: 0.2rem 0.35rem;
+}
+.run-update-input.variable {
+  width: 7rem;
+}
+.run-update-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+.run-update-actions button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.55rem 0.75rem;
+}
+.run-update-check,
+.run-output-check {
+  background: #15803d;
+  color: #ffffff;
+}
+.run-update-reset {
+  background: #475569;
+  color: #ffffff;
+}
+.run-update-hint {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+.run-update-next {
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+.run-update-panel {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  color: #1e3a8a;
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+}
+.run-update-panel ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.run-update-panel li + li {
+  margin-top: 0.5rem;
+}
+.run-update-feedback,
+.run-output-feedback {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #334155;
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+}
+.run-update-feedback.correct,
+.run-output-feedback.correct {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+.run-update-feedback.retry,
+.run-output-feedback.retry {
+  background: #ffedd5;
+  border-color: #fdba74;
+  color: #9a3412;
+}
+.run-output-question {
+  border-top: 1px solid #d8e0ea;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.run-output-question p {
+  color: #1e293b;
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+}
+.run-output-options {
+  display: grid;
+  gap: 0.55rem;
+}
+.run-output-option {
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  cursor: pointer;
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: auto 1fr;
+  padding: 0.7rem;
+}
+.run-output-option:has(input:checked) {
+  background: #eff6ff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+.run-output-option input {
+  margin-top: 0.3rem;
+}
+.run-output-option code {
+  color: #0f172a;
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  line-height: 1.45;
+  white-space: pre;
+}
+</style>
+<div class="run-update-exercise">
+  <h4>Aktualisierung ausführen</h4>
+  <p class="run-update-task">Ergänzen Sie, welche Werte an <code>update(...)</code> übergeben werden und welche aktualisierten Werte zurückgespeichert werden.</p>
+  <pre class="run-update-code"><code>theta = 0.5
+difficulty = 1.5
+
+<input class="run-update-input variable assign-first" aria-label="Ersten Rückgabewert ergänzen" placeholder="Variable">, <input class="run-update-input variable assign-second" aria-label="Zweiten Rückgabewert ergänzen" placeholder="Variable"> = update(
+    <input class="run-update-input variable arg-first" aria-label="Erstes Argument ergänzen" placeholder="Argument">,
+    <input class="run-update-input variable arg-second" aria-label="Zweites Argument ergänzen" placeholder="Argument">,
+    result=1,
+    k=0.1
+)
+
+print(round(theta, 3))
+print(round(difficulty, 3))</code></pre>
+
+  <div class="run-update-actions">
+    <button class="run-update-check" type="button">Code prüfen</button>
+    <button class="run-update-reset" type="button">Zurücksetzen</button>
+    <button class="run-update-hint" type="button">Hinweis 1 anzeigen</button>
+  </div>
+  <div class="run-update-next">Nächster Klick: Hinweis 1</div>
+  <div class="run-update-panel" hidden></div>
+  <div class="run-update-feedback" role="status">Ergänzen Sie die vier Lücken und prüfen Sie Ihre Eingabe.</div>
+
+  <div class="run-output-question">
+    <p>Welche Ausgabe erzeugt das Programm?</p>
+    <div class="run-output-options"></div>
+    <div class="run-update-actions">
+      <button class="run-output-check" type="button">Ausgabe prüfen</button>
+    </div>
+    <div class="run-output-feedback" role="status">Wählen Sie eine Ausgabe aus und prüfen Sie Ihre Auswahl.</div>
+  </div>
+</div>
+`
+
+const assignFirstInput = runUpdateExercise.querySelector(".run-update-input.assign-first")
+const assignSecondInput = runUpdateExercise.querySelector(".run-update-input.assign-second")
+const argFirstInput = runUpdateExercise.querySelector(".run-update-input.arg-first")
+const argSecondInput = runUpdateExercise.querySelector(".run-update-input.arg-second")
+const runFeedback = runUpdateExercise.querySelector(".run-update-feedback")
+const runHintButton = runUpdateExercise.querySelector(".run-update-hint")
+const runHintPanel = runUpdateExercise.querySelector(".run-update-panel")
+const runNext = runUpdateExercise.querySelector(".run-update-next")
+const runCheckButton = runUpdateExercise.querySelector(".run-update-check")
+const runResetButton = runUpdateExercise.querySelector(".run-update-reset")
+const outputOptionsContainer = runUpdateExercise.querySelector(".run-output-options")
+const outputFeedback = runUpdateExercise.querySelector(".run-output-feedback")
+const outputCheckButton = runUpdateExercise.querySelector(".run-output-check")
+let revealedRunHints = 0
+
+const runSolution = `theta, difficulty = update(
+    theta,
+    difficulty,
+    result=1,
+    k=0.1
+)`
+
+const outputOptions = [
+  {
+    id: "correct",
+    label: "0.573\n1.427",
+    feedback: "Sehr gut. Die Fähigkeit steigt auf 0.573, die Schwierigkeit sinkt auf 1.427."
+  },
+  {
+    id: "opposite",
+    label: "0.427\n1.573",
+    feedback: "Noch nicht ganz. Diese Ausgabe würde zu einer falschen Antwort passen: Fähigkeit sinkt, Schwierigkeit steigt."
+  },
+  {
+    id: "unchanged",
+    label: "0.500\n1.500",
+    feedback: "Noch nicht ganz. Die Werte bleiben nicht unverändert, weil eine Aktualisierung durchgeführt wird."
+  },
+  {
+    id: "swapped",
+    label: "1.500\n0.500",
+    feedback: "Noch nicht ganz. Hier wären die Startwerte lediglich vertauscht, nicht aktualisiert."
+  }
+]
+
+const normalizeRunInput = value =>
+  value.replace(/\s+/g, "").toLowerCase()
+
+const runTypoDistance = (source, target) => {
+  const rows = source.length + 1
+  const columns = target.length + 1
+  const distances = Array.from({length: rows}, () => Array(columns).fill(0))
+
+  for (let row = 0; row < rows; row += 1) distances[row][0] = row
+  for (let column = 0; column < columns; column += 1) distances[0][column] = column
+
+  for (let row = 1; row < rows; row += 1) {
+    for (let column = 1; column < columns; column += 1) {
+      const substitutionCost = source[row - 1] === target[column - 1] ? 0 : 1
+      distances[row][column] = Math.min(
+        distances[row - 1][column] + 1,
+        distances[row][column - 1] + 1,
+        distances[row - 1][column - 1] + substitutionCost
+      )
+
+      if (
+        row > 1 &&
+        column > 1 &&
+        source[row - 1] === target[column - 2] &&
+        source[row - 2] === target[column - 1]
+      ) {
+        distances[row][column] = Math.min(
+          distances[row][column],
+          distances[row - 2][column - 2] + 1
+        )
+      }
+    }
+  }
+
+  return distances[source.length][target.length]
+}
+
+const runLooksLikeIdentifier = (value, target) => {
+  if (value === target || value.length === 0) return false
+  const allowedDistance = target.length <= 5 ? 1 : 2
+  return runTypoDistance(value, target) <= allowedDistance
+}
+
+const setRunFeedback = (message, state = "") => {
+  runFeedback.className = `run-update-feedback ${state}`.trim()
+  runFeedback.innerHTML = message
+}
+
+const setOutputFeedback = (message, state = "") => {
+  outputFeedback.className = `run-output-feedback ${state}`.trim()
+  outputFeedback.textContent = message
+}
+
+const updateRunHintButtonText = () => {
+  if (revealedRunHints < runUpdateHints.length) {
+    const nextHint = runUpdateHints[revealedRunHints]
+    runHintButton.textContent = `Hinweis ${revealedRunHints + 1} anzeigen`
+    runNext.textContent = `Nächster Klick: ${nextHint.title}`
+    return
+  }
+
+  runHintButton.textContent = "Lösung anzeigen"
+  runNext.textContent = "Nächster Klick: Lösung"
+}
+
+const renderRunHints = solutionVisible => {
+  runHintPanel.hidden = false
+  const shownHints = runUpdateHints.slice(0, revealedRunHints)
+  const hintList = shownHints
+    .map(hint => `<li><strong>${hint.title}:</strong> ${hint.text}</li>`)
+    .join("")
+  const solution = solutionVisible
+    ? `<p><strong>Lösung:</strong><br><code>${runSolution}</code></p>`
+    : ""
+  runHintPanel.innerHTML = `<ol>${hintList}</ol>${solution}`
+}
+
+outputOptions.forEach(option => {
+  const label = document.createElement("label")
+  label.className = "run-output-option"
+  label.innerHTML = `
+    <input type="radio" name="run-output-choice" value="${option.id}">
+    <code>${option.label}</code>
+  `
+  outputOptionsContainer.append(label)
+})
+
+const checkRunCode = () => {
+  const assignFirst = normalizeRunInput(assignFirstInput.value)
+  const assignSecond = normalizeRunInput(assignSecondInput.value)
+  const argFirst = normalizeRunInput(argFirstInput.value)
+  const argSecond = normalizeRunInput(argSecondInput.value)
+  const values = [assignFirst, assignSecond, argFirst, argSecond]
+
+  if (values.some(value => value.length === 0)) {
+    setRunFeedback("Ergänzen Sie alle vier Lücken im Code.", "retry")
+    return
+  }
+
+  if (assignFirst === "difficulty" && assignSecond === "theta") {
+    setRunFeedback("Die Rückgabe ist vertauscht. Speichern Sie zuerst die aktualisierte Fähigkeit und danach die aktualisierte Schwierigkeit.", "retry")
+    return
+  }
+
+  if (argFirst === "difficulty" && argSecond === "theta") {
+    setRunFeedback("Die Übergabe ist vertauscht. Die Funktion erhält zuerst die Fähigkeit und danach die Schwierigkeit.", "retry")
+    return
+  }
+
+  if (
+    runLooksLikeIdentifier(assignFirst, "difficulty") &&
+    runLooksLikeIdentifier(assignSecond, "theta")
+  ) {
+    setRunFeedback("Die Rückgabe wirkt vertauscht. Prüfen Sie außerdem die Schreibweise der beiden Einträge links vom Gleichheitszeichen.", "retry")
+    return
+  }
+
+  if (
+    runLooksLikeIdentifier(argFirst, "difficulty") &&
+    runLooksLikeIdentifier(argSecond, "theta")
+  ) {
+    setRunFeedback("Die Übergabe wirkt vertauscht. Prüfen Sie außerdem die Schreibweise der beiden Argumente im Funktionsaufruf.", "retry")
+    return
+  }
+
+  if (runLooksLikeIdentifier(assignFirst, "theta")) {
+    setRunFeedback("Der erste Wert links vom Gleichheitszeichen sieht fast richtig aus. Prüfen Sie die Schreibweise.", "retry")
+    return
+  }
+
+  if (runLooksLikeIdentifier(assignSecond, "difficulty")) {
+    setRunFeedback("Der zweite Wert links vom Gleichheitszeichen sieht fast richtig aus. Prüfen Sie die Schreibweise.", "retry")
+    return
+  }
+
+  if (runLooksLikeIdentifier(argFirst, "theta")) {
+    setRunFeedback("Das erste Argument im Funktionsaufruf sieht fast richtig aus. Prüfen Sie die Schreibweise.", "retry")
+    return
+  }
+
+  if (runLooksLikeIdentifier(argSecond, "difficulty")) {
+    setRunFeedback("Das zweite Argument im Funktionsaufruf sieht fast richtig aus. Prüfen Sie die Schreibweise.", "retry")
+    return
+  }
+
+  if (assignFirst !== "theta" || assignSecond !== "difficulty") {
+    setRunFeedback("Links vom Gleichheitszeichen werden die beiden aktualisierten Werte zurückgespeichert. Prüfen Sie, ob dort die passenden Variablen in der richtigen Reihenfolge stehen.", "retry")
+    return
+  }
+
+  if (argFirst !== "theta" || argSecond !== "difficulty") {
+    setRunFeedback("Im Funktionsaufruf werden die aktuellen Werte an <code>update(...)</code> übergeben. Prüfen Sie, ob dort die passenden Variablen in der richtigen Reihenfolge stehen.", "retry")
+    return
+  }
+
+  setRunFeedback("Sehr gut, Rückgabe und Übergabe sind korrekt ergänzt.", "correct")
+}
+
+runCheckButton.addEventListener("click", checkRunCode)
+runUpdateExercise
+  .querySelectorAll(".run-update-input")
+  .forEach(input => {
+    input.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        event.preventDefault()
+        checkRunCode()
+      }
+    })
+  })
+
+runResetButton.addEventListener("click", () => {
+  assignFirstInput.value = ""
+  assignSecondInput.value = ""
+  argFirstInput.value = ""
+  argSecondInput.value = ""
+  revealedRunHints = 0
+  runHintPanel.hidden = true
+  runHintPanel.innerHTML = ""
+  updateRunHintButtonText()
+  runUpdateExercise
+    .querySelectorAll('input[name="run-output-choice"]')
+    .forEach(input => input.checked = false)
+  setRunFeedback("Ergänzen Sie die vier Lücken und prüfen Sie Ihre Eingabe.")
+  setOutputFeedback("Wählen Sie eine Ausgabe aus und prüfen Sie Ihre Auswahl.")
+  assignFirstInput.focus()
+})
+
+runHintButton.addEventListener("click", () => {
+  if (revealedRunHints < runUpdateHints.length) {
+    revealedRunHints += 1
+    renderRunHints(false)
+    updateRunHintButtonText()
+    return
+  }
+
+  renderRunHints(true)
+})
+
+outputCheckButton.addEventListener("click", () => {
+  const selected = runUpdateExercise.querySelector('input[name="run-output-choice"]:checked')
+
+  if (!selected) {
+    setOutputFeedback("Wählen Sie zuerst eine Ausgabe aus.", "retry")
+    return
+  }
+
+  const selectedOption = outputOptions.find(option => option.id === selected.value)
+  const isCorrect = selectedOption.id === "correct"
+  setOutputFeedback(selectedOption.feedback, isCorrect ? "correct" : "retry")
+})
+
+updateRunHintButtonText()
+
+return runUpdateExercise
+}
+```

@@ -1,0 +1,390 @@
+# Programmieraufgabe: Aktualisierung in Python
+
+Diese Datei enthält den OJS-Quellcode der interaktiven Codeergänzung zur Berechnung von p innerhalb der Update-Funktion.
+
+## 1. Codeergänzung mit Hinweisen
+
+Dieser Block erzeugt das Eingabefeld, prüft den Funktionsaufruf, diagnostiziert typische Fehler und verwaltet Hinweise sowie Lösung.
+
+```{ojs}
+//| echo: false
+
+{
+const updateProbabilityHints = [
+  {
+    title: "Hinweis 1",
+    text: "Die Variable <code>p</code> soll die erwartete Erfolgswahrscheinlichkeit enthalten."
+  },
+  {
+    title: "Hinweis 2",
+    text: "An dieser Stelle wird kein mathematischer Ausdruck erwartet, sondern ein Funktionsaufruf."
+  },
+  {
+    title: "Hinweis 3",
+    text: "Überlegen Sie, welche Funktion die erwartete Erfolgswahrscheinlichkeit berechnet."
+  },
+  {
+    title: "Hinweis 4",
+    text: "Rufen Sie diese Funktion mit den beiden Variablen <code>theta</code> und <code>difficulty</code> auf."
+  }
+]
+
+const updateProbabilityExercise = html`
+<style>
+.update-probability-exercise {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem;
+}
+.update-probability-exercise h4 {
+  margin: 0 0 0.7rem;
+}
+.update-probability-task {
+  color: #334155;
+  margin: 0 0 0.75rem;
+}
+.update-probability-code {
+  background: #0f172a;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0;
+  overflow-x: auto;
+  padding: 0.9rem;
+  white-space: pre;
+}
+.update-probability-input {
+  background: #ffffff;
+  border: 2px solid #93c5fd;
+  border-radius: 6px;
+  color: #0f172a;
+  font: inherit;
+  min-width: min(20rem, 88%);
+  padding: 0.2rem 0.35rem;
+}
+.update-probability-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+.update-probability-actions button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.55rem 0.75rem;
+}
+.update-probability-check {
+  background: #15803d;
+  color: #ffffff;
+}
+.update-probability-reset {
+  background: #475569;
+  color: #ffffff;
+}
+.update-probability-hint {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+.update-probability-next {
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+.update-probability-panel,
+.update-probability-feedback {
+  border-radius: 8px;
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+}
+.update-probability-panel {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+}
+.update-probability-panel ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.update-probability-panel li + li {
+  margin-top: 0.5rem;
+}
+.update-probability-feedback {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+.update-probability-feedback.correct {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+.update-probability-feedback.retry {
+  background: #ffedd5;
+  border-color: #fdba74;
+  color: #9a3412;
+}
+</style>
+<div class="update-probability-exercise">
+  <h4>Berechnung der Erfolgswahrscheinlichkeit einbinden</h4>
+  <p class="update-probability-task">Die erwartete Erfolgswahrscheinlichkeit wurde bereits in einer eigenen Funktion implementiert. Verwenden Sie diese Funktion nun innerhalb der Aktualisierung, anstatt die Berechnung erneut zu programmieren.</p>
+  <pre class="update-probability-code"><code>def update(theta, difficulty, result, k=0.1):
+
+    p = <input class="update-probability-input" aria-label="Ausdruck zur Berechnung von p ergänzen" placeholder="Ausdruck ergänzen">
+
+    theta_new = theta + k * (result - p)
+    difficulty_new = difficulty + k * (p - result)
+
+    return theta_new, difficulty_new</code></pre>
+
+  <div class="update-probability-actions">
+    <button class="update-probability-check" type="button">Eingabe prüfen</button>
+    <button class="update-probability-reset" type="button">Zurücksetzen</button>
+    <button class="update-probability-hint" type="button">Hinweis 1 anzeigen</button>
+  </div>
+  <div class="update-probability-next">Nächster Klick: Hinweis 1</div>
+  <div class="update-probability-panel" hidden></div>
+  <div class="update-probability-feedback" role="status">Ergänzen Sie den Ausdruck hinter <code>p =</code> und prüfen Sie Ihre Eingabe.</div>
+</div>
+`
+
+const updateInput = updateProbabilityExercise.querySelector(".update-probability-input")
+const updateFeedback = updateProbabilityExercise.querySelector(".update-probability-feedback")
+const updateHintPanel = updateProbabilityExercise.querySelector(".update-probability-panel")
+const updateHintButton = updateProbabilityExercise.querySelector(".update-probability-hint")
+const updateNext = updateProbabilityExercise.querySelector(".update-probability-next")
+const updateCheckButton = updateProbabilityExercise.querySelector(".update-probability-check")
+const updateResetButton = updateProbabilityExercise.querySelector(".update-probability-reset")
+let revealedUpdateHints = 0
+
+const updateSolution = "probability(theta, difficulty)"
+
+const setUpdateFeedback = (message, state = "") => {
+  updateFeedback.className = `update-probability-feedback ${state}`.trim()
+  updateFeedback.innerHTML = message
+}
+
+const normalizeUpdateInput = value =>
+  value.replace(/\s+/g, "").toLowerCase()
+
+const typoDistance = (source, target) => {
+  const rows = source.length + 1
+  const columns = target.length + 1
+  const distances = Array.from({length: rows}, () => Array(columns).fill(0))
+
+  for (let row = 0; row < rows; row += 1) distances[row][0] = row
+  for (let column = 0; column < columns; column += 1) distances[0][column] = column
+
+  for (let row = 1; row < rows; row += 1) {
+    for (let column = 1; column < columns; column += 1) {
+      const substitutionCost = source[row - 1] === target[column - 1] ? 0 : 1
+      distances[row][column] = Math.min(
+        distances[row - 1][column] + 1,
+        distances[row][column - 1] + 1,
+        distances[row - 1][column - 1] + substitutionCost
+      )
+
+      if (
+        row > 1 &&
+        column > 1 &&
+        source[row - 1] === target[column - 2] &&
+        source[row - 2] === target[column - 1]
+      ) {
+        distances[row][column] = Math.min(
+          distances[row][column],
+          distances[row - 2][column - 2] + 1
+        )
+      }
+    }
+  }
+
+  return distances[source.length][target.length]
+}
+
+const looksLikeIdentifier = (value, target) => {
+  if (value === target || value.length === 0) return false
+  const allowedDistance = target.length <= 5 ? 1 : 2
+  return typoDistance(value, target) <= allowedDistance
+}
+
+const updateHintButtonText = () => {
+  if (revealedUpdateHints < updateProbabilityHints.length) {
+    const nextHint = updateProbabilityHints[revealedUpdateHints]
+    updateHintButton.textContent = `Hinweis ${revealedUpdateHints + 1} anzeigen`
+    updateNext.textContent = `Nächster Klick: ${nextHint.title}`
+    return
+  }
+
+  updateHintButton.textContent = "Lösung anzeigen"
+  updateNext.textContent = "Nächster Klick: Lösung"
+}
+
+const renderUpdateHints = solutionVisible => {
+  updateHintPanel.hidden = false
+  const shownHints = updateProbabilityHints.slice(0, revealedUpdateHints)
+  const hintList = shownHints
+    .map(hint => `<li><strong>${hint.title}:</strong> ${hint.text}</li>`)
+    .join("")
+  const solution = solutionVisible
+    ? `<p><strong>Lösung:</strong><br><code>${updateSolution}</code></p>`
+    : ""
+  updateHintPanel.innerHTML = `<ol>${hintList}</ol>${solution}`
+}
+
+const checkUpdateExpression = () => {
+  const normalized = normalizeUpdateInput(updateInput.value)
+  const generalCallMatch = normalized.match(/^([a-z_][a-z0-9_]*)\((.*)\)$/)
+
+  if (normalized.length === 0) {
+    setUpdateFeedback("Ergänzen Sie zuerst den Ausdruck hinter <code>p =</code>.", "retry")
+    return
+  }
+
+  if (normalized === "probability(theta,difficulty)") {
+    setUpdateFeedback("Sehr gut, die Codezeile stimmt.", "correct")
+    return
+  }
+
+  if (normalized === "probability(difficulty,theta)") {
+    setUpdateFeedback("Die Argumente sind vertauscht. Die Funktion erwartet zuerst die Fähigkeit und anschließend die Schwierigkeit.", "retry")
+    return
+  }
+
+  if (normalized === "probability()") {
+    setUpdateFeedback("Die Funktion benötigt Eingabewerte. Welche beiden Größen beschreiben Lernenden und Aufgabe?", "retry")
+    return
+  }
+
+  if (
+    generalCallMatch &&
+    generalCallMatch[1] !== "probability" &&
+    looksLikeIdentifier(generalCallMatch[1], "probability")
+  ) {
+    setUpdateFeedback("Der Funktionsname sieht fast richtig aus. Prüfen Sie die Schreibweise von <code>probability</code>.", "retry")
+    return
+  }
+
+  const probabilityCallMatch = normalized.match(/^probability\((.*)\)$/)
+  if (probabilityCallMatch) {
+    const args = probabilityCallMatch[1].length === 0
+      ? []
+      : probabilityCallMatch[1].split(",").filter(argument => argument.length > 0)
+
+    if (args.length === 1) {
+      const singleArgument = args[0]
+      if (singleArgument.includes("theta") && singleArgument.includes("difficulty")) {
+        setUpdateFeedback("Zwischen <code>theta</code> und <code>difficulty</code> fehlt ein Komma.", "retry")
+        return
+      }
+
+      if (
+        singleArgument.includes("theta") &&
+        looksLikeIdentifier(singleArgument.replace("theta", ""), "difficulty")
+      ) {
+        setUpdateFeedback("Zwischen <code>theta</code> und <code>difficulty</code> fehlt vermutlich ein Komma. Prüfen Sie außerdem die Schreibweise.", "retry")
+        return
+      }
+
+      if (
+        singleArgument.includes("difficulty") &&
+        looksLikeIdentifier(singleArgument.replace("difficulty", ""), "theta")
+      ) {
+        setUpdateFeedback("Zwischen <code>theta</code> und <code>difficulty</code> fehlt vermutlich ein Komma. Prüfen Sie außerdem die Reihenfolge.", "retry")
+        return
+      }
+
+      if (looksLikeIdentifier(singleArgument, "theta")) {
+        setUpdateFeedback("Der Parameter sieht fast richtig aus. Prüfen Sie die Schreibweise von <code>theta</code>. Es fehlt außerdem noch ein zweiter Parameter.", "retry")
+        return
+      }
+
+      if (looksLikeIdentifier(singleArgument, "difficulty")) {
+        setUpdateFeedback("Der Parameter sieht fast richtig aus. Prüfen Sie die Schreibweise von <code>difficulty</code>. Es fehlt außerdem noch ein zweiter Parameter.", "retry")
+        return
+      }
+
+      setUpdateFeedback("Es fehlt noch ein Parameter.", "retry")
+      return
+    }
+
+    if (args.length > 2) {
+      setUpdateFeedback("Der Funktionsaufruf enthält zu viele Parameter. Benötigt werden genau zwei Eingabewerte.", "retry")
+      return
+    }
+
+    if (args.length === 2) {
+      const [firstArgument, secondArgument] = args
+
+      if (looksLikeIdentifier(firstArgument, "theta")) {
+        setUpdateFeedback("Der erste Parameter sieht fast richtig aus. Prüfen Sie die Schreibweise von <code>theta</code>.", "retry")
+        return
+      }
+
+      if (looksLikeIdentifier(secondArgument, "difficulty")) {
+        setUpdateFeedback("Der zweite Parameter sieht fast richtig aus. Prüfen Sie die Schreibweise von <code>difficulty</code>.", "retry")
+        return
+      }
+
+      if (
+        looksLikeIdentifier(firstArgument, "difficulty") ||
+        looksLikeIdentifier(secondArgument, "theta")
+      ) {
+        setUpdateFeedback("Die Argumente wirken vertauscht. Die Funktion erwartet zuerst <code>theta</code> und anschließend <code>difficulty</code>.", "retry")
+        return
+      }
+    }
+  }
+
+  if (!normalized.startsWith("probability(")) {
+    setUpdateFeedback("Noch nicht ganz. An dieser Stelle wird ein Funktionsaufruf benötigt, dessen Ergebnis in <code>p</code> gespeichert wird.", "retry")
+    return
+  }
+
+  if (!normalized.includes("theta") || !normalized.includes("difficulty")) {
+    setUpdateFeedback("Noch nicht ganz. Der Funktionsaufruf benötigt die beiden vorhandenen Variablen <code>theta</code> und <code>difficulty</code>.", "retry")
+    return
+  }
+
+  setUpdateFeedback("Die Codezeile stimmt noch nicht. Prüfen Sie den Funktionsnamen, die beiden Argumente und die Klammern.", "retry")
+}
+
+updateCheckButton.addEventListener("click", checkUpdateExpression)
+updateInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    event.preventDefault()
+    checkUpdateExpression()
+  }
+})
+
+updateHintButton.addEventListener("click", () => {
+  if (revealedUpdateHints < updateProbabilityHints.length) {
+    revealedUpdateHints += 1
+    renderUpdateHints(false)
+    updateHintButtonText()
+    return
+  }
+
+  renderUpdateHints(true)
+})
+
+updateResetButton.addEventListener("click", () => {
+  updateInput.value = ""
+  revealedUpdateHints = 0
+  updateHintPanel.hidden = true
+  updateHintPanel.innerHTML = ""
+  updateHintButtonText()
+  setUpdateFeedback("Ergänzen Sie den Ausdruck hinter <code>p =</code> und prüfen Sie Ihre Eingabe.")
+  updateInput.focus()
+})
+
+updateHintButtonText()
+
+return updateProbabilityExercise
+}
+```
