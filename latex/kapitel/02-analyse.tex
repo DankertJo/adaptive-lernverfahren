@@ -1,0 +1,1126 @@
+% !TEX root = ../main.tex
+
+\chapter{Analyse adaptiver
+Lernverfahren}\label{analyse-adaptiver-lernverfahren}
+
+\section{Forschungsstand und verwandte
+Arbeiten}\label{forschungsstand-und-verwandte-arbeiten}
+
+Die neuere Literatur beschreibt adaptive Lernsysteme nicht als einzelne,
+klar umrissene Technologie, sondern als breites Feld personalisierter
+digitaler Lernumgebungen, die Inhalte, Rückmeldungen, Aufgaben oder
+Lernpfade auf Grundlage von Lernerdaten dynamisch anpassen
+\citep{duPlooy2024, Wang2025, Martin2020}. Überblicksarbeiten
+verdeutlichen dabei, dass adaptive Lernsysteme in sehr unterschiedlichen
+Bildungskontexten - etwa in Hochschulumgebungen, intelligenten
+Tutorensystemen oder digitalen Lernplattformen - eingesetzt werden und
+zugleich methodisch stark ausdifferenzViert sind. Das Spektrum reicht von
+klassischen psychometrischen und probabilistischen Modellen über
+regelbasierte und wissensbasierte Verfahren bis hin zu
+Recommender-Systemen sowie neueren KI- und Machine-Learning-Ansätzen
+\citep{Wang2025, Hariyanto2025, daSilva2023, Liu2024}.\\
+Adaptive Lerntechnologien lassen sich daher nicht auf einzelne
+technische Ansätze reduzieren, sondern umfassen unterschiedliche
+Verfahren, Modelle und Formen der Personalisierung.
+
+Allgemeine Überblicksarbeiten betonen häufig die pädagogischen,
+organisatorischen und implementierungsbezogenen Potenziale adaptiver
+Lernsysteme. Für den Hochschulbereich zeigt ein aktueller Scoping
+Review, dass adaptive Lernangebote häufig mit Verbesserungen von
+Lernleistung und Engagement verbunden sind, zugleich jedoch durch
+technische, zeitliche und organisatorische Ressourcen begrenzt werden.
+Eine weitere Review zu KI-gestützten Adaptive-Learning-Plattformen hebt
+hervor, dass insbesondere Plattformdesign, pädagogische Fundierung,
+praktische Implementierung sowie geeignete Evaluationsmetriken zentrale
+Themen des Forschungsfeldes darstellen. Solche Arbeiten machen die
+Breite und Vielfalt adaptiver Lernsysteme deutlich, betrachten Verfahren
+jedoch häufig primär auf Ebene konkreter Plattformen oder
+Anwendungsszenarien. Die zugrunde liegenden algorithmischen Verfahren
+werden dabei meist nicht systematisch als eigenständige
+Verfahrensfamilien analysiert \citep{duPlooy2024, Tan2025}.
+
+Daneben existieren zahlreiche spezialisierte Reviews, die jeweils nur
+einzelne Teilbereiche adaptiver Lernsysteme untersuchen. Wang et
+al.~analysieren adaptive E-Learning-Systeme mit Fokus auf die
+Modellierung von Lernendenmerkmalen und die Verfahren zu deren
+Identifikation. Die Autoren zeigen dabei insbesondere die große
+methodische Vielfalt bestehender Learner-Modeling-Ansätze sowie eine
+zunehmende Erweiterung des eingesetzten Methodenspektrums von
+klassischen regelbasierten und probabilistischen Verfahren hin zu
+breiteren Machine-Learning-Ansätzen \citep{Wang2025}. Desmarais und
+Baker heben insbesondere probabilistische Modelle und Modelle latenter
+Wissenszustände als zentrale Ansätze des Learner- und Skill-Modelings in
+intelligenten Lernumgebungen hervor und zeigen, dass Verfahren zur
+Wissensdiagnose eine Schlüsselrolle innerhalb adaptiver Systeme
+einnehmen \citep{Desmarais2012}. Neuere Surveys zu Knowledge Tracing
+beschreiben zudem einen Übergang von klassischen probabilistischen
+Verfahren wie Bayesian Knowledge Tracing hin zu tiefen neuronalen
+Sequenzmodellen \citep{Abdelrahman2023}. Im Bereich des Computerized
+Adaptive Testing liegt der Fokus insbesondere auf Verfahren zur
+adaptiven Auswahl informativer Testaufgaben sowie auf der
+kontinuierlichen Fähigkeitsdiagnostik unter Verwendung psychometrischer
+Modelle \citep{Han2018, Liu2024}. Aktuelle Reviews zu Reinforcement
+Learning im Bildungsbereich zeigen, dass RL-Verfahren insbesondere zur
+sequentiellen Optimierung adaptiver Lernentscheidungen eingesetzt
+werden, zugleich jedoch weiterhin Herausforderungen hinsichtlich
+realistischer Trainingsdaten und praktischer Implementierung bestehen
+\citep{Riedmann2025}.\\
+Der Forschungsstand ist damit reich an spezialisierten Teilanalysen,
+enthält jedoch bislang nur wenige übergreifende Einordnungen, die
+unterschiedliche Verfahrensfamilien systematisch und aus informatischer
+Perspektive über Anwendungskontexte hinweg zusammenführen.
+
+Darüber hinaus untersucht ein Teil der Literatur adaptive Lernsysteme
+aus Perspektive von Implementierung, Akzeptanz und
+Stakeholderbeteiligung. Alajlani, Crabb und Murray zeigen in ihrem
+systematischen Review, dass Lehrende bislang nur in begrenztem Umfang in
+Design, Implementierung und Evaluation adaptiver Lernsysteme eingebunden
+sind \citep{Alajlani2024}. Diese Perspektive ist insbesondere für die
+praktische Einführung adaptiver Lernsysteme relevant, trägt jedoch nur
+eingeschränkt dazu bei, die zugrunde liegenden Verfahren und
+Adaptionsmechanismen systematisch einzuordnen.
+
+Insgesamt zeigt der Forschungsstand damit eine deutliche
+Perspektivenpluralität: Pädagogische, didaktische, organisationale,
+anwendungsbezogene und algorithmische Zugänge existieren weitgehend
+nebeneinander, werden jedoch bislang nur selten in übergreifenden
+Systematisierungen zusammengeführt.
+
+\section{Methodisches Vorgehen des Scoping
+Reviews}\label{methodisches-vorgehen-des-scoping-reviews}
+
+Zur Analyse bestehender Klassifikationsansätze und algorithmischer
+Verfahren adaptiver Lernsysteme wurde ein explorativ angelegtes Scoping
+Review durchgeführt. Ziel war dabei nicht die vollständige Erfassung
+sämtlicher Veröffentlichungen des Forschungsfeldes, sondern die
+strukturierende Analyse zentraler Forschungsrichtungen, algorithmischer
+Verfahren und bestehender Systematisierungsansätze.
+
+Das Vorgehen orientierte sich an methodischen Empfehlungen für Scoping
+Reviews nach Arksey und O'Malley sowie den weiterentwickelten Leitlinien
+von Peters et al.~und PRISMA-ScR
+\citep{Arksey2005, Peters2020, Tricco2018}. Übernommen wurden
+insbesondere die explorative Ausrichtung des Vorgehens, die
+systematische Identifikation relevanter Literatur sowie die thematische
+Zusammenführung unterschiedlicher Forschungsstränge.\\
+Auf eine vollständige PRISMA-konforme Durchführung mit formalisiertem
+Screening-Prozess, detaillierter Dokumentation aller Suchanfragen und
+vollständigem PRISMA-Flow-Diagramm wurde hingegen verzichtet.
+Hintergrund hierfür ist, dass die Arbeit nicht auf eine vollständige
+quantitative Erfassung sämtlicher Veröffentlichungen abzielt, sondern
+auf die strukturierende Analyse zentraler algorithmischer Verfahren und
+Klassifikationsperspektiven adaptiver Lernsysteme.
+
+Die Literaturrecherche erfolgte explorativ unter Nutzung
+wissenschaftlicher Suchmaschinen und Datenbanken. Ergänzend wurden
+KI-gestützte Recherche- und Analysewerkzeuge verwendet, um relevante
+Überblicksarbeiten, Surveys und thematische Zusammenhänge innerhalb des
+Forschungsfeldes zu identifizieren. Berücksichtigt wurden insbesondere
+Überblicksarbeiten, Surveys und systematische Reviews zu adaptiven
+Lernsystemen, algorithmischen Verfahren adaptiver Lernprozesse, Learner
+Modeling, Adaptivitätskonzepten, Empfehlungssystemen sowie bestehenden
+Klassifikations- und Strukturierungsansätzen des Forschungsfeldes.\\
+Die Auswahl der Literatur erfolgte anhand ihrer thematischen Relevanz
+für die Forschungsfragen der Arbeit. Besonderes Augenmerk lag auf
+Arbeiten, die bestehende Klassifikationen adaptiver Systeme beschreiben
+oder algorithmische Verfahren und deren funktionale Rollen innerhalb
+adaptiver Lernprozesse analysieren.\\
+Für die weitere Analyse wurden insbesondere Überblicksarbeiten, Surveys
+und systematische Reviews berücksichtigt, da diese eine vergleichende
+Einordnung bestehender Verfahren und Forschungsperspektiven ermöglichen.
+Die identifizierten Arbeiten wurden anschließend hinsichtlich ihrer
+Klassifikationslogiken, ihrer funktionalen Perspektiven auf Adaptivität
+sowie der beschriebenen algorithmischen Verfahren ausgewertet und
+thematisch zusammengeführt.
+
+\section{Bestehende Klassifikationen und
+Perspektiven}\label{bestehende-klassifikationen-und-perspektiven}
+
+Die Klassifikation adaptiver Lernsysteme gestaltet sich schwierig, da
+die Literatur unterschiedliche Perspektiven auf Adaptivität und
+Personalisierung verwendet. Während einige Arbeiten adaptive Systeme
+primär über ihre Systemarchitektur beschreiben, orientieren sich andere
+an pädagogischen Zielgrößen, psychologischen Merkmalen oder spezifischen
+algorithmischen Teilproblemen. Eine einheitliche und allgemein
+akzeptierte Taxonomie adaptiver Lernverfahren existiert bislang nicht.
+
+Für die vorliegende Arbeit ist diese Heterogenität besonders relevant,
+da unterschiedliche Klassifikationsansätze jeweils verschiedene
+funktionale Aspekte adaptiver Systeme hervorheben. Im Folgenden werden
+daher zentrale Perspektiven bestehender Systematisierungen analysiert
+und hinsichtlich ihrer Eignung für eine informatisch orientierte
+Klassifikation algorithmischer Verfahren eingeordnet.\\
+Die Heterogenität der Literatur macht zugleich deutlich, dass eine
+informatisch orientierte Klassifikation adaptiver Lernverfahren nicht
+unmittelbar aus einer einzelnen bestehenden Taxonomie übernommen werden
+kann. Vielmehr ergibt sich die Notwendigkeit, unterschiedliche
+etablierte Perspektiven vergleichend zu betrachten und zu einer
+begründeten Synthese zusammenzuführen.
+
+\subsection{Adaptivitätsorientierte
+Klassifikationen}\label{adaptivituxe4tsorientierte-klassifikationen}
+
+Eine adaptivitätsorientierte Perspektive beschreibt adaptive Lernsysteme
+danach, auf welche Arten von Lernendenmerkmalen Anpassungen erfolgen.
+Plass und Pawar strukturieren Adaptivität dabei anhand affektiver,
+kognitiver, motivationaler sowie soziokultureller Variablen
+\citep{Plass2020}.
+
+Zusätzlich unterscheiden Plass und Pawar zwischen Mikro- und
+Makroadaptivität. Makroadaptivität beschreibt längerfristige oder
+stärker vorausgeplante Anpassungen innerhalb des allgemeinen
+Lernkontexts. Hierzu zählen beispielsweise die Gestaltung von
+Lernpfaden, die Sequenzierung von Kursinhalten, vorbereitende
+Lernaktivitäten, Unterstützungsangebote oder curriculare Entscheidungen
+innerhalb eines Studienverlaufs. Anpassungen erfolgen dabei
+typischerweise auf Grundlage allgemeinerer Informationen über Lernende
+und können daher auch qualitative Merkmale und längerfristige Lernziele
+berücksichtigen.
+
+Mikroadaptivität bezieht sich dagegen auf kurzfristige und dynamische
+Anpassungen innerhalb der unmittelbaren Lerninteraktion. Dazu gehören
+beispielsweise adaptive Rückmeldungen, Hilfestellungen,
+Aufgabenanpassungen oder die Auswahl nächster Lernschritte während der
+Bearbeitung konkreter Lernaufgaben. Solche Anpassungen erfordern häufig
+eine kontinuierliche oder echtzeitnahe Erfassung von Interaktionsdaten
+und beruhen daher oft auf quantitativen Messungen des Lernverhaltens
+\citep{Plass2020}.
+
+Die Stärke dieser Taxonomie liegt insbesondere darin, dass Adaptivität
+nicht primär technisch, sondern funktional über die zugrunde liegenden
+Anpassungsziele beschrieben wird. Dadurch eignet sich der Ansatz gut, um
+unterschiedliche Formen personalisierten Lernens pädagogisch und
+psychologisch vergleichbar zu machen.
+
+Für eine informatisch orientierte Analyse algorithmischer Verfahren
+bleibt diese Perspektive jedoch nur begrenzt ausreichend. Die Taxonomie
+fokussiert damit primär die funktionale Perspektive der Adaptivität,
+weniger jedoch die algorithmischen Mechanismen, durch die adaptive
+Entscheidungen tatsächlich realisiert werden.
+
+\subsection{System- und lernendenmodellorientierte
+Perspektiven}\label{system--und-lernendenmodellorientierte-perspektiven}
+
+Im Unterschied zu adaptivitätsorientierten Ansätzen beschreiben andere
+Arbeiten adaptive Lernsysteme stärker über ihre Systemarchitektur und
+die Repräsentation lernendenbezogener Informationen. Typischerweise
+werden dabei Komponenten wie Domänenmodell, Learner Model,
+Adaptionsmodell sowie Benutzerschnittstelle unterschieden. Das
+Domänenmodell repräsentiert dabei die fachlichen Inhalte und
+Wissensstrukturen eines Lernsystems, während das Learner Model
+Informationen über Wissen, Fähigkeiten, Präferenzen oder Interaktionen
+von Lernenden enthält. Das Adaptionsmodell nutzt diese Informationen, um
+Entscheidungen über Lerninhalte, Unterstützungsmaßnahmen oder Lernpfade
+zu treffen. Die Benutzerschnittstelle bildet schließlich die Interaktion
+zwischen Lernenden und System ab. Innerhalb dieser Architektur nimmt
+insbesondere das Learner Model eine zentrale Rolle ein, da dort
+diejenigen Informationen über Lernende repräsentiert werden, auf deren
+Grundlage spätere adaptive Entscheidungen erfolgen \citep{Wang2025}.
+
+Im Mittelpunkt dieser Perspektive stehen daher insbesondere Learner
+Models sowie die Frage, wie Informationen über Lernende innerhalb
+adaptiver Systeme strukturiert, verarbeitet und für
+Adaptionsentscheidungen genutzt werden.
+
+Martin et al.~verfolgen eine stärker forschungs- und
+implementierungsorientierte Perspektive auf adaptive Lernsysteme. Statt
+adaptive Verfahren primär algorithmisch zu klassifizieren,
+systematisieren die Autoren die Forschungslandschaft anhand von
+Publikationstrends, Anwendungskontexten, eingesetzten Strategien und
+technologischen Umsetzungen adaptiver Systeme.\\
+Die Analyse zeigt dabei unter anderem, dass Lernstile über längere Zeit
+zu den am häufigsten betrachteten Lernendenmerkmalen gehörten.
+Gleichzeitig wurden insbesondere adaptive Feedback-Mechanismen und
+adaptive Navigation häufig untersucht. Darüber hinaus verdeutlicht die
+Arbeit, dass adaptive Lernsysteme in sehr unterschiedlichen
+Bildungskontexten eingesetzt werden und sich sowohl hinsichtlich ihrer
+pädagogischen Zielsetzungen als auch ihrer technischen Umsetzung stark
+unterscheiden \citep{Martin2020}.
+
+Auch Wang et al.~verfolgen keine primär algorithmische Klassifikation
+adaptiver Systeme, sondern betrachten adaptive Lernumgebungen aus
+Perspektive des Learner Modelings. Im Mittelpunkt steht dabei die Frage,
+welche Lernendenmerkmale innerhalb adaptiver Systeme erfasst und
+modelliert werden und mit welchen Verfahren diese Merkmale identifiziert
+oder aktualisiert werden. Die Autoren beschreiben adaptive Systeme dabei
+als mehrstufigen Prozess: Zunächst werden relevante Merkmale von
+Lernenden -- beispielsweise Wissen, Präferenzen oder Lernverhalten --
+innerhalb eines Learner Models repräsentiert. Anschließend kommen
+unterschiedliche Verfahren zum Einsatz, um Lernende anhand dieser
+Merkmale zu klassifizieren oder Veränderungen des Lernzustands zu
+erkennen. Auf Grundlage dieser Informationen erfolgen schließlich
+adaptive Entscheidungen, etwa bei der Auswahl von Lerninhalten, Aufgaben
+oder Unterstützungsmaßnahmen \citep{Wang2025}.
+
+Eine noch stärkere Fokussierung auf das Learner Model selbst findet sich
+bei Böck. Dort wird das Learner Model als explizite maschineninterne
+Repräsentation individueller Merkmale, Zustände und Interaktionsdaten
+eines Lernenden beschrieben. Im Mittelpunkt steht dabei insbesondere die
+Frage, wie lernendenbezogene Informationen innerhalb adaptiver Systeme
+formal strukturiert, repräsentiert und weiterverarbeitet werden.\\
+Zugleich zeigt die Arbeit, dass viele Publikationen zwar mögliche
+Attribute von Learner Models benennen, deren konkrete formale
+Modellierung sowie die zugrunde liegenden Datenquellen jedoch häufig
+unklar bleiben. Darüber hinaus verweist Böck darauf, dass bislang kein
+allgemeiner und flexibel erweiterbarer Standard für Learner Models
+identifiziert werden konnte.~ Die fehlende Standardisierung von Learner
+Models hängt zugleich mit der großen Vielfalt unterschiedlicher
+Modellierungsansätze zusammen. Böck verweist in diesem Zusammenhang auf
+Verfahren, die von regel- und constraintsbasierten Ansätzen über
+probabilistische Verfahren und Ontologien bis hin zu Clustering-,
+Klassifikations- und Deep-Learning-Methoden reichen. Dies verdeutlicht,
+dass adaptive Lernsysteme nicht nur unterschiedliche Lernendenmerkmale
+modellieren, sondern hierfür auch sehr unterschiedliche technische
+Modellierungsstrategien verwenden \citep{Boeck2025}.
+
+Die betrachteten Arbeiten verdeutlichen insgesamt unterschiedliche
+Perspektiven auf adaptive Lernsysteme. Während Martin et al.~adaptive
+Lernforschung primär über Kontexte, Strategien und Technologien
+strukturieren, stellen Wang et al.~insbesondere den Prozess des Learner
+Modelings in den Mittelpunkt. Böck fokussiert dagegen stärker die
+technische Struktur und Modellierung lernendenbezogener Informationen.
+Gemeinsam ist diesen Ansätzen, dass sie wichtige Einblicke in Aufbau,
+Informationsverarbeitung und Adaptionslogik adaptiver Systeme liefern,
+jedoch keine durchgängige Einordnung algorithmischer Verfahrensfamilien
+vornehmen. Adaptive Lernsysteme werden damit häufig über
+Lernendenmerkmale, Systemarchitekturen oder Forschungs- und
+Anwendungskontexte beschrieben, weniger jedoch über die zugrunde
+liegenden algorithmischen Mechanismen selbst.
+
+\subsection{Algorithmisch orientierte
+Perspektiven}\label{algorithmisch-orientierte-perspektiven}
+
+Im Gegensatz zu stärker pädagogisch, system- oder
+lernendenmodellorientierten Ansätzen existieren auch Arbeiten, die
+adaptive Lernsysteme primär über algorithmische Verfahren und Methoden
+der Wissensmodellierung strukturieren. Im Mittelpunkt steht dabei
+weniger die Frage, welche Lernendenmerkmale modelliert werden, sondern
+vielmehr, mit welchen technischen Verfahren adaptive Entscheidungen
+getroffen, Wissenszustände geschätzt oder Lernprozesse analysiert
+werden.
+
+Zwar existieren zahlreiche spezialisierte Arbeiten zu einzelnen
+algorithmischen Verfahrensfamilien adaptiver Lernsysteme, darunter
+probabilistische Verfahren des Learner Modelings, psychometrische
+Modelle im Computerized Adaptive Testing, Verfahren des Knowledge
+Tracing, Recommender-Systeme oder Reinforcement-Learning-basierte
+Ansätze. Diese Arbeiten untersuchen adaptive Verfahren jedoch meist
+innerhalb spezifischer Anwendungskontexte oder Forschungsfelder und
+verwenden unterschiedliche Begrifflichkeiten, Modellannahmen und
+Klassifikationslogiken. Eine übergreifende und konsistente
+algorithmische Taxonomie adaptiver Lernverfahren findet sich bislang nur
+eingeschränkt.
+
+Im Bereich des Learner Modelings spielen insbesondere probabilistische
+Verfahren zur Wissens- und Fähigkeitsdiagnostik eine zentrale Rolle.
+Desmarais und Baker beschreiben verschiedene Ansätze zur Modellierung
+von Wissenszuständen in intelligenten Lernumgebungen und heben hervor,
+dass probabilistische Modelle besonders geeignet sind, Unsicherheit
+innerhalb adaptiver Systeme abzubilden \citep{Desmarais2012}. Adaptive
+Systeme besitzen dabei keinen direkten Zugriff auf den tatsächlichen
+Wissensstand von Lernenden, sondern müssen diesen aus beobachtbaren
+Interaktionen wie Antworten, Fehlermustern oder Bearbeitungszeiten
+inferieren.
+
+Pelánek beschreibt in seiner Überblicksarbeit zum Learner Modeling
+insbesondere Bayesian Knowledge Tracing sowie logistische Modelle als
+zentrale Ansätze zur Modellierung von Wissenszuständen über mehrere
+Lerninteraktionen hinweg \citep{Pelanek2017}. Gleichzeitig betont die
+Arbeit, dass unterschiedliche Modellierungsverfahren jeweils von den
+verfügbaren Daten, dem Anwendungskontext und dem Ziel der Adaptation
+abhängen. Lernendenmodellierung stellt damit keinen einzelnen
+Algorithmus dar, sondern einen breiten Bereich unterschiedlicher
+Zustands-, Fähigkeits- und Wahrscheinlichkeitsmodelle.
+
+Neuere Arbeiten zum Knowledge Tracing differenzieren adaptive
+Wissensmodellierung zusätzlich stärker nach technischen Modellfamilien.
+Abdelrahman et al.~unterscheiden dabei insbesondere Bayesian Models,
+Logistic Models sowie Deep-Learning-basierte Ansätze
+\citep{Abdelrahman2023}. Neben klassischen Verfahren wie Bayesian
+Knowledge Tracing treten damit zunehmend neuronale Sequenzmodelle zur
+Modellierung latenter Wissenszustände in den Vordergrund. Die Literatur
+verdeutlicht zugleich, dass ähnliche funktionale Ziele -- etwa die
+Schätzung von Wissensständen -- mit sehr unterschiedlichen
+Modellierungsansätzen realisiert werden können.
+
+Neben probabilistischen Verfahren existieren weitere spezialisierte
+algorithmische Forschungsfelder adaptiver Lernsysteme. Im Bereich des
+Computerized Adaptive Testing stehen insbesondere psychometrische
+Verfahren zur adaptiven Auswahl informativer Testaufgaben und zur
+kontinuierlichen Fähigkeitsdiagnostik im Mittelpunkt
+\citep{Han2018, Liu2024}. Educational Recommender Systems konzentrieren
+sich dagegen auf die personalisierte Auswahl von Lernressourcen,
+Aufgaben oder Lernpfaden auf Grundlage von Präferenzen,
+Interaktionsdaten oder Ähnlichkeiten zwischen Lernenden
+\citep{daSilva2023, Nabizadeh2020}. Reinforcement-Learning-basierte
+Ansätze fokussieren schließlich die sequenzielle Optimierung adaptiver
+Entscheidungen und die dynamische Steuerung von Lernprozessen
+\citep{Riedmann2025}.
+
+Die algorithmisch orientierte Perspektive macht deutlich, dass adaptive
+Lernsysteme eine große Vielfalt unterschiedlicher Modellierungs- und
+Entscheidungsverfahren verwenden. Gleichzeitig zeigt sich jedoch, dass
+die Literatur algorithmische Verfahren häufig innerhalb spezialisierter
+Teilbereiche diskutiert und nur selten übergreifend zusammenführt. Die
+bestehende Forschungslandschaft ist damit reich an spezialisierten
+Verfahrensanalysen, weist jedoch weiterhin eine starke Fragmentierung
+hinsichtlich Begrifflichkeiten, Modellierungslogiken und
+Klassifikationsansätzen auf.
+
+\subsection{KI- und Machine-Learning-orientierte
+Perspektiven}\label{ki--und-machine-learning-orientierte-perspektiven}
+
+Neben probabilistischen, psychometrischen oder regelbasierten Verfahren
+existieren auch Arbeiten, die adaptive Lernsysteme primär über Methoden
+des maschinellen Lernens strukturieren. Im Mittelpunkt steht dabei
+insbesondere die automatische Analyse von Lernerdaten sowie die
+datengetriebene Modellierung adaptiver Entscheidungen.
+
+Hariyanto et al.~klassifizieren adaptive Bildungssysteme beispielsweise
+anhand zentraler Kategorien des maschinellen Lernens und unterscheiden
+zwischen überwachten, unüberwachten und
+Reinforcement-Learning-Verfahren.
+
+Überwachte Lernverfahren werden dabei vor allem zur Klassifikation von
+Lernendenprofilen und zur Vorhersage lernbezogener Eigenschaften
+eingesetzt. Die Autoren nennen unter anderem Entscheidungsbäume, Support
+Vector Machines sowie k-Nearest-Neighbor-Verfahren als typische Ansätze
+zur Analyse von Leistungsdaten und Lernverhalten. Ziel solcher Verfahren
+ist es häufig, Lernende bestimmten Kategorien oder
+Unterstützungsmaßnahmen zuzuordnen.
+
+Unüberwachte Lernverfahren dienen dagegen insbesondere der
+Identifikation von Mustern und Gruppenstrukturen innerhalb von
+Lernerdaten. Hierzu werden beispielsweise Clustering-Verfahren genutzt,
+um Ähnlichkeiten in Interaktions-, Zeit- oder Leistungsdaten zu erkennen
+und Lernende anhand gemeinsamer Merkmale zu gruppieren.
+
+Reinforcement-Learning-Verfahren werden vor allem zur dynamischen
+Steuerung adaptiver Lernprozesse eingesetzt. Reinforcement Learning
+ermöglicht dabei insbesondere die sequenzielle Optimierung von
+Lernpfaden, Inhaltsauswahl oder Unterstützungsmaßnahmen auf Grundlage
+fortlaufender Rückmeldungen aus der Interaktion mit dem Lernsystem
+\citep{Hariyanto2025}.
+
+Die KI- und ML-orientierte Perspektive verdeutlicht insbesondere die
+zunehmende Bedeutung datengetriebener Verfahren innerhalb adaptiver
+Lernsysteme. Gleichzeitig konzentrieren sich solche Arbeiten häufig auf
+bestimmte Paradigmen des maschinellen Lernens, während probabilistische,
+psychometrische oder symbolische Verfahren teilweise weniger
+berücksichtigt werden.
+
+\subsection{Zwischenbetrachtung und Grenzen bestehender
+Ansätze}\label{zwischenbetrachtung-und-grenzen-bestehender-ansuxe4tze}
+
+Die analysierten Arbeiten verdeutlichen insgesamt, dass adaptive
+Lernsysteme in der Forschung aus sehr unterschiedlichen Perspektiven
+beschrieben und strukturiert werden. Während einige Ansätze Adaptivität
+primär über Lernendenmerkmale und pädagogische Zielgrößen definieren,
+fokussieren andere stärker Systemarchitekturen, Learner Models,
+Forschungs- und Anwendungskontexte oder konkrete algorithmische
+Verfahren.
+
+Darüber hinaus zeigt sich, dass adaptive Lernsysteme häufig innerhalb
+spezialisierter Forschungsfelder wie Intelligent Tutoring Systems,
+Knowledge Tracing, Educational Recommender Systems, Computerized
+Adaptive Testing oder Reinforcement-Learning-basierten Lernumgebungen
+untersucht werden
+\citep{Desmarais2012, Abdelrahman2023, daSilva2023, Liu2024, Riedmann2025}.
+Dadurch entstehen eigenständige Teilbereiche mit jeweils eigenen
+Begrifflichkeiten, Modellierungsansätzen und Bewertungskriterien.
+
+Gleichzeitig wird jedoch deutlich, dass ähnliche algorithmische
+Grundprinzipien in unterschiedlichen Anwendungskontexten wiederkehren.
+Probabilistische Zustandsmodellierung, Klassifikation, Mustererkennung
+oder sequenzielle Entscheidungsoptimierung treten beispielsweise in
+mehreren Teilbereichen adaptiver Lernsysteme auf, werden jedoch häufig
+getrennt voneinander betrachtet und nur selten gemeinsam eingeordnet.
+
+Die bestehende Literatur liefert damit zahlreiche spezialisierte
+Teilsystematiken und wichtige Perspektiven auf adaptive Lernsysteme,
+bietet bislang jedoch nur begrenzte Ansätze für eine integrierte
+informatisch orientierte Klassifikation algorithmischer Verfahren.
+Insbesondere fehlt häufig eine gemeinsame Strukturierung, die
+funktionale Rolle, Datenbasis, Adaptionsmechanismus und technische
+Modellierungsansätze systematisch zusammenführt.
+
+\section{Zentrale algorithmische Verfahren im
+Überblick}\label{zentrale-algorithmische-verfahren-im-uxfcberblick}
+
+Für eine informatisch orientierte Betrachtung adaptiver Lernsysteme ist
+zunächst weniger entscheidend, welcher konkrete Plattformtyp vorliegt,
+sondern vielmehr, welche algorithmischen Verfahrensfamilien innerhalb
+adaptiver Systeme wiederkehren und welche funktionalen Rollen diese
+übernehmen.
+
+\subsection{Learner Modeling und Knowledge
+Tracing}\label{learner-modeling-und-knowledge-tracing}
+
+Eine zentrale Rolle spielt dabei der Bereich des Learner Modeling
+beziehungsweise der Wissens- und Fähigkeitsdiagnostik.
+
+Learner Modeling beschäftigt sich grundsätzlich mit der Frage, wie
+Wissen, Fähigkeiten, Präferenzen oder weitere lernendenbezogene Merkmale
+innerhalb eines adaptiven Systems repräsentiert und fortlaufend
+aktualisiert werden können \citep{Wang2025, Boeck2025}. Adaptive Systeme
+besitzen dabei keinen direkten Zugriff auf den tatsächlichen
+Wissensstand eines Lernenden. Beobachtbar sind lediglich Interaktionen
+mit dem System, etwa Antworten auf Aufgaben, Fehlversuche,
+Bearbeitungszeiten oder Navigationsverhalten. Der eigentliche
+Wissenszustand stellt somit eine latente Größe dar, die aus
+beobachtbaren Daten erschlossen werden muss \citep{Desmarais2012}.
+
+Vor diesem Hintergrund spielen probabilistische Verfahren eine zentrale
+Rolle im Learner Modeling. Desmarais und Baker betonen, dass
+probabilistische Modelle für die Einschätzung von Fähigkeiten und
+Wissenszuständen in intelligenten Lernumgebungen von grundlegender
+Bedeutung sind. Solche Verfahren gehen davon aus, dass Wissen nicht als
+direkt beobachtbarer Zustand vorliegt, sondern nur mit einer bestimmten
+Wahrscheinlichkeit angenommen werden kann. Anstatt einen Lernenden
+eindeutig als \enquote{beherrscht} oder \enquote{nicht beherrscht} zu
+klassifizieren, modellieren probabilistische Ansätze daher die
+Wahrscheinlichkeit, mit der bestimmte Kenntnisse oder Fähigkeiten
+vorhanden sind. Neue Interaktionen mit dem Lernsystem können
+anschließend genutzt werden, um diese Wahrscheinlichkeiten fortlaufend
+anzupassen und die Einschätzung des Wissenszustands zu aktualisieren
+\citep{Desmarais2012}.
+
+In der späteren Überblicksliteratur zum Learner Modeling hebt Pelánek
+insbesondere Bayesian Knowledge Tracing sowie logistische Modelle als
+wichtige Ansätze zur Modellierung von Wissenszuständen hervor. Bayesian
+Knowledge Tracing modelliert dabei den Wissenszustand eines Lernenden
+als Wahrscheinlichkeit, die nach jeder bearbeiteten Aufgabe aktualisiert
+wird. Logistische Modelle verfolgen dagegen einen stärker statistischen
+Ansatz und schätzen die Wahrscheinlichkeit korrekter Antworten auf
+Grundlage bestimmter Merkmale von Lernenden oder Aufgaben. Beide Ansätze
+verfolgen damit das Ziel, Lernprozesse quantitativ zu beschreiben und
+zukünftige Lernleistungen vorherzusagen, beruhen jedoch auf
+unterschiedlichen Modellannahmen über Wissenserwerb und
+Kompetenzentwicklung \citep{Pelanek2017}.\\
+Gleichzeitig betont Pelánek, dass die Wahl eines geeigneten Modells
+stets vom jeweiligen Anwendungskontext, den verfügbaren Daten sowie dem
+Ziel der Adaptation abhängt \citep{Pelanek2017}. Lernendenmodellierung
+stellt damit keinen einzelnen Algorithmus dar, sondern einen breiten
+Bereich unterschiedlicher Zustands-, Fähigkeits- und
+Wahrscheinlichkeitsmodelle, die jeweils verschiedene Perspektiven auf
+Lernen, Wissen und Kompetenzentwicklung abbilden.
+
+Besonders stark ausdifferenziert ist dieser Bereich im Forschungsfeld
+des Knowledge Tracing. Knowledge Tracing beschäftigt sich mit der Frage,
+wie sich der Wissenszustand eines Lernenden über mehrere
+Lerninteraktionen hinweg modellieren und fortlaufend aktualisieren
+lässt. Ziel ist es, auf Grundlage bisheriger Bearbeitungen möglichst
+präzise abzuschätzen, welche Wissenskomponenten bereits beherrscht
+werden und bei welchen weiterhin Lernbedarf besteht
+\citep{Abdelrahman2023}.
+
+Der Survey von Shen et al.~unterscheidet drei grundlegende technische
+Modellierungsrichtungen innerhalb des Knowledge Tracing: Bayesian
+Models, Logistic Models und Deep Learning Models \citep{Shen2024}. Diese
+Einteilung ist für eine informatische Systematisierung besonders
+relevant, da die Verfahren nicht primär nach ihrem Anwendungskontext,
+sondern nach ihrer technischen Modellierungslogik gruppiert werden.
+
+Bayesian Models modellieren Wissen als verborgenen beziehungsweise
+latenten Zustand, dessen Wahrscheinlichkeit anhand beobachtbarer
+Interaktionen geschätzt wird. Zu den bekanntesten Vertretern zählen
+Bayesian Knowledge Tracing (BKT) sowie Erweiterungen wie Dynamic
+Bayesian Knowledge Tracing (DBKT). Der Wissenszustand eines Lernenden
+wird dabei als Wahrscheinlichkeit dargestellt, die nach jeder
+bearbeiteten Aufgabe auf Grundlage neuer Beobachtungen aktualisiert wird
+\citep{Pelanek2017, Shen2024}.
+
+Logistic Models verfolgen dagegen einen stärker statistischen Ansatz. Zu
+den wichtigsten Vertretern zählen Learning Factors Analysis (LFA) und
+Performance Factors Analysis (PFA). Im Mittelpunkt steht hierbei die
+Schätzung der Wahrscheinlichkeit korrekter Antworten auf Grundlage
+beobachtbarer Merkmale und Interaktionsdaten, etwa früherer Erfolge oder
+Fehlversuche. Im Unterschied zu klassischen Bayesian-Modellen wird dabei
+nicht unmittelbar ein verborgener Wissenszustand modelliert, sondern das
+Antwortverhalten selbst statistisch beschrieben \citep{Shen2024}.
+
+Deep-Learning-basierte Verfahren verzichten weitgehend auf manuell
+definierte Wissensmodelle und lernen Zusammenhänge direkt aus großen
+Mengen von Interaktionsdaten. Zu den bekanntesten Ansätzen zählt Deep
+Knowledge Tracing (DKT), das rekurrente neuronale Netze zur Modellierung
+von Lernverläufen verwendet. Neuere Varianten erweitern diesen Ansatz
+beispielsweise um Speichermechanismen, Aufmerksamkeitsstrukturen oder
+Graphrepräsentationen. Dadurch können komplexe Muster im Lernverhalten
+erfasst werden, allerdings geht dies häufig zulasten der
+Interpretierbarkeit der Modelle \citep{Shen2024}.
+
+Die von Shen et al.~vorgeschlagene Einteilung verdeutlicht, dass
+dieselbe funktionale Aufgabe -- die Schätzung von Wissenszuständen --
+mit sehr unterschiedlichen technischen Modellierungsansätzen realisiert
+werden kann. Für eine informatische Klassifikation adaptiver Verfahren
+sind daher nicht nur die funktionalen Ziele, sondern auch die zugrunde
+liegenden Modellierungslogiken von zentraler Bedeutung.
+
+Gleichzeitig zeigt die Knowledge-Tracing-Literatur, dass sich die
+verschiedenen Verfahren nicht nur hinsichtlich ihrer
+Modellierungsansätze, sondern auch hinsichtlich der verwendeten
+Datenbasis unterscheiden. Die Qualität der Wissensschätzung hängt
+wesentlich davon ab, welche Informationen einem Modell zur Verfügung
+stehen und wie diese in die Schätzung des Lernzustands einbezogen werden
+\citep{Shen2024}. Frühe Knowledge-Tracing-Modelle arbeiten häufig
+ausschließlich mit Aufgabenfolgen und den zugehörigen Antwortdaten. Das
+Modell beobachtet dabei typischerweise, ob eine Aufgabe korrekt oder
+inkorrekt beantwortet wurde, und nutzt diese Informationen zur
+Aktualisierung des geschätzten Wissenszustands. Solche Ansätze sind
+vergleichsweise einfach zu implementieren und benötigen nur wenige
+Eingabedaten, können jedoch viele Einflussfaktoren des tatsächlichen
+Lernprozesses nicht berücksichtigen \citep{Shen2024}. Neuere Verfahren
+erweitern diese Datenbasis deutlich. Neben den eigentlichen Antwortdaten
+werden zunehmend zusätzliche Informationen in die Modellierung
+einbezogen. Hierzu zählen beispielsweise individuelle Eigenschaften
+eines Lernenden vor Beginn des Lernprozesses, Merkmale des bisherigen
+Lernverlaufs, Indikatoren für Motivation oder Engagement sowie
+Informationen über Vergessensprozesse im Zeitverlauf. Darüber hinaus
+werden sogenannte Side Information genutzt, etwa Antwortzeiten,
+Bearbeitungsdauer, Navigationsmuster oder Tutorinterventionen während
+des Lernprozesses \citep{Shen2024}. Diese Entwicklung verdeutlicht, dass
+dieselbe funktionale Aufgabe -- die Schätzung von Wissenszuständen --
+mit sehr unterschiedlichen Datentiefegraden realisiert werden kann.
+Während einfache Modelle lediglich auf einer Folge richtiger und
+falscher Antworten basieren, versuchen komplexere Verfahren ein
+umfassenderes Bild des Lernprozesses zu erfassen \citep{Shen2024}.
+
+Für die Frage der Interpretierbarkeit ist diese Unterscheidung von
+zentraler Bedeutung. Der Survey von Shen et al.~weist ausdrücklich
+darauf hin, dass moderne Deep-Learning-Verfahren im Knowledge Tracing
+häufig eine höhere Vorhersagegenauigkeit erreichen als traditionelle
+Ansätze, ihre Entscheidungsprozesse jedoch deutlich schwerer
+nachvollziehbar sind \citep{Shen2024}. Während klassische Modelle meist
+auf klar definierten Parametern und Modellannahmen beruhen, entstehen
+die Vorhersagen tiefer neuronaler Netze aus einer großen Zahl interner
+Berechnungen, deren Einfluss auf das Ergebnis oft nur schwer zu
+interpretieren ist.
+
+Gerade im Bildungskontext besitzt diese Problematik besondere Relevanz.
+Adaptive Lernsysteme treffen Entscheidungen über Lerninhalte,
+Empfehlungen, Unterstützungsmaßnahmen oder die Einschätzung von
+Wissensständen. Lehrende und Lernende haben dabei häufig ein
+berechtigtes Interesse daran, nachvollziehen zu können, warum ein System
+eine bestimmte Einschätzung vorgenommen oder eine konkrete Empfehlung
+ausgesprochen hat. Fehlende Transparenz kann die Akzeptanz adaptiver
+Systeme reduzieren und erschwert zugleich die pädagogische Bewertung
+ihrer Entscheidungen.
+
+Vor diesem Hintergrund hat sich innerhalb der
+Knowledge-Tracing-Forschung ein eigener Forschungsstrang zu
+interpretierbaren Modellen und Explainable Artificial Intelligence (XAI)
+entwickelt. Ziel dieser Arbeiten ist es, die Entscheidungsprozesse
+komplexer Modelle besser verständlich zu machen und zusätzliche
+Erklärungen für Vorhersagen bereitzustellen. Dabei werden beispielsweise
+Einflussfaktoren einzelner Aufgaben, Wissenskomponenten oder
+Interaktionen sichtbar gemacht, um die Ursachen einer Modellentscheidung
+nachvollziehbarer darzustellen \citep{Shen2024}.
+
+Für eine informatische Klassifikation adaptiver Verfahren ergibt sich
+daraus eine wichtige zusätzliche Betrachtungsdimension. Modelle
+unterscheiden sich nicht nur hinsichtlich ihrer Vorhersageleistung oder
+ihrer technischen Modellierungslogik, sondern auch hinsichtlich ihrer
+Transparenz und Erklärbarkeit. Probabilistische und logistische
+Verfahren sind dabei häufig leichter interpretierbar als
+Deep-Learning-Ansätze, während tiefe neuronale Modelle oftmals eine
+höhere Modellkomplexität und geringere Nachvollziehbarkeit aufweisen
+\citep{Shen2024}. Die Interpretierbarkeit eines Verfahrens stellt daher
+eine eigenständige Eigenschaft dar, die bei einer systematischen
+Einordnung adaptiver Lernverfahren berücksichtigt werden sollte.
+
+\subsection{Recommender-Systeme und
+Lernpfadverfahren}\label{recommender-systeme-und-lernpfadverfahren}
+
+Eine zweite große Verfahrensfamilie bilden Recommender-Systeme und
+Lernpfadverfahren. Während Verfahren des Learner Modelings primär auf
+die Diagnose und Modellierung von Wissenszuständen abzielen, steht bei
+Recommender-Systemen die Auswahl und Priorisierung geeigneter
+Lernressourcen im Vordergrund. Ziel ist es, Lernenden diejenigen
+Inhalte, Aufgaben oder Lernaktivitäten bereitzustellen, die für ihre
+individuellen Bedürfnisse, Interessen oder Lernziele besonders relevant
+erscheinen \citep{daSilva2023}.
+
+Im Bildungsbereich werden Recommender-Systeme daher als zentrales
+Instrument zur Personalisierung von Lernumgebungen betrachtet.
+Empfehlungen können sich beispielsweise auf Lernmaterialien, Aufgaben,
+Kurse, Lernpfade oder unterstützende Ressourcen beziehen. Grundlage
+hierfür bilden typischerweise Informationen über Lernende, deren
+bisheriges Lernverhalten, Leistungsdaten, Präferenzen oder Ähnlichkeiten
+zu anderen Nutzenden \citep{daSilva2023}.
+
+Der systematische Review von da Silva et al.~zeigt, dass insbesondere
+hybride Recommender-Systeme in der aktuellen Forschung und Praxis eine
+dominante Rolle einnehmen. Hybride Verfahren kombinieren dabei
+unterschiedliche Empfehlungsstrategien, etwa kollaboratives Filtern,
+inhaltsbasierte Verfahren oder wissensbasierte Ansätze. Ziel dieser
+Kombination ist es, die jeweiligen Stärken einzelner Methoden zu nutzen
+und deren Schwächen auszugleichen. So können beispielsweise Empfehlungen
+nicht nur auf Ähnlichkeiten zwischen Lernenden beruhen, sondern
+zusätzlich fachliche Eigenschaften von Lernressourcen oder pädagogische
+Anforderungen berücksichtigen \citep{daSilva2023}.
+
+Die einzelnen Empfehlungsstrategien werden wiederum durch
+unterschiedliche algorithmische Verfahren realisiert. Kollaborative
+Recommender nutzen beispielsweise Ähnlichkeitsmaße oder
+Nachbarschaftsverfahren wie k-Nearest Neighbors, um Lernende mit
+vergleichbaren Interessen oder Verhaltensmustern zu identifizieren.
+Inhaltsbasierte Ansätze arbeiten häufig mit Merkmalsvektoren und
+Ähnlichkeitsmaßen wie der Kosinus-Ähnlichkeit, um passende
+Lernressourcen zu bestimmen. Darüber hinaus kommen in Educational
+Recommender Systems Verfahren wie Matrix Factorization, Fuzzy Logic,
+genetische Algorithmen sowie zunehmend neuronale Netze und
+Deep-Learning-Ansätze zum Einsatz \citep{daSilva2023}.
+
+Gleichzeitig weist die Review darauf hin, dass die Evaluation von
+Educational Recommender Systems bislang überwiegend auf technischen
+Qualitätsmaßen wie Genauigkeit, Präzision oder Trefferquote basiert,
+während die tatsächliche pädagogische Wirksamkeit deutlich seltener
+untersucht wird \citep{daSilva2023}. Für die Analyse adaptiver
+Lernverfahren ist dieser Befund besonders relevant, da
+Recommender-Systeme nicht primär der Wissensdiagnostik dienen, sondern
+der Auswahl und Priorisierung von Lernressourcen. Der Erfolg eines
+Verfahrens lässt sich daher nicht allein an der Qualität der Empfehlung
+messen, sondern sollte idealerweise auch anhand von Lernerfolg,
+Motivation oder Lernerfahrung bewertet werden.
+
+Innerhalb dieses Bereichs sind insbesondere wissens- und
+ontologiebasierte Recommender-Systeme von besonderem Interesse. Im
+Unterschied zu vielen datengetriebenen Verfahren beruhen sie nicht
+primär auf statistischen Mustern oder Ähnlichkeiten zwischen Nutzenden,
+sondern auf explizit modelliertem Wissen über Lernende, Lernressourcen
+und fachliche Zusammenhänge. Die Personalisierung erfolgt dabei auf
+Grundlage formalisierter Wissensstrukturen, welche Beziehungen zwischen
+Konzepten, Lernzielen, Kompetenzen oder Inhaltsbereichen beschreiben
+\citep{George2019}.
+
+Ontologien dienen in diesem Zusammenhang als formale Repräsentationen
+von Wissen. Sie definieren Konzepte eines bestimmten Anwendungsbereichs
+sowie die Beziehungen zwischen diesen Konzepten. Dadurch können
+Lerninhalte, Wissensgebiete, Kompetenzen und Lernendenmerkmale
+strukturiert beschrieben und maschinell verarbeitet werden. Adaptive
+Systeme können diese Wissensstrukturen nutzen, um Zusammenhänge zwischen
+Lernenden und Lernressourcen abzuleiten und darauf aufbauend
+personalisierte Empfehlungen zu erzeugen \citep{George2019}.
+
+George und Lal heben hervor, dass ontologiebasierte Ansätze insbesondere
+Reusability, Reasoning und Inferenz unterstützen \citep{George2019}. Da
+Wissen explizit modelliert wird, können Systeme nicht nur vorhandene
+Informationen speichern, sondern zusätzliche Beziehungen und
+Schlussfolgerungen aus den modellierten Strukturen ableiten. Dadurch
+eignen sich Ontologien besonders für adaptive Lernumgebungen, in denen
+fachliche Abhängigkeiten, Kompetenzmodelle oder curriculare
+Zusammenhänge berücksichtigt werden sollen.
+
+Die Review von George und Lal zeigt zugleich, dass ontologiebasierte
+Recommender-Systeme unterschiedliche technische Verfahren zur
+Generierung von Empfehlungen einsetzen \citep{George2019}. Häufig kommen
+dabei regelbasierte Schlussfolgerungsverfahren (Rule-Based Reasoning),
+semantische Ähnlichkeitsmaße (Semantic Similarity), Case-Based Reasoning
+sowie hybride Ansätze zum Einsatz, welche Ontologien mit kollaborativen
+Filterverfahren, Fuzzy-Logic-Methoden oder weiteren Empfehlungstechniken
+kombinieren. Die eigentliche Empfehlung entsteht dabei nicht allein
+durch statistische Muster in den Nutzungsdaten, sondern durch
+Schlussfolgerungen auf Grundlage der modellierten Wissensstrukturen.
+
+Besonders semantische Ähnlichkeitsverfahren spielen eine wichtige Rolle.
+Dabei werden Beziehungen zwischen Konzepten innerhalb einer Ontologie
+genutzt, um die fachliche Nähe zwischen Lernressourcen, Kompetenzen oder
+Lernzielen zu bestimmen. Regelbasierte Verfahren ermöglichen darüber
+hinaus die Formulierung expliziter pädagogischer oder fachlicher Regeln,
+auf deren Grundlage Empfehlungen abgeleitet werden können. Adaptive
+Entscheidungen beruhen damit stärker auf symbolischen Inferenzprozessen
+als auf rein datengetriebenem Lernen \citep{George2019}.
+
+Gleichzeitig verweisen die Autoren auf mehrere Herausforderungen. Die
+Erstellung und Pflege ontologischer Wissensmodelle ist häufig mit hohem
+Modellierungsaufwand verbunden und erfordert umfangreiche
+Domänenkenntnisse. Darüber hinaus wird die Evaluation solcher Systeme
+durch das Fehlen standardisierter Datensätze und Vergleichsgrundlagen
+erschwert \citep{George2019}.
+
+Für eine informatische Klassifikation adaptiver Verfahren sind
+ontologiebasierte Recommender insbesondere deshalb relevant, weil sie
+eine deutlich andere Modellierungslogik verfolgen als rein
+datengetriebene Ansätze. Während viele Machine-Learning-Verfahren
+Zusammenhänge implizit aus Interaktionsdaten lernen, beruhen
+ontologiebasierte Systeme auf explizit repräsentiertem Wissen und
+symbolischen Schlussfolgerungsmechanismen. Adaptive Lernsysteme
+unterscheiden sich daher nicht nur hinsichtlich ihrer Algorithmen,
+sondern auch hinsichtlich der Art, wie Wissen innerhalb des Systems
+repräsentiert und verarbeitet wird.
+
+Verwandt, aber nicht deckungsgleich mit Recommender-Systemen sind
+Lernpfad- und Sequenzierungsverfahren. Während klassische
+Recommender-Systeme primär die Auswahl einzelner Lernressourcen oder
+Inhalte unterstützen, beschäftigen sich Lernpfadverfahren mit der
+Planung, Generierung und Anpassung ganzer Sequenzen von Lernaktivitäten.
+Im Mittelpunkt steht dabei die Frage, in welcher Reihenfolge Lerninhalte
+bearbeitet werden sollten, um individuelle Lernziele möglichst effizient
+zu erreichen \citep{Nabizadeh2020}.
+
+Der Survey von Nabizadeh et al.~unterscheidet zur Personalisierung von
+Lernpfaden drei zentrale Ansätze: Course Generation, Sequential Pattern
+Recognition und Course Sequence. Bei der Course Generation werden
+individuelle Lernpfade auf Grundlage von Lernzielen, Vorwissen oder
+Kompetenzanforderungen erzeugt. Sequential Pattern Recognition
+konzentriert sich dagegen auf die Identifikation erfolgreicher
+Lernsequenzen innerhalb vorhandener Lerndaten, um daraus geeignete
+Reihenfolgen von Lernaktivitäten abzuleiten. Course-Sequence-Verfahren
+fokussieren schließlich die gezielte Planung und Optimierung von Kurs-
+oder Inhaltsabfolgen unter Berücksichtigung fachlicher Abhängigkeiten,
+Voraussetzungen und Lernfortschritte \citep{Nabizadeh2020}.
+
+Die einzelnen Ansätze zur Lernpfadpersonalisierung werden durch sehr
+unterschiedliche Optimierungs- und Suchverfahren realisiert. Der Survey
+von Nabizadeh et al.~zeigt, dass insbesondere evolutionäre Verfahren wie
+Genetic Algorithms, schwarmbasierte Optimierungsverfahren wie Ant Colony
+Optimization und Particle Swarm Optimization, graphbasierte Verfahren,
+Constraint-based Approaches sowie Case-Based-Reasoning-Ansätze
+eingesetzt werden \citep{Nabizadeh2020}.
+
+Gemeinsam ist diesen Verfahren, dass sie nicht lediglich einzelne
+Inhalte auswählen, sondern mögliche Lernsequenzen als
+Optimierungsproblem betrachten. Ziel ist es, unter Berücksichtigung von
+Lernzielen, Vorwissen, Voraussetzungen oder zeitlichen Restriktionen
+eine möglichst geeignete Reihenfolge von Lernaktivitäten zu bestimmen.
+Graphbasierte Verfahren modellieren Lernpfade beispielsweise als
+Netzwerke von Lernobjekten und suchen geeignete Wege durch diese
+Strukturen. Evolutionäre und schwarmbasierte Verfahren erzeugen dagegen
+schrittweise verbesserte Lernpfade, indem verschiedene
+Lösungsalternativen miteinander verglichen und optimiert werden
+\citep{Nabizadeh2020}.
+
+Darüber hinaus zeigt die Literatur, dass Lernpfadverfahren häufig
+mehrere Modellierungsansätze kombinieren. Neben klassischen
+Optimierungsverfahren kommen unter anderem
+Reinforcement-Learning-Ansätze, Fuzzy-Logic-Methoden sowie
+wissensbasierte Verfahren zum Einsatz. Die algorithmische Vielfalt
+verdeutlicht, dass Lernpfadpersonalisierung weniger als einzelner
+Algorithmus, sondern vielmehr als eigenständige Klasse sequenzieller
+Entscheidungs- und Optimierungsprobleme verstanden werden kann
+\citep{Nabizadeh2020}.
+
+Insgesamt verdeutlicht die Literatur, dass Lernpfadpersonalisierung
+einen eigenständigen Bereich adaptiver Lernverfahren darstellt. Im
+Unterschied zu klassischen Recommender-Systemen steht nicht primär die
+Auswahl eines einzelnen Inhaltsobjekts im Vordergrund, sondern die
+Planung, Generierung und Optimierung ganzer Lernsequenzen
+\citep{Nabizadeh2020}. Die Vielfalt der eingesetzten Verfahren -- von
+graphbasierten und wissensbasierten Ansätzen über evolutionäre und
+schwarmbasierte Optimierungsverfahren bis hin zu
+Reinforcement-Learning-Methoden -- zeigt, dass Lernpfadpersonalisierung
+als sequenzielles Entscheidungs- und Optimierungsproblem verstanden
+werden kann. Für eine informatische Klassifikation adaptiver Verfahren
+ergibt sich daraus, dass nicht nur die verwendeten Algorithmen, sondern
+auch die Art der zu lösenden Entscheidungsprobleme berücksichtigt werden
+sollte.
+
+\subsection{Compurterized Adaptive
+Testing}\label{compurterized-adaptive-testing}
+
+Die Grundlage vieler Computerized-Adaptive-Testing-Systeme bilden
+psychometrische Messmodelle, insbesondere Verfahren der Item Response
+Theory (IRT) \citep{Han2018, Liu2024}. Im Gegensatz zu klassischen Tests
+wird dabei nicht davon ausgegangen, dass alle Testpersonen dieselben
+Aufgaben bearbeiten müssen. Stattdessen wird die Schwierigkeit einer
+Aufgabe in Beziehung zur geschätzten Fähigkeit einer Person gesetzt. Auf
+Grundlage der bisherigen Antworten wird fortlaufend eine Schätzung des
+Fähigkeitsniveaus berechnet, die anschließend die Auswahl weiterer
+Aufgaben steuert.
+
+Han beschreibt die klassische CAT-Architektur über drei zentrale
+Komponenten des Item-Selection-Algorithmus: Content Balancing, Item
+Selection Criterion und Item Exposure Control \citep{Han2018}. Content
+Balancing stellt sicher, dass unterschiedliche Inhaltsbereiche
+angemessen berücksichtigt werden. Das Item Selection Criterion bestimmt,
+welche Aufgabe für die aktuelle Fähigkeitsschätzung den größten
+Informationsgewinn verspricht. Item Exposure Control dient dazu, eine
+übermäßige Wiederverwendung einzelner Aufgaben zu verhindern und die
+Qualität des Aufgabenpools langfristig zu erhalten.
+
+Die einzelnen Komponenten werden wiederum durch unterschiedliche
+psychometrische und algorithmische Verfahren realisiert. Für die
+Fähigkeitsschätzung kommen häufig Modelle der Item Response Theory (IRT)
+zum Einsatz, insbesondere das Rasch-Modell (1PL) sowie die erweiterten
+2PL- und 3PL-Modelle, welche unterschiedliche Eigenschaften von
+Testaufgaben berücksichtigen. Die Auswahl der nächsten Aufgabe erfolgt
+häufig informationsbasiert, etwa über
+Maximum-Fisher-Information-Kriterien, bei denen jene Aufgabe ausgewählt
+wird, die für die aktuelle Fähigkeitsschätzung den größten erwarteten
+Informationsgewinn liefert. Zur Kontrolle der Aufgabennutzung werden
+darüber hinaus Exposure-Control-Verfahren eingesetzt, beispielsweise das
+Sympson-Hetter-Verfahren, um eine übermäßige Wiederverwendung einzelner
+Testitems zu verhindern \citep{Han2018}.
+
+Der Survey von Liu et al.~erweitert diese klassische Sichtweise um
+zusätzliche Komponenten wie Measurement Models, Question Selection, Bank
+Construction und Test Control \citep{Liu2024}. Dabei kommen zunehmend
+auch Machine-Learning- und Optimierungsverfahren zum Einsatz. Für die
+Aufgabenwahl werden beispielsweise informationsbasierte
+Selektionsverfahren, Bayes-Methoden oder banditähnliche Strategien
+diskutiert. Darüber hinaus werden Verfahren zur automatisierten
+Konstruktion und Kalibrierung von Aufgabenpools sowie Modelle zur
+Vorhersage von Itemeigenschaften untersucht. Die Literatur verdeutlicht
+damit einen Wandel von klassischen psychometrischen CAT-Systemen hin zu
+stärker datengetriebenen und algorithmisch erweiterten
+Adaptionsarchitekturen \citep{Liu2024}.
+
+Für eine informatische Betrachtung adaptiver Verfahren ist CAT besonders
+interessant, weil die einzelnen Schritte der Adaptation explizit
+modelliert werden. Die Fähigkeitsschätzung, die Auswahl der nächsten
+Aufgabe, die Kontrolle der Testbedingungen sowie die Entscheidung über
+die Beendigung des Tests erfolgen innerhalb einer klar definierten
+Entscheidungsarchitektur \citep{Han2018, Liu2024}. Im Unterschied zu
+vielen anderen adaptiven Lernverfahren steht damit nicht primär die
+Modellierung komplexer Lernprozesse im Vordergrund, sondern die
+möglichst effiziente Gewinnung von Informationen über den
+Fähigkeitsstand einer Person. CAT stellt somit ein Anwendungsfeld dar,
+in dem Adaptivität als sequenzielles Entscheidungs- und
+Optimierungsproblem besonders deutlich sichtbar wird.
+
+\subsection{Reinforcement Learning}\label{reinforcement-learning}
+
+Reinforcement Learning unterscheidet sich von vielen anderen adaptiven
+Verfahren dadurch, dass Entscheidungen nicht auf Grundlage fester Regeln
+oder bereits gelernter Modelle getroffen werden, sondern durch
+fortlaufende Interaktion mit einer Umgebung optimiert werden. Ein Agent
+wählt dabei wiederholt Aktionen aus, beobachtet deren Auswirkungen und
+erhält Rückmeldungen in Form von Belohnungen oder Bestrafungen. Ziel ist
+es, langfristig eine Strategie zu erlernen, welche den kumulierten
+Nutzen über viele Entscheidungsschritte hinweg maximiert
+\citep{Riedmann2025}.
+
+Diese Grundidee ist für adaptive Lernsysteme besonders attraktiv, da
+viele Bildungsprozesse selbst als sequenzielle Entscheidungsprobleme
+verstanden werden können. Die Auswahl eines Lerninhalts beeinflusst
+beispielsweise nicht nur den unmittelbaren Lernerfolg, sondern auch
+spätere Lernmöglichkeiten und den weiteren Lernverlauf.
+Reinforcement-Learning-Verfahren ermöglichen es daher, adaptive
+Entscheidungen nicht isoliert, sondern im Kontext langfristiger
+Lernziele zu optimieren \citep{Riedmann2025}.
+
+Die Literatur berichtet dabei unterschiedliche Klassen von
+Reinforcement-Learning-Verfahren. Zu den klassischen Ansätzen zählt
+Q-Learning, bei dem für jede mögliche Aktion schrittweise ein erwarteter
+Nutzenwert erlernt wird. Deep-Q-Networks (DQN) erweitern dieses Prinzip
+durch neuronale Netze und ermöglichen die Verarbeitung komplexerer
+Zustandsräume. Policy-Gradient-Verfahren wie REINFORCE verfolgen dagegen
+einen anderen Ansatz: Statt einzelne Aktionswerte zu schätzen, lernen
+sie direkt eine Entscheidungsstrategie, welche die Auswahl zukünftiger
+Aktionen steuert \citep{Riedmann2025}.
+
+Die verschiedenen Verfahren unterscheiden sich insbesondere hinsichtlich
+ihrer Repräsentation von Zuständen, ihrer Lernstrategie sowie ihrer
+Skalierbarkeit auf komplexe Lernumgebungen. Während klassische Verfahren
+wie Q-Learning häufig leichter interpretierbar sind, ermöglichen
+Deep-Reinforcement-Learning-Ansätze die Modellierung deutlich
+komplexerer Adaptionsprozesse \citep{Riedmann2025}.
+
+\subsection{Heterogene Verfahren und
+Datenquellen}\label{heterogene-verfahren-und-datenquellen}
+
+Über diese Verfahrensfamilien hinaus bleibt festzuhalten, dass adaptive
+E-Learning-Systeme in der Praxis nur selten auf einem einzelnen
+Modellierungsansatz beruhen. Der systematische Review von Wang et
+al.~zeigt, dass insbesondere Lernstile, Wissensstände und Lernverhalten
+häufig gemeinsam innerhalb von Learner Models berücksichtigt werden und
+zu ihrer Modellierung sehr unterschiedliche Verfahren eingesetzt werden
+\citep{Wang2025}.
+
+Die Autoren identifizieren unter anderem Bayesian Networks, Neural
+Networks, Fuzzy-Logic-Methoden, Entscheidungsbäume,
+k-Nearest-Neighbor-Verfahren, Faktorenanalyse sowie regelbasierte
+Ansätze als wiederkehrende Techniken innerhalb adaptiver Lernsysteme
+\citep{Wang2025}. Die Bandbreite dieser Verfahren verdeutlicht, dass
+adaptive Systeme unterschiedliche Arten von Wissen und Daten verarbeiten
+müssen und daher häufig mehrere Modellierungsansätze miteinander
+kombinieren.
+
+Besonders interessant ist dabei die Entwicklung der verwendeten
+Verfahren über die Zeit. Wang et al.~beschreiben einen Wandel von einer
+früher vergleichsweise starken Dominanz von Fuzzy-Logic-Verfahren hin zu
+einer deutlich vielfältigeren Methodenlandschaft, in der
+probabilistische Modelle, Machine-Learning-Verfahren, neuronale Netze
+und regelbasierte Ansätze parallel eingesetzt werden \citep{Wang2025}.
+Adaptive Lernsysteme entwickeln sich damit zunehmend zu hybriden
+Architekturen, in denen unterschiedliche Verfahren jeweils spezifische
+Teilaufgaben übernehmen.
+
+Für eine informatische Klassifikation adaptiver Lernverfahren ergibt
+sich daraus eine wichtige Konsequenz: Die einzelnen Verfahrensfamilien
+treten in realen Systemen häufig nicht isoliert auf. Ein adaptives
+System kann beispielsweise probabilistische Wissensmodelle zur
+Lernstandsdiagnostik, Recommender-Verfahren zur Inhaltsauswahl sowie
+Optimierungsverfahren zur Lernpfadplanung gleichzeitig verwenden. Die
+algorithmische Landschaft adaptiver Lernsysteme ist daher nicht nur
+vielfältig, sondern auch stark durch die Kombination unterschiedlicher
+Modellierungs- und Entscheidungsverfahren geprägt \citep{Wang2025}.
+
+Neben den verwendeten Modellierungs- und Entscheidungsverfahren
+unterscheiden sich adaptive Lernsysteme auch hinsichtlich der
+Datenarten, die sie verarbeiten. Die Literatur zeigt, dass
+unterschiedliche Verfahrensfamilien auf sehr verschiedenen
+Informationsquellen basieren und dadurch jeweils andere Aspekte des
+Lernprozesses erfassen \citep{Wang2025, Shen2024, daSilva2023}.
+
+Im Bereich des Knowledge Tracing bilden insbesondere Aufgabenfolgen,
+Antwortmuster und Bearbeitungshistorien die Grundlage der
+Wissensmodellierung. Erweiterte Modelle berücksichtigen darüber hinaus
+zusätzliche Informationen wie Antwortzeiten, Vergessenseffekte,
+Lernverhalten oder Tutorinterventionen als sogenannte Side Information
+\citep{Shen2024}. Ziel ist es, den Wissenszustand eines Lernenden
+möglichst präzise aus einer Folge beobachtbarer Interaktionen
+abzuleiten.
+
+Computerized-Adaptive-Testing-Systeme arbeiten ebenfalls mit
+Antwortdaten, konzentrieren sich jedoch stärker auf die kontinuierliche
+Schätzung von Fähigkeitswerten innerhalb einer Testsituation. Relevant
+sind dabei insbesondere Antwortmuster, Itemeigenschaften,
+Aufgabenschwierigkeiten sowie Informationen zur Teststeuerung und
+Itemauswahl \citep{Han2018, Liu2024}.
+
+Recommender-Systeme greifen dagegen häufig auf deutlich breitere
+Datenquellen zurück. Dazu zählen Interessenprofile, Lernhistorien,
+Leistungsdaten, Präferenzen, Kompetenzinformationen sowie Eigenschaften
+von Lernressourcen. Kollaborative Verfahren nutzen zusätzlich
+Interaktionsdaten anderer Lernender, während wissens- und
+ontologiebasierte Ansätze stärker auf explizite Domänenmodelle und
+strukturierte Wissensrepräsentationen zurückgreifen
+\citep{daSilva2023, George2019}.
+
+Auch Machine-Learning-basierte adaptive Lernsysteme verarbeiten häufig
+vielfältige Verhaltens- und Kontextdaten. Wang et al.~nennen unter
+anderem Lernleistungen, Lernverhalten, demographische Merkmale,
+Lernstile sowie Interaktionsdaten als typische Informationsquellen
+innerhalb von Learner Models. In cluster- und verhaltensbasierten
+Verfahren spielen zusätzlich Klickpfade, Bearbeitungszeiten oder
+Nutzungsmuster digitaler Lernumgebungen eine wichtige Rolle
+\citep{Wang2025}.
+
+Für eine informatische Klassifikation adaptiver Lernverfahren ergibt
+sich daraus, dass Verfahren nicht ausschließlich anhand ihrer
+Algorithmen beschrieben werden können. Unterschiedliche
+Modellierungsansätze basieren auf unterschiedlichen
+Datenrepräsentationen und Informationsquellen. Eine systematische
+Einordnung adaptiver Lernverfahren sollte daher neben den verwendeten
+Algorithmen auch die zugrunde liegende Datenbasis berücksichtigen, da
+diese wesentlich beeinflusst, welche Formen von Adaptivität überhaupt
+realisiert werden können.
+
+\section{Zwischenfazit und Anforderungen an eine eigene
+Klassifikation}\label{zwischenfazit-und-anforderungen-an-eine-eigene-klassifikation}
+
+Die Analyse des Forschungsstands zeigt, dass adaptive Lernsysteme in der
+Literatur aus sehr unterschiedlichen Perspektiven beschrieben und
+klassifiziert werden. Während einige Arbeiten Adaptivität primär über
+Lernendenmerkmale, pädagogische Zielgrößen oder Formen der
+Personalisierung strukturieren, fokussieren andere stärker
+Systemarchitekturen, Learner Models, Anwendungskontexte oder konkrete
+algorithmische Verfahren. Darüber hinaus werden spezialisierte
+Forschungsfelder wie Knowledge Tracing, Educational Recommender Systems,
+Computerized Adaptive Testing oder Reinforcement-Learning-basierte
+Lernsysteme häufig weitgehend unabhängig voneinander betrachtet, obwohl
+sich zahlreiche algorithmische Grundprinzipien zwischen diesen Bereichen
+überschneiden.
+
+Die Analyse macht zugleich deutlich, dass bestehende Systematisierungen
+häufig unterschiedliche Beschreibungsebenen vermischen. Teilweise stehen
+funktionale Rollen adaptiver Verfahren im Vordergrund, etwa
+Wissensdiagnostik, Empfehlung oder Sequenzierung. Andere Arbeiten
+klassifizieren nach Modellierungsverfahren, Datenquellen, Plattformtypen
+oder pädagogischen Zielgrößen. Eine informatisch orientierte
+Klassifikation adaptiver Lernverfahren sollte diese unterschiedlichen
+Ebenen zunächst analytisch voneinander trennen, bevor sie systematisch
+zusammengeführt werden. Erst dadurch lässt sich nachvollziehen, welche
+Verfahren ähnliche Probleme lösen, welche Daten sie verarbeiten und
+welche Modellierungslogiken ihren Entscheidungen zugrunde liegen.
+
+Aus der Analyse der unterschiedlichen Verfahrensfamilien ergeben sich
+mehrere Anforderungen an eine informatisch orientierte Klassifikation
+adaptiver Lernverfahren. Die untersuchten Verfahren treten in
+unterschiedlichen Forschungskontexten wie Knowledge Tracing, Educational
+Recommender Systems, Computerized Adaptive Testing oder
+Reinforcement-Learning-basierten Lernumgebungen auf, verwenden jedoch
+teilweise ähnliche Modellierungs- und Entscheidungsprinzipien. Eine
+Klassifikation sollte daher nicht ausschließlich an Anwendungskontexten
+ansetzen, sondern gemeinsame algorithmische Grundideen sichtbar machen.
+Gleichzeitig hat die Analyse gezeigt, dass adaptive Verfahren innerhalb
+eines Systems unterschiedliche funktionale Rollen übernehmen können,
+etwa bei der Wissensdiagnostik, der Empfehlung von Lernressourcen, der
+Planung von Lernpfaden oder der Optimierung adaptiver Entscheidungen.
+Darüber hinaus unterscheiden sich die Verfahren erheblich hinsichtlich
+ihrer Datenquellen, Modellierungsansätze sowie ihrer Transparenz und
+Interpretierbarkeit. Eine tragfähige Klassifikation sollte diese
+unterschiedlichen Beschreibungsebenen systematisch berücksichtigen.
+
+Zusätzlich macht die Literatur auf mehrere Defizite bestehender
+Forschungsansätze aufmerksam. Im Bereich des Learner Modelings wird
+wiederholt auf fehlende Standardisierung und uneinheitliche
+Beschreibungen von Lernendenmodellen hingewiesen \citep{Boeck2025}.
+Educational-Recommender-Systeme werden häufig anhand technischer
+Qualitätsmaße wie Genauigkeit oder Präzision bewertet, während ihre
+tatsächliche pädagogische Wirksamkeit deutlich seltener untersucht wird
+\citep{daSilva2023}. Für Reinforcement-Learning-basierte Lernsysteme
+verweist die Literatur zudem auf methodische und empirische
+Einschränkungen, da viele Arbeiten weiterhin auf simulierten Szenarien
+beruhen und groß angelegte Evaluationen mit realen Lernenden bislang
+vergleichsweise selten sind \citep{Riedmann2025}. Diese Befunde
+verdeutlichen die weiterhin starke Fragmentierung der Forschung zu
+adaptiven Lernverfahren. Eine eigene Klassifikation sollte daher einen
+gemeinsamen Ordnungsrahmen schaffen, der Verfahren auch über die Grenzen
+einzelner Forschungsfelder hinweg vergleichbar macht.
+
+Für den weiteren Aufbau der Arbeit bedeutet dies, dass Kapitel 2
+zunächst die zentralen Perspektiven, Verfahrensfamilien und
+Modellierungsansätze adaptiver Lernsysteme systematisch herausarbeitet
+und zugleich die Grenzen bestehender Systematisierungen sichtbar macht.
+Die Analyse hat gezeigt, dass weder anwendungsbezogene Einteilungen noch
+rein algorithmische oder pädagogische Klassifikationen die Vielfalt
+adaptiver Lernverfahren vollständig erfassen können. Insbesondere die
+Überschneidungen zwischen unterschiedlichen Forschungsfeldern, die
+Heterogenität der Datenquellen sowie die Kombination mehrerer Verfahren
+innerhalb realer Systeme erschweren eine eindeutige Einordnung
+bestehender Ansätze.
+
+Kapitel 3 sollte daher auf dieser Grundlage eine eigenständige
+Klassifikation entwickeln, die adaptive Lernverfahren nicht
+ausschließlich über Anwendungskontexte oder einzelne Technologien
+beschreibt, sondern als informatische Modellierungs-, Diagnose-,
+Entscheidungs- und Optimierungsverfahren systematisch einordnet. Der
+Mehrwert einer solchen Klassifikation liegt insbesondere darin,
+unterschiedliche Verfahrensfamilien über gemeinsame Strukturmerkmale
+vergleichbar zu machen und dadurch einen übergreifenden Ordnungsrahmen
+für adaptive Lernsysteme bereitzustellen.
+
+\section{Offene Punkte und Grenzen}\label{offene-punkte-und-grenzen}
+
+Die verfügbare Überblicksliteratur zu adaptiven Lernsystemen ist
+umfangreich, zugleich jedoch stark fragmentiert. Allgemeine Reviews
+fokussieren häufig pädagogische Konzepte, Formen der Personalisierung
+oder Systemarchitekturen, während detaillierte Analysen algorithmischer
+Verfahren überwiegend in spezialisierten Forschungsfeldern wie Knowledge
+Tracing, Educational Recommender Systems, Computerized Adaptive Testing
+oder Reinforcement Learning zu finden sind. Eine übergreifende
+Betrachtung adaptiver Lernverfahren erfordert daher die Zusammenführung
+von Erkenntnissen aus mehreren Teilgebieten, die unterschiedliche
+Begrifflichkeiten, Modellierungsansätze und Bewertungskriterien
+verwenden.
+
+Darüber hinaus zeigt sich, dass die Evidenzlage häufig stärker auf die
+Beschreibung einzelner Verfahren oder Forschungsfelder ausgerichtet ist
+als auf deren systematischen Vergleich. Zwar liegen zahlreiche
+Untersuchungen zu Lernwirkungen, Vorhersageleistungen oder technischen
+Eigenschaften einzelner Ansätze vor, jedoch existieren nur begrenzte
+Erkenntnisse darüber, unter welchen Bedingungen bestimmte
+Verfahrensfamilien gegenüber anderen vorzuziehen sind. Insbesondere
+hybride Systeme, die mehrere Modellierungs- und Entscheidungsverfahren
+kombinieren, erschweren eine eindeutige Zuordnung zu bestehenden
+Kategorien.
+
+Die im Rahmen dieses Kapitels entwickelte Analyse kann daher keinen
+Anspruch auf eine vollständige oder abschließende Bewertung aller
+adaptiven Lernverfahren erheben. Sie schafft jedoch eine fundierte
+Grundlage, um in den folgenden Kapiteln eine eigenständige informatisch
+orientierte Klassifikation zu entwickeln, die die identifizierten
+Perspektiven, Verfahrensfamilien und Beschreibungsebenen systematisch
+zusammenführt.

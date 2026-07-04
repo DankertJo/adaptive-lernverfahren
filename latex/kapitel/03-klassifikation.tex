@@ -1,0 +1,799 @@
+% !TEX root = ../main.tex
+
+\chapter{Eigene Klassifikation adaptiver
+Lernverfahren}\label{eigene-klassifikation-adaptiver-lernverfahren}
+
+Aufbauend auf den in Kapitel 2 identifizierten Anforderungen wird im
+Folgenden eine eigenständige Klassifikation adaptiver Lernverfahren
+entwickelt. Ziel ist nicht die Einordnung nach Anwendungskontexten oder
+Plattformtypen, sondern die systematische Beschreibung der Verfahren
+anhand ihrer funktionalen Rolle innerhalb adaptiver Systeme sowie
+weiterer ergänzender Merkmale. Die Klassifikation soll Verfahren
+unterschiedlicher Forschungsfelder vergleichbar machen und gleichzeitig
+die Einordnung konkreter Algorithmen ermöglichen.
+
+\section{Wahl der
+Klassifikationsstruktur}\label{wahl-der-klassifikationsstruktur}
+
+Die in Kapitel 2 analysierte Literatur macht deutlich, dass adaptive
+Lernverfahren durch eine hohe methodische Vielfalt gekennzeichnet sind.
+Neben probabilistischen, logistischen und tiefen Lernmodellen existieren
+Recommender-Systeme, Lernpfadverfahren, psychometrische Ansätze und
+Reinforcement-Learning-Verfahren, die teilweise unterschiedliche
+Aufgaben innerhalb adaptiver Systeme übernehmen, teilweise jedoch auch
+ähnliche Probleme mit unterschiedlichen Modellierungsansätzen lösen.
+Gleichzeitig treten viele Verfahren in mehreren Forschungskontexten auf
+und werden in realen Systemen häufig miteinander kombiniert. Die
+Entwicklung einer eigenen Klassifikation erfordert daher zunächst die
+Frage, welche Strukturform für eine systematische Einordnung dieser
+Verfahren geeignet ist.
+
+Eine rein hierarchische Taxonomie bietet den Vorteil einer klaren und
+intuitiven Struktur. Verfahren können schrittweise in Ober- und
+Unterkategorien eingeordnet werden, wodurch sich eine übersichtliche
+Gliederung ergibt. Für adaptive Lernverfahren erweist sich ein solcher
+Ansatz jedoch als nur eingeschränkt geeignet. Viele Verfahren lassen
+sich nicht eindeutig einer einzelnen Kategorie zuordnen, da hybride
+Systeme mehrere Modellierungs- und Entscheidungsverfahren kombinieren.
+Zudem treten identische Verfahren teilweise in unterschiedlichen
+Anwendungskontexten auf. Eine ausschließlich hierarchische Struktur
+würde daher entweder Mehrfachzuordnungen erzwingen oder relevante
+Unterschiede zwischen Verfahren verdecken.
+
+Demgegenüber ermöglicht eine rein facettierte Taxonomie die unabhängige
+Beschreibung verschiedener Eigenschaften eines Verfahrens. Datenbasis,
+Modellierungsansatz, Entscheidungsmechanismus oder Interpretierbarkeit
+könnten getrennt voneinander betrachtet werden. Dieser Ansatz bietet
+eine hohe analytische Flexibilität und eignet sich insbesondere für den
+Vergleich heterogener Verfahren. Für die Zielsetzung dieser Arbeit
+besitzt eine ausschließlich facettierte Struktur jedoch den Nachteil,
+dass sie keinen intuitiven primären Ordnungsrahmen bereitstellt.
+Verfahren würden lediglich als Kombination verschiedener Merkmale
+erscheinen, ohne dass ihre funktionale Rolle innerhalb adaptiver Systeme
+unmittelbar sichtbar wird.
+
+Für die vorliegende Arbeit erscheint daher eine hierarchisch verankerte
+facettierte Mehrdimensionaltaxonomie am geeignetsten. Sie kombiniert die
+Vorteile beider Ansätze: Einerseits werden Verfahren zunächst anhand
+ihrer funktionalen Rolle innerhalb des adaptiven Prozesses eingeordnet.
+Andererseits ermöglichen zusätzliche Beschreibungsdimensionen eine
+differenzierte Charakterisierung der Verfahren. Auf diese Weise lassen
+sich sowohl konkrete Algorithmen als auch hybride Systeme systematisch
+erfassen, ohne die Übersichtlichkeit der Klassifikation zu verlieren.
+
+\subsection{Herleitung der
+Hauptdimensionen}\label{herleitung-der-hauptdimensionen}
+
+Die Analyse der in Kapitel 2 betrachteten Verfahrensfamilien zeigt, dass
+adaptive Lernsysteme trotz ihrer methodischen Vielfalt zwei grundlegende
+Aufgaben erfüllen müssen. Zum einen benötigen sie Mechanismen zur
+Erfassung und Modellierung des aktuellen Lernzustands. Zum anderen
+müssen sie auf Grundlage dieser Informationen Entscheidungen über
+Inhalte, Aufgaben, Interventionen oder Lernpfade treffen. Unabhängig
+davon, ob ein System probabilistische Modelle, Recommender-Verfahren,
+psychometrische Ansätze oder Reinforcement Learning verwendet, lassen
+sich die zugrunde liegenden Verfahren letztlich einer dieser beiden
+Aufgaben zuordnen.
+
+Verfahren wie Bayesian Knowledge Tracing, Performance Factors Analysis,
+Item-Response-Theory-Modelle oder Deep Knowledge Tracing dienen primär
+der Schätzung von Wissen, Fähigkeiten oder zukünftigen Leistungen. Ihr
+Ziel besteht darin, einen internen Zustand des Lernenden möglichst
+präzise zu modellieren. Recommender-Systeme, Lernpfadverfahren,
+Computerized Adaptive Testing oder Reinforcement-Learning-Verfahren
+treffen demgegenüber Entscheidungen darüber, welche Inhalte, Aufgaben
+oder Interventionen als Nächstes ausgewählt werden sollen. Sie greifen
+dabei häufig auf Informationen zurück, die zuvor durch Verfahren der
+Zustandsmodellierung bereitgestellt wurden.
+
+Aus dieser Beobachtung ergibt sich die funktionale Rolle eines
+Verfahrens als geeignete primäre Klassifikationsdimension. Die
+vorgeschlagene Taxonomie unterscheidet daher zunächst zwischen Verfahren
+der Zustandsmodellierung und Verfahren der Adaptionsentscheidung.
+
+\section{Die vorgeschlagene
+Klassifikation}\label{die-vorgeschlagene-klassifikation}
+
+\subsection{Zustandsmodellierung}\label{zustandsmodellierung}
+
+Die erste Hauptklasse der vorgeschlagenen Klassifikation umfasst
+Verfahren zur Zustandsmodellierung des Lernenden. Gemeinsam ist diesen
+Verfahren, dass ihre unmittelbare Ausgabe nicht in einer konkreten
+adaptiven Entscheidung besteht, sondern in der Schätzung eines internen
+Zustands des Lernenden. Ziel ist es, Wissen, Fähigkeiten, Kompetenzen,
+Präferenzen oder zukünftige Leistungen auf Grundlage beobachtbarer
+Interaktionen möglichst präzise zu modellieren. Die erzeugten
+Zustandsinformationen dienen anschließend häufig als Grundlage für
+weitere adaptive Entscheidungen, etwa bei der Auswahl von
+Lernressourcen, der Generierung von Lernpfaden oder der Steuerung
+adaptiver Tests.
+
+Die Analyse der in Kapitel 2 betrachteten Forschungsfelder zeigt, dass
+Verfahren der Zustandsmodellierung in nahezu allen Bereichen adaptiver
+Lernsysteme eine zentrale Rolle einnehmen. Im Knowledge Tracing steht
+die Schätzung des Beherrschungsgrads einzelner Wissenskomponenten im
+Vordergrund. Im Computerized Adaptive Testing werden Fähigkeiten über
+psychometrische Modelle geschätzt, während Recommender-Systeme und
+Lernpfadverfahren häufig Informationen über Wissen, Präferenzen oder
+Lernfortschritte als Eingabe für spätere Entscheidungen nutzen. Trotz
+unterschiedlicher Anwendungskontexte verfolgen diese Verfahren somit
+dieselbe grundlegende Funktion: die Modellierung eines internen Zustands
+des Lernenden auf Basis beobachtbarer Daten.
+
+Aus der Literatur lassen sich innerhalb dieser Hauptklasse fünf zentrale
+Untergruppen ableiten. Diese unterscheiden sich primär hinsichtlich
+ihrer Modellierungslogik, ihrer Annahmen über den Lernprozess sowie der
+Art und Weise, wie Zustandsinformationen aus den verfügbaren Daten
+gewonnen werden. Die vorgeschlagene Klassifikation unterscheidet daher
+zwischen psychometrischen Fähigkeitsmodellen, probabilistisch-temporalen
+Wissensmodellen, logistischen und online aktualisierten
+Performanzmodellen, merkmalsbasierten Machine-Learning-Modellen sowie
+tiefen sequenziellen und repräsentationslernenden Modellen.
+
+\subsubsection{Psychometrische
+Fähigkeitsmodelle}\label{psychometrische-fuxe4higkeitsmodelle}
+
+Psychometrische Fähigkeitsmodelle bilden die erste Unterklasse der
+Zustandsmodellierung. Ihr gemeinsames Ziel besteht darin, latente
+Fähigkeiten oder Kompetenzen eines Lernenden auf Grundlage beobachtbarer
+Antwortmuster zu schätzen. Im Gegensatz zu vielen später entwickelten
+Lernmodellen steht dabei weniger die Modellierung eines zeitlichen
+Lernverlaufs als vielmehr die möglichst präzise Messung eines aktuellen
+Fähigkeitsniveaus im Vordergrund \citep{Han2018, Liu2024}.
+
+Zu den wichtigsten Vertretern dieser Modellfamilie zählen das
+Rasch-Modell sowie die verschiedenen Modelle der Item Response Theory
+(IRT). Diese Verfahren beschreiben die Wahrscheinlichkeit einer
+korrekten Antwort als Funktion von Personen- und Itemparametern und
+ermöglichen dadurch die Schätzung latenter Fähigkeiten aus Testdaten. In
+adaptiven Testsystemen dienen sie häufig als Grundlage für die Auswahl
+informativer Aufgaben und die fortlaufende Aktualisierung von
+Fähigkeitswerten \citep{Han2018, Liu2024}.
+
+Innerhalb der vorgeschlagenen Klassifikation werden psychometrische
+Modelle als eigenständige Unterklasse geführt, da ihr primärer Fokus auf
+der diagnostischen Fähigkeitsmessung liegt. Während spätere
+Knowledge-Tracing-Modelle Lernprozesse über mehrere Interaktionen hinweg
+modellieren, konzentrieren sich psychometrische Verfahren auf die
+möglichst zuverlässige Schätzung eines latenten Zustands zu einem
+gegebenen Zeitpunkt \citep{Shen2024, Han2018}. Typische Vertreter dieser
+Unterklasse sind das Rasch-Modell sowie die 2PL- und 3PL-Varianten der
+Item Response Theory.
+
+\subsubsection{Probabilistisch-temporale
+Wissensmodelle}\label{probabilistisch-temporale-wissensmodelle}
+
+Probabilistisch-temporale Wissensmodelle bilden die zweite Unterklasse
+der Zustandsmodellierung. Ihr gemeinsames Merkmal besteht darin, dass
+sie Wissen nicht als statischen Zustand, sondern als dynamischen
+Lernprozess modellieren. Ziel dieser Verfahren ist die Schätzung der
+Wahrscheinlichkeit, mit der ein Lernender eine bestimmte
+Wissenskomponente beherrscht, wobei diese Schätzung nach jeder neuen
+Lerninteraktion aktualisiert wird \citep{Shen2024, Abdelrahman2023}.
+
+Charakteristisch für diese Modellfamilie ist die explizite Modellierung
+von Wissensentwicklung über die Zeit. Viele Verfahren dieser Klasse
+basieren auf probabilistischen Zustandsmodellen, insbesondere
+Hidden-Markov-Modellen oder Bayes-Netz-artigen Strukturen. Wissen wird
+dabei als latenter, nicht direkt beobachtbarer Zustand aufgefasst, der
+anhand beobachtbarer Antworten oder Interaktionen inferiert wird
+\citep{Shen2024}.
+
+Der wichtigste Vertreter dieser Unterklasse ist Bayesian Knowledge
+Tracing (BKT). Das von Corbett und Anderson entwickelte Verfahren
+modelliert Lernen als Folge von Zustandsübergängen und berücksichtigt
+dabei insbesondere Anfangswissen, Lernwahrscheinlichkeit sowie die
+Möglichkeiten von Guessing, also die Wahrscheinlichkeit, dass eine
+Aufgabe trotz fehlender Beherrschung korrekt beantwortet wird, und
+Slipping, der umgekehrte Fall einer falschen Antwort trotz vorhandenen
+Wissens. Aufbauend auf dem klassischen BKT wurden zahlreiche
+Erweiterungen entwickelt, die beispielsweise individuelle
+Lernendenparameter, Itemschwierigkeiten oder komplexere
+Abhängigkeitsstrukturen berücksichtigen
+\citep{Shen2024, Abdelrahman2023}.
+
+Innerhalb der vorgeschlagenen Klassifikation werden
+probabilistisch-temporale Wissensmodelle als eigenständige Unterklasse
+geführt, da sie im Unterschied zu psychometrischen Fähigkeitsmodellen
+nicht primär die Messung eines aktuellen Fähigkeitsniveaus verfolgen,
+sondern die zeitliche Entwicklung von Wissen modellieren. Typische
+Vertreter dieser Modellfamilie sind Bayesian Knowledge Tracing (BKT)
+sowie Dynamic Bayesian Knowledge Tracing (DBKT)
+\citep{Shen2024, Abdelrahman2023}.
+
+\subsubsection{Logistische und online aktualisierte
+Performanzmodelle}\label{logistische-und-online-aktualisierte-performanzmodelle}
+
+Logistische und online aktualisierte Performanzmodelle bilden die dritte
+Unterklasse der Zustandsmodellierung. Im Mittelpunkt dieser Verfahren
+steht nicht die explizite Modellierung eines verborgenen
+Wissenszustands, sondern die Vorhersage zukünftiger Leistungen auf
+Grundlage beobachtbarer Lernhistorien. Ziel ist es, die
+Wahrscheinlichkeit einer korrekten Antwort aus bisherigen Erfolgen,
+Fehlern und Übungserfahrungen abzuleiten \citep{Pelanek2017, Shen2024}.
+
+Charakteristisch für diese Modellfamilie ist die Verwendung
+statistischer oder online aktualisierter Modelle zur
+Performanzschätzung. Im Gegensatz zu probabilistischen Wissensmodellen
+wird Wissen dabei häufig nicht als latenter Zustand modelliert, sondern
+indirekt über beobachtbare Leistungsindikatoren beschrieben. Viele
+Verfahren dieser Klasse nutzen logistische Regressionen, um den Einfluss
+früherer Interaktionen auf zukünftige Antworten zu schätzen
+\citep{Pelanek2017, Shen2024}.
+
+Zu den wichtigsten Vertretern dieser Unterklasse zählen Learning Factors
+Analysis (LFA) und Performance Factors Analysis (PFA). Beide Verfahren
+modellieren die Wahrscheinlichkeit korrekter Antworten auf Basis der
+bisherigen Bearbeitungshistorie eines Lernenden. Während LFA
+insbesondere die Anzahl früherer Übungsgelegenheiten berücksichtigt,
+unterscheidet PFA zusätzlich zwischen erfolgreichen und fehlerhaften
+Bearbeitungen und kann dadurch Lernfortschritte differenzierter abbilden
+\citep{Pelanek2017, Shen2024}.
+
+Ebenfalls dieser Unterklasse zuzuordnen sind Elo-basierte Verfahren.
+Diese interpretieren die Interaktion zwischen Lernendem und Aufgabe als
+eine Art Wettbewerb, bei dem sowohl die Fähigkeit des Lernenden als auch
+die Schwierigkeit der Aufgabe nach jeder Bearbeitung fortlaufend
+aktualisiert werden. Dadurch eignen sich Elo-Verfahren insbesondere für
+adaptive Systeme, die schnelle Online-Aktualisierungen bei
+vergleichsweise geringem Modellierungsaufwand benötigen
+\citep{Pelanek2017, Shen2024}.
+
+Innerhalb der vorgeschlagenen Klassifikation werden logistische und
+online aktualisierte Performanzmodelle als eigenständige Unterklasse
+geführt, da sie im Unterschied zu probabilistischen Wissensmodellen
+keine explizite Repräsentation eines verborgenen Wissenszustands
+anstreben, sondern unmittelbar aus beobachtbaren Leistungsdaten auf
+zukünftige Performanz schließen. Typische Vertreter dieser Modellfamilie
+sind LFA, PFA, PFAE sowie Elo-basierte Verfahren
+\citep{Pelanek2017, Shen2024}.
+
+\subsubsection{Merkmalsbasierte
+Machine-Learning-Modelle}\label{merkmalsbasierte-machine-learning-modelle}
+
+Merkmalsbasierte Machine-Learning-Modelle bilden die vierte Unterklasse
+der Zustandsmodellierung. Im Unterschied zu den zuvor beschriebenen
+Modellfamilien beruhen diese Verfahren nicht auf spezifischen Annahmen
+über Wissenszustände, Lernprozesse oder Fähigkeitsmodelle. Stattdessen
+nutzen sie allgemeine Methoden des Machine Learning, um aus
+beobachtbaren Merkmalen Muster zu erkennen und Eigenschaften von
+Lernenden vorherzusagen \citep{Wang2025, Orji2022}.
+
+Die Eingabedaten dieser Verfahren können sehr unterschiedlich ausfallen.
+Neben Antwortmustern und Leistungsdaten werden häufig Interaktionsdaten,
+Nutzungsverhalten, demographische Merkmale oder weitere Informationen
+über Lernende berücksichtigt. Ziel ist dabei nicht ausschließlich die
+Schätzung von Wissen oder Fähigkeiten, sondern auch die Vorhersage
+weiterer Lernendenmerkmale wie Motivation, Engagement, Lernstilen,
+Persönlichkeitsmerkmalen oder affektiven Zuständen \citep{Orji2022}.
+
+Zu den typischen Vertretern dieser Unterklasse zählen
+Entscheidungsbäume, Random Forests, k-Nearest-Neighbor-Verfahren (kNN),
+Support Vector Machines (SVM), Clustering-Verfahren sowie verschiedene
+Fuzzy-Logic-Ansätze. Darüber hinaus werden in der Literatur auch
+Bayesian Networks und faktorenanalytische Verfahren zur Modellierung von
+Lernendenmerkmalen beschrieben \citep{Wang2025, Orji2022}.
+
+Innerhalb der vorgeschlagenen Klassifikation werden diese Verfahren als
+eigenständige Unterklasse geführt, da sie nicht auf speziell
+entwickelten Wissens- oder Fähigkeitsmodellen beruhen, sondern
+allgemeine datengetriebene Lernverfahren zur Vorhersage von
+Lernendenmerkmalen einsetzen. Im Unterschied zu tiefen neuronalen
+Verfahren arbeiten merkmalsbasierte Machine-Learning-Modelle
+typischerweise mit explizit definierten Eingabemerkmalen, die aus den
+verfügbaren Lern- und Interaktionsdaten abgeleitet werden. Die
+relevanten Eigenschaften der Lernenden werden dabei nicht automatisch
+gelernt, sondern dem Modell in Form von Features bereitgestellt. Sie
+stellen damit eine flexiblere, aber häufig auch weniger
+domänenspezifische Alternative zu psychometrischen, probabilistischen
+oder logistischen Modellen dar.
+
+\subsubsection{Tiefe sequenzielle und repräsentationslernende
+Modelle}\label{tiefe-sequenzielle-und-repruxe4sentationslernende-modelle}
+
+Die fünfte Unterklasse der Zustandsmodellierung umfasst tiefe
+sequenzielle und repräsentationslernende Modelle. Im Unterschied zu
+psychometrischen, probabilistischen oder logistischen Ansätzen beruhen
+diese Verfahren nicht auf explizit definierten Wissenszuständen oder
+fest vorgegebenen Lernparametern. Stattdessen lernen sie latente
+Repräsentationen direkt aus den Interaktionsdaten von Lernenden und
+nutzen diese zur Vorhersage zukünftiger Leistungen oder Wissenszustände
+\citep{Shen2024}.
+
+Besonders verbreitet sind diese Verfahren im Bereich des Knowledge
+Tracing. Zu den bekanntesten Vertretern zählen Deep Knowledge Tracing
+(DKT), speicherbasierte Modelle sowie aufmerksamkeitsbasierte und
+transformerbasierte Knowledge-Tracing-Verfahren \citep{Shen2024}.
+Gemeinsam ist diesen Ansätzen, dass sie Interaktionssequenzen als
+zeitliche Datenfolgen behandeln und komplexe Abhängigkeiten zwischen
+früheren und späteren Lernaktivitäten modellieren können.
+
+Charakteristisch für diese Modellfamilie ist die automatische Bildung
+latenter Repräsentationen. Anstatt Wissen explizit über Parameter oder
+Wahrscheinlichkeitsmodelle zu beschreiben, lernen die Modelle interne
+Zustandsrepräsentationen, die zur Vorhersage zukünftiger Antworten
+genutzt werden. Dadurch können auch komplexe und nichtlineare
+Zusammenhänge erfasst werden, die in klassischen Modellen häufig nicht
+abgebildet werden \citep{Shen2024}.
+
+Die hohe Vorhersageleistung dieser Verfahren geht jedoch häufig mit
+einer geringeren Interpretierbarkeit einher. Während psychometrische
+oder probabilistische Modelle ihre Annahmen explizit offenlegen, bleiben
+die internen Repräsentationen tiefer neuronaler Modelle oftmals schwer
+nachvollziehbar. Die Literatur diskutiert deshalb regelmäßig den
+Zielkonflikt zwischen Vorhersagegüte und Erklärbarkeit tiefer
+Knowledge-Tracing-Modelle \citep{Shen2024}.
+
+Innerhalb der vorgeschlagenen Klassifikation werden tiefe sequenzielle
+und repräsentationslernende Modelle als eigenständige Unterklasse
+geführt, da sie Wissen nicht über explizite Fähigkeits- oder
+Wissensparameter beschreiben, sondern latente Zustände datengetrieben
+aus großen Interaktionssequenzen erlernen. Typische Vertreter dieser
+Kategorie sind DKT sowie weitere neuronale Sequenz- und
+Transformer-Modelle \citep{Shen2024}.
+
+\subsection{Adaptionsentscheidung}\label{adaptionsentscheidung}
+
+Die zweite Hauptklasse der vorgeschlagenen Klassifikation umfasst
+Verfahren der Adaptionsentscheidung. Im Unterschied zu den Verfahren der
+Zustandsmodellierung besteht ihre unmittelbare Aufgabe nicht in der
+Schätzung eines internen Zustands des Lernenden, sondern in der Auswahl,
+Steuerung oder Planung einer konkreten Systemaktion. Grundlage dieser
+Entscheidungen sind häufig die durch Learner Models,
+Knowledge-Tracing-Verfahren oder andere Zustandsmodelle bereitgestellten
+Informationen. Das Ergebnis dieser Verfahren ist somit nicht eine
+Diagnose des Lernenden, sondern eine Entscheidung darüber, wie das
+adaptive System auf den aktuellen Zustand reagieren soll.
+
+Verfahren der Adaptionsentscheidung finden sich in nahezu allen
+Bereichen adaptiver Lernsysteme. Computerized-Adaptive-Testing-Systeme
+wählen auf Basis der aktuellen Fähigkeitsschätzung die nächste Aufgabe
+aus. Recommender-Systeme empfehlen Lernressourcen oder Aufgaben, die zum
+Lernenden passen. Lernpfadverfahren planen ganze Sequenzen von
+Lernaktivitäten, während Reinforcement-Learning-Verfahren langfristige
+Strategien zur Optimierung des Lernerfolgs entwickeln. Trotz
+unterschiedlicher Anwendungskontexte verfolgen diese Ansätze damit
+dieselbe grundlegende Funktion: die Auswahl einer geeigneten Folgeaktion
+auf Grundlage verfügbarer Informationen über den Lernenden und die
+Lernumgebung.
+
+Die in Kapitel 2 analysierte Literatur zeigt zugleich, dass sich
+adaptive Entscheidungen auf sehr unterschiedliche Weise realisieren
+lassen. Einige Verfahren beruhen auf explizit definierten Regeln oder
+Expertenwissen, andere nutzen informationsbasierte Auswahlkriterien,
+Empfehlungssysteme oder Optimierungsverfahren. Darüber hinaus
+unterscheiden sich die Verfahren hinsichtlich ihres Planungshorizonts.
+Während manche Ansätze lediglich die nächste Aufgabe oder Ressource
+auswählen, planen andere vollständige Lernpfade oder optimieren
+langfristige Entscheidungsstrategien über viele Interaktionen hinweg.
+
+Aus der Literatur lassen sich innerhalb dieser Hauptklasse fünf zentrale
+Untergruppen ableiten. Diese unterscheiden sich primär hinsichtlich
+ihres Entscheidungsmechanismus sowie der Art der erzeugten
+Adaptionsentscheidung. Die vorgeschlagene Klassifikation unterscheidet
+daher zwischen regel- und wissensbasierten Adaptionsverfahren,
+informationsmaximierenden Selektionsverfahren, Verfahren der
+Ressourcenempfehlung und Aufgabenwahl, Verfahren zur Lernpfadgenerierung
+und Sequenzplanung sowie Verfahren der sequentiellen Optimierung unter
+Unsicherheit.
+
+\subsubsection{Regel- und wissenbasierte
+Adaptionsverfahren}\label{regel--und-wissenbasierte-adaptionsverfahren}
+
+Regel- und wissensbasierte Adaptionsverfahren bilden die erste
+Unterklasse der Adaptionsentscheidung. Gemeinsam ist diesen Verfahren,
+dass adaptive Entscheidungen nicht durch statistische Optimierung oder
+datengetriebene Lernverfahren erzeugt werden, sondern auf explizit
+formulierten Regeln oder Wissensstrukturen beruhen. Die Adaptionslogik
+wird dabei durch Expertinnen und Experten vorgegeben und vom System zur
+Auswahl geeigneter Aktionen angewendet.
+
+Typischerweise kommen If-Then-Regeln beziehungsweise
+Condition-Action-Regeln zum Einsatz. Auf Grundlage beobachteter Merkmale
+eines Lernenden werden dabei bestimmte Inhalte, Navigationsmöglichkeiten
+oder Unterstützungsmaßnahmen aktiviert. Ein einfaches Beispiel wäre die
+Regel, einem Lernenden bei wiederholten Fehlern zusätzliche Erklärungen
+oder Übungsaufgaben bereitzustellen. Darüber hinaus können auch
+symbolische Wissensrepräsentationen und regelbasierte
+Inferenzmechanismen zur Ableitung adaptiver Entscheidungen genutzt
+werden \citep{Wang2025}.
+
+Ein wesentlicher Vorteil dieser Verfahren liegt in ihrer hohen
+Transparenz und Nachvollziehbarkeit. Da die Entscheidungsregeln explizit
+definiert sind, lässt sich die Ursache einer bestimmten
+Adaptionsentscheidung unmittelbar nachvollziehen. Gleichzeitig sind
+regelbasierte Verfahren häufig stark von Expertenwissen abhängig und
+können neue oder unerwartete Situationen nur eingeschränkt
+berücksichtigen. Im Vergleich zu datengetriebenen Verfahren besitzen sie
+daher oftmals eine geringere Flexibilität und Anpassungsfähigkeit.
+
+Innerhalb der vorgeschlagenen Klassifikation werden regel- und
+wissensbasierte Verfahren als eigenständige Unterklasse geführt, da die
+Adaptionslogik hier nicht gelernt oder optimiert wird, sondern explizit
+modelliert ist. Typische Vertreter dieser Kategorie sind regelbasierte
+Tutorensysteme, Expertensysteme sowie Condition-Action-basierte
+Adaptionsmechanismen.
+
+\subsubsection{Informationsmaximierende
+Selektionsverfahren}\label{informationsmaximierende-selektionsverfahren}
+
+Informationsmaximierende Selektionsverfahren bilden die zweite
+Unterklasse der Adaptionsentscheidung. Im Mittelpunkt dieser Verfahren
+steht die Auswahl derjenigen Aufgabe oder Testfrage, die auf Grundlage
+des aktuell geschätzten Lernendenzustands den größten diagnostischen
+Informationsgewinn verspricht. Im Unterschied zu Verfahren der
+Zustandsmodellierung besteht ihre unmittelbare Ausgabe somit nicht in
+einer Fähigkeitsschätzung, sondern in der Entscheidung, welches Item als
+Nächstes präsentiert werden soll.
+
+Besonders verbreitet sind diese Verfahren im Bereich des Computerized
+Adaptive Testing (CAT). Dort wird die aktuelle Fähigkeitsschätzung eines
+Lernenden fortlaufend genutzt, um die nächste Aufgabe adaptiv
+auszuwählen. Ziel dieser Verfahren ist es, auf Basis der aktuellen
+Fähigkeitsschätzung jene Aufgabe auszuwählen, die den größten
+zusätzlichen Informationsgewinn für die weitere Schätzung des
+Fähigkeitsniveaus liefert. Die Aufgabenauswahl erfolgt dabei
+typischerweise anhand informationsbasierter Auswahlkriterien, die
+bestimmen, welche Aufgabe unter den verfügbaren Kandidaten den größten
+zusätzlichen Erkenntnisgewinn liefert \citep{Liu2024}.
+
+Zu den wichtigsten Verfahren dieser Unterklasse zählen
+informationsmaximierende Item-Selection-Kriterien wie die
+Maximum-Fisher-Information-Auswahl oder Kullback-Leibler-basierte
+Selektionsverfahren. Darüber hinaus spielen Verfahren des Content
+Balancing sowie Mechanismen zur Kontrolle der Itemexposition eine
+wichtige Rolle, um in realen Testsystemen sowohl diagnostische Qualität
+als auch faire Nutzung der Aufgabenbanken sicherzustellen
+\citep{Liu2024}.
+
+Charakteristisch für diese Modellfamilie ist die explizite Optimierung
+der Aufgabenauswahl unter diagnostischen und testtheoretischen
+Randbedingungen. Die Verfahren wählen Aufgaben nicht primär aufgrund
+inhaltlicher Ähnlichkeit oder Präferenzen aus, sondern anhand ihres
+erwarteten Informationsbeitrags zur Fähigkeitsmessung. Dadurch
+unterscheiden sie sich grundlegend von Recommender-Systemen oder
+Lernpfadverfahren, deren Ziel stärker auf Personalisierung und
+Inhaltsauswahl ausgerichtet ist.
+
+Innerhalb der vorgeschlagenen Klassifikation werden
+informationsmaximierende Selektionsverfahren als eigenständige
+Unterklasse geführt, da die Adaptionsentscheidung hier explizit als
+Optimierungsproblem der diagnostischen Informationsgewinnung formuliert
+wird.
+
+\subsubsection{Ressourcenempfehlung}\label{ressourcenempfehlung}
+
+Verfahren der Ressourcenempfehlung bilden die dritte Unterklasse der
+Adaptionsentscheidung. Im Mittelpunkt dieser Verfahren steht die Auswahl
+geeigneter Lernressourcen, Aufgaben oder Inhalte auf Grundlage
+verfügbarer Informationen über den Lernenden. Im Unterschied zu
+informationsmaximierenden Selektionsverfahren erfolgt die Entscheidung
+dabei nicht primär nach diagnostischem Informationsgewinn, sondern nach
+der erwarteten Relevanz, Passung oder Nützlichkeit eines Lernobjekts für
+einen bestimmten Lernenden.
+
+Besonders verbreitet sind diese Verfahren im Bereich der Educational
+Recommender Systems (ERS). Ziel solcher Systeme ist es, Lernenden
+diejenigen Ressourcen vorzuschlagen, die ihren Interessen, ihrem
+Wissensstand, ihren Lernzielen oder ihren bisherigen Interaktionen
+möglichst gut entsprechen. Die Literatur unterscheidet dabei
+insbesondere zwischen content-basierten, kollaborativen,
+wissensbasierten sowie hybriden Empfehlungsverfahren
+\citep{daSilva2023}.
+
+Content-basierte Verfahren empfehlen Lernressourcen auf Grundlage ihrer
+Eigenschaften und Merkmale. Dabei werden Inhalte ausgewählt, die
+Ähnlichkeiten zu bereits genutzten oder positiv bewerteten Ressourcen
+aufweisen. Kollaborative Verfahren nutzen dagegen Präferenz- oder
+Interaktionsmuster mehrerer Lernender und gehen davon aus, dass Personen
+mit ähnlichem Verhalten auch ähnliche Ressourcen bevorzugen. Wissens-
+beziehungsweise ontologiebasierte Verfahren greifen auf explizit
+modelliertes Domänenwissen, Lernziele oder semantische Beziehungen
+zwischen Lernobjekten zurück, um geeignete Empfehlungen abzuleiten
+\citep{daSilva2023}.
+
+In der aktuellen Literatur besitzen hybride Empfehlungsverfahren eine
+besondere Bedeutung. Sie kombinieren mehrere Empfehlungsstrategien,
+beispielsweise content-basierte und kollaborative Verfahren, um die
+jeweiligen Stärken verschiedener Ansätze miteinander zu verbinden und
+deren Einschränkungen teilweise zu reduzieren. Insbesondere Probleme wie
+der Cold-Start-Effekt, bei dem für neue Lernende oder Lernressourcen
+zunächst kaum Informationen vorliegen, sowie Datensparsamkeit (Data
+Sparsity), also eine geringe Anzahl verfügbarer Interaktionsdaten,
+können durch die Kombination mehrerer Empfehlungsstrategien teilweise
+reduziert werden. Typische Vertreter dieser Unterklasse sind
+kollaborative Filterverfahren, content-basierte Empfehlungssysteme,
+wissens- bzw. ontologiebasierte Recommender sowie hybride
+Empfehlungssysteme \citep{daSilva2023}.
+
+Charakteristisch für diese Modellfamilie ist die Verbindung von
+Zustandsinformationen über den Lernenden mit der Auswahl konkreter
+Lernressourcen. Die Verfahren bilden damit die Schnittstelle zwischen
+Learner Modeling und inhaltlicher Personalisierung. Während
+Zustandsmodelle Informationen über Wissen, Fähigkeiten oder Präferenzen
+bereitstellen, entscheiden Empfehlungssysteme darüber, welche Inhalte
+auf Grundlage dieser Informationen als Nächstes vorgeschlagen werden
+sollen.
+
+Innerhalb der vorgeschlagenen Klassifikation werden Verfahren der
+Ressourcenempfehlung als eigenständige Unterklasse geführt, da ihre
+primäre Aufgabe in der Auswahl geeigneter Lernobjekte auf Basis von
+Relevanz-, Ähnlichkeits- oder Präferenzkriterien besteht. Typische
+Vertreter dieser Kategorie sind content-basierte Recommender,
+kollaborative Filterverfahren, wissensbasierte Empfehlungssysteme sowie
+hybride Educational Recommender Systems.
+
+\subsubsection{Lernpfadempfehlung und
+Sequenzplanung}\label{lernpfadempfehlung-und-sequenzplanung}
+
+Verfahren der Lernpfadempfehlung und Sequenzplanung bilden die vierte
+Unterklasse der Adaptionsentscheidung. Im Unterschied zu klassischen
+Empfehlungssystemen steht hier nicht die Auswahl eines einzelnen
+Lernobjekts im Mittelpunkt, sondern die Planung ganzer Sequenzen von
+Lernaktivitäten. Ziel dieser Verfahren ist die Konstruktion
+personalisierter Lernpfade, die den aktuellen Wissensstand, individuelle
+Lernziele sowie weitere Randbedingungen eines Lernenden berücksichtigen.
+
+Die Literatur beschreibt personalisierte Lernpfade als einen zentralen
+Bestandteil adaptiver Lernsysteme. Während Recommender-Systeme
+typischerweise einzelne Ressourcen empfehlen, versuchen
+Lernpfadverfahren, mehrere Lernobjekte in eine sinnvolle Reihenfolge zu
+bringen und dadurch den gesamten Lernprozess zu strukturieren. Nabizadeh
+et al.~unterscheiden hierzu die Ansätze Course Generation, Sequential
+Pattern Recognition und Course Sequence. Gemeinsam ist diesen Verfahren,
+dass sie zeitliche und inhaltliche Abhängigkeiten zwischen
+Lernaktivitäten berücksichtigen und Lernen als Sequenzierungs-
+beziehungsweise Optimierungsproblem modellieren \citep{Nabizadeh2020}.
+
+Auf algorithmischer Ebene kommen unterschiedliche Such-, Optimierungs-
+und Planungsverfahren zum Einsatz. Nabizadeh et al.~nennen insbesondere
+graphbasierte Verfahren, Constraint-based Approaches,
+Case-Based-Reasoning-Ansätze sowie evolutionäre und schwarmbasierte
+Optimierungsverfahren wie Genetic Algorithms, Ant Colony Optimization
+und Particle Swarm Optimization \citep{Nabizadeh2020}. Gemeinsam ist
+diesen Verfahren, dass sie nicht lediglich einzelne Lernobjekte
+auswählen, sondern ganze Lernsequenzen als Optimierungsproblem
+modellieren.
+
+Charakteristisch für diese Modellfamilie ist die explizite
+Berücksichtigung zeitlicher und inhaltlicher Abhängigkeiten zwischen
+Lernobjekten. Die Verfahren modellieren Lernen somit nicht als Folge
+isolierter Empfehlungen, sondern als zusammenhängenden Prozess, dessen
+einzelne Schritte aufeinander aufbauen.
+
+Innerhalb der vorgeschlagenen Klassifikation werden Verfahren der
+Lernpfadempfehlung und Sequenzplanung als eigenständige Unterklasse
+geführt, da ihre primäre Aufgabe in der Planung vollständiger
+Lernsequenzen besteht. Typische Vertreter dieser Kategorie sind
+Course-Generation-Verfahren, Sequential-Pattern-Mining-Ansätze,
+graphbasierte Lernpfadverfahren sowie Optimierungsverfahren zur
+Curriculum- und Lernpfadplanung.
+
+\subsubsection{Sequentielle
+Entscheidungsoptimierung}\label{sequentielle-entscheidungsoptimierung}
+
+Verfahren der sequentiellen Entscheidungsoptimierung bilden die fünfte
+Unterklasse der Adaptionsentscheidung. Im Mittelpunkt dieser Verfahren
+steht nicht die Auswahl einzelner Lernressourcen oder die Planung
+vorgegebener Lernpfade, sondern die Optimierung von
+Entscheidungsstrategien über eine Folge von Interaktionen hinweg. Ziel
+ist es, adaptives Verhalten zu erlernen, das langfristig den Lernerfolg
+maximiert.
+
+Charakteristisch für diese Modellfamilie ist die Betrachtung adaptiver
+Entscheidungen als sequentielles Entscheidungsproblem. Die Auswahl einer
+Lernaktivität beeinflusst dabei nicht nur den unmittelbaren Lernerfolg,
+sondern auch zukünftige Zustände und Handlungsmöglichkeiten. Verfahren
+dieser Klasse müssen daher zwischen Exploration und Exploitation
+abwägen. Exploration bezeichnet das Ausprobieren bislang wenig genutzter
+Aktionen, um zusätzliche Informationen zu gewinnen, während Exploitation
+die Nutzung bereits bekannter erfolgreicher Strategien beschreibt
+\citep{Riedmann2025}.
+
+Einen frühen Ansatz zur Modellierung adaptiver Bildungsentscheidungen
+stellen kontextuelle Bandits dar. Hier wird auf Grundlage des aktuellen
+Lernendenzustands diejenige Aktion ausgewählt, die den erwarteten
+kurzfristigen Lernerfolg maximiert. Im Gegensatz zu vollständigen
+Reinforcement-Learning-Verfahren berücksichtigen Bandit-Modelle dabei
+typischerweise keine langfristigen Auswirkungen späterer Entscheidungen
+\citep{Riedmann2025}.
+
+Den wichtigsten Forschungsbereich dieser Unterklasse bildet das
+Reinforcement Learning. Dabei lernt ein Agent durch Interaktion mit der
+Lernumgebung eine Strategie (Policy), die langfristige Belohnungen
+maximiert. Die Literatur beschreibt insbesondere wertbasierte Verfahren
+wie Q-Learning und Deep Q-Networks (DQN) sowie Policy-Gradient- und
+weitere Policy-Learning-Verfahren als häufig eingesetzte Ansätze im
+Bildungsbereich \citep{Riedmann2025}.
+
+Im Unterschied zu klassischen Recommender-Systemen erfolgt die Auswahl
+von Lernaktivitäten hier nicht primär auf Grundlage von Ähnlichkeits-,
+Präferenz- oder Relevanzmaßen. Stattdessen wird die gesamte Folge von
+Zuständen, Aktionen und Belohnungen berücksichtigt. Die
+Adaptionsentscheidung wird somit als Optimierungsproblem über längere
+Interaktionssequenzen modelliert.
+
+Innerhalb der vorgeschlagenen Klassifikation werden Verfahren der
+sequentiellen Entscheidungsoptimierung als eigenständige Unterklasse
+geführt, da sie adaptive Entscheidungen explizit als Folgeproblem mit
+Exploration, Exploitation und langfristiger Belohnungsmaximierung
+modellieren. Typische Vertreter dieser Kategorie sind kontextuelle
+Bandits, Q-Learning, Deep Q-Networks (DQN), Proximal Policy Optimization
+(PPO) \citep{Riedmann2025}.
+
+\section{Ergänzende
+Klassifikationsdimensionen}\label{erguxe4nzende-klassifikationsdimensionen}
+
+Die bislang entwickelte Taxonomie klassifiziert adaptive Lernverfahren
+primär nach ihrer funktionalen Rolle innerhalb adaptiver Lernsysteme.
+Dabei wird zwischen Verfahren der Zustandsmodellierung und Verfahren der
+Adaptionsentscheidung unterschieden. Diese Einteilung erlaubt eine
+systematische Zuordnung der in der Literatur beschriebenen Verfahren,
+erfasst jedoch nicht alle relevanten Unterschiede zwischen einzelnen
+Ansätzen.
+
+Aus analytischer Sicht ist es daher sinnvoll, die funktionale
+Klassifikation durch zusätzliche Querschnittsdimensionen zu ergänzen.
+Diese beschreiben Eigenschaften, die sich über mehrere Kategorien hinweg
+erstrecken und einen Vergleich unterschiedlicher Verfahren ermöglichen.
+Insbesondere die verwendete Datenbasis, die zugrunde liegende
+Modellierungsfamilie sowie die Interpretierbarkeit eines Verfahrens
+werden in der Literatur wiederholt als zentrale Unterscheidungsmerkmale
+hervorgehoben.
+
+\subsection{Datenbasis}\label{datenbasis}
+
+Die Datenbasis beschreibt, auf welchen Informationen ein Verfahren seine
+Modellierung oder Entscheidungsfindung aufbaut. Adaptive Lernsysteme
+nutzen hierzu eine Vielzahl unterschiedlicher Datentypen. Dazu zählen
+insbesondere Leistungsdaten wie richtige oder falsche Antworten,
+Interaktions- und Prozessdaten wie Bearbeitungszeiten, Navigationspfade
+oder Hint-Nutzung, Strukturwissen über Domänen und Lernobjekte sowie
+Profil-, Präferenz- und Kontextinformationen der Lernenden.
+
+Die Datenbasis stellt eine wichtige ergänzende Klassifikationsdimension
+dar, da Verfahren derselben funktionalen Kategorie auf unterschiedlichen
+Informationsquellen beruhen können. So zählen Rasch-Modelle, Bayesian
+Knowledge Tracing und Deep Knowledge Tracing trotz ihrer gemeinsamen
+Zuordnung zur Zustandsmodellierung zu unterschiedlichen Verfahrenstypen
+und nutzen verfügbare Lerndaten in unterschiedlicher Form. Während
+psychometrische Verfahren überwiegend Antwortdaten verarbeiten, beziehen
+tief-neuronale Ansätze häufig längere Interaktionssequenzen ein. Analog
+unterscheiden sich Verfahren der Adaptionsentscheidung hinsichtlich der
+verwendeten Informationsquellen, etwa zwischen Präferenzdaten in
+Recommender-Systemen und Zustands-Aktions-Belohnungsdaten im
+Reinforcement Learning.
+
+\subsection{Modellierungsfamilie}\label{modellierungsfamilie}
+
+Die Modellierungsfamilie beschreibt das zugrunde liegende mathematische
+oder informatische Repräsentationsprinzip eines Verfahrens. Verfahren
+mit ähnlicher Funktion können dabei auf sehr unterschiedlichen
+Modellierungsansätzen beruhen. In der Literatur finden sich insbesondere
+psychometrische, probabilistische, logistische, symbolische,
+graphbasierte, faktorisierungsbasierte, metaheuristische sowie
+tief-neuronale Modellierungsansätze.
+
+Die Modellierungsfamilie verdeutlicht, dass Verfahren mit gleicher
+funktionaler Rolle auf unterschiedlichen mathematischen Grundlagen
+beruhen können. Innerhalb der Zustandsmodellierung finden sich
+beispielsweise psychometrische Verfahren wie IRT-Modelle,
+probabilistische Ansätze wie BKT, logistische Verfahren wie PFA sowie
+tief-neuronale Verfahren wie DKT. Die funktionale Einordnung allein
+erfasst diese Unterschiede nicht, weshalb die Modellierungsfamilie eine
+sinnvolle ergänzende Beschreibungsebene darstellt.
+
+\subsection{Interpretierbarkeit}\label{interpretierbarkeit}
+
+Die Interpretierbarkeit beschreibt, in welchem Umfang die Entscheidungen
+oder Vorhersagen eines Verfahrens für Menschen nachvollziehbar sind.
+Diese Eigenschaft besitzt im Bildungsbereich eine besondere Bedeutung,
+da adaptive Entscheidungen häufig gegenüber Lernenden, Lehrenden oder
+Institutionen begründet werden müssen.
+
+Besonders deutlich wird dies innerhalb der Zustandsmodellierung.
+Psychometrische Modelle, Bayes-Netz-Ansätze oder regelbasierte Verfahren
+gelten häufig als vergleichsweise gut nachvollziehbar, da ihre
+Modellannahmen und Entscheidungsregeln explizit beschrieben werden
+können. Demgegenüber erreichen tiefe neuronale Verfahren oftmals höhere
+Vorhersageleistungen, erzeugen ihre Ergebnisse jedoch auf Grundlage
+schwer nachvollziehbarer interner Repräsentationen. Die
+Interpretierbarkeit stellt daher keine eigenständige
+Klassifikationsachse dar, ergänzt die funktionale Taxonomie jedoch um
+eine für den Bildungsbereich wichtige Bewertungsperspektive.
+
+Die Interpretierbarkeit bildet daher eine wichtige ergänzende
+Klassifikationsdimension, da sie einen zentralen Zielkonflikt adaptiver
+Lernsysteme sichtbar macht: den Ausgleich zwischen Vorhersage-
+beziehungsweise Optimierungsleistung einerseits und Transparenz sowie
+Erklärbarkeit andererseits.
+
+Die beschriebenen Dimensionen stellen keine eigenständigen
+Klassifikationsachsen der vorgeschlagenen Taxonomie dar, ermöglichen
+jedoch eine differenziertere Beschreibung und den Vergleich von
+Verfahren innerhalb derselben funktionalen Kategorie.
+
+\section{Diskussion und Grenzen der
+Klassifikation}\label{diskussion-und-grenzen-der-klassifikation}
+
+Die vorgeschlagene Taxonomie ist als synthetische Ordnung adaptiver
+Lernverfahren zu verstehen. Sie reproduziert keine einzelne, in der
+Literatur etablierte Gesamtklassifikation, sondern führt mehrere in
+unterschiedlichen Forschungsbereichen entwickelte Teilordnungen zu einem
+gemeinsamen Schema zusammen. Ihre Stärke liegt damit in der
+Zusammenführung fragmentierter Literaturstränge aus Bereichen wie
+Learner Modeling, Knowledge Tracing, Computerized Adaptive Testing,
+Educational Recommender Systems und Reinforcement Learning. Gleichzeitig
+stellt genau diese Synthese auch eine Grenze der Taxonomie dar.
+
+Eine erste Einschränkung ergibt sich aus der Tatsache, dass die
+vorgeschlagenen Kategorien nicht vollständig trennscharf sind. Besonders
+deutlich zeigt sich dies bei hybriden Systemen, die in der Literatur
+eher die Regel als die Ausnahme darstellen. Adaptive Lernumgebungen
+kombinieren häufig mehrere Modellierungs- und Entscheidungsverfahren
+miteinander. So können Knowledge-Tracing-Modelle als Grundlage für
+Empfehlungssysteme dienen, Lernpfadverfahren auf Zustandsmodellen
+aufbauen oder Reinforcement-Learning-Verfahren Informationen aus
+psychometrischen oder probabilistischen Lernendenmodellen verwenden.
+
+Einzelne Verfahren können daher je nach Betrachtungsperspektive mehreren
+Kategorien zugeordnet werden. So lassen sich Bayes-Netz-basierte Ansätze
+sowohl zur Modellierung von Lernzuständen als auch als Bestandteil von
+Adaptionsentscheidungen einsetzen. Ebenso können Recommender-Systeme
+Komponenten des Reinforcement Learning integrieren oder Elo-basierte
+Verfahren Elemente psychometrischer Fähigkeitsmodelle aufweisen. Die
+Kategorien sind daher als analytische Hauptzuordnungen und nicht als
+gegenseitig ausschließende Klassen zu verstehen. Eine ausschließlich auf
+gegenseitig ausschließenden Kategorien beruhende Taxonomie würde die in
+der Praxis verbreitete Hybridität adaptiver Lernsysteme nur unzureichend
+abbilden.
+
+Für die vorgeschlagene Klassifikation werden hybride Systeme daher nach
+der primären funktionalen Rolle des jeweiligen Moduls eingeordnet.
+Zusätzliche Verfahren oder Modellierungsansätze werden über die
+ergänzenden Klassifikationsdimensionen berücksichtigt. Ein System, das
+beispielsweise Bayesian Knowledge Tracing zur Wissensschätzung und
+anschließend ein Recommender-System zur Auswahl geeigneter
+Lernressourcen verwendet, umfasst somit sowohl ein Verfahren der
+Zustandsmodellierung als auch ein Verfahren der Adaptionsentscheidung.
+Die Taxonomie versteht sich daher nicht als Zuordnung vollständiger
+Systeme zu exakt einer Kategorie, sondern als Einordnung der jeweils
+verwendeten Verfahren und Module.
+
+Eine zweite Grenze betrifft die Dynamik des Forschungsfeldes. Adaptive
+Lernsysteme entwickeln sich kontinuierlich weiter, insbesondere im
+Bereich datengetriebener und neuronaler Verfahren. Neue
+Modellarchitekturen oder hybride Ansätze können bestehende Kategorien
+miteinander verbinden oder neue Untergruppen erforderlich machen. Die
+vorgeschlagene Taxonomie ist daher nicht als abschließende Ordnung zu
+verstehen, sondern als strukturierender Bezugsrahmen für den aktuellen
+Forschungsstand.
+
+Darüber hinaus weist die Literatur wiederholt auf Defizite in der
+Evaluation adaptiver Lernverfahren hin. Mehrere Reviews stellen fest,
+dass die Auswahl bestimmter Adaptionsverfahren häufig nur begrenzt
+theoretisch oder empirisch begründet wird. Gleichzeitig konzentrieren
+sich viele Studien auf technische Leistungsmaße wie
+Vorhersagegenauigkeit oder Empfehlungsqualität, während pädagogische
+Wirkungen, Lernerfolge oder langfristige Nutzungseffekte deutlich
+seltener untersucht werden. Auch im Bereich des Reinforcement Learning
+basiert ein erheblicher Teil der vorhandenen Evidenz auf Simulationen
+statt auf realen Lernumgebungen. Die Aussagekraft von Vergleichen
+zwischen Verfahren ist dadurch teilweise eingeschränkt.
+
+Die ergänzenden Klassifikationsdimensionen Datenbasis,
+Modellierungsfamilie und Interpretierbarkeit wurden eingeführt, um
+einige dieser Einschränkungen abzumildern. Sie verdeutlichen, dass
+Verfahren mit gleicher funktionaler Rolle auf unterschiedlichen
+Datenquellen, Modellierungsansätzen oder Transparenzniveaus beruhen
+können. Gleichzeitig ersetzen diese Dimensionen nicht die funktionale
+Hauptstruktur der Taxonomie, sondern dienen als ergänzende
+Beschreibungsperspektiven.
+
+Insgesamt erscheint die Unterscheidung zwischen Zustandsmodellierung und
+Adaptionsentscheidung dennoch als ein sachlich klarer und informatisch
+anschlussfähiger Ausgangspunkt für die Klassifikation adaptiver
+Lernverfahren. Innerhalb dieser beiden Hauptklassen lassen sich die in
+der Literatur beschriebenen Verfahren konsistent einordnen, ohne die
+Vielfalt der zugrunde liegenden Modellierungsansätze vollständig zu
+verlieren.

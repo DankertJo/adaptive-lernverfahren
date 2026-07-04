@@ -1,0 +1,166 @@
+\documentclass[twoside,bibliography=totoc,openany]{fumi}
+
+% Angaben zur Arbeit
+\newcommand{\thesistitle}{Adaptive Lernverfahren: Systematisierung und didaktische Aufbereitung}
+\newcommand{\thesisauthor}{Johannes Dankert}
+\newcommand{\thesissupervidsor}{Dr. Niels Seidel}
+\newcommand{\thesistype}{Bachelorarbeit}
+\newcommand{\course}{Informatik}
+\newcommand{\thesismatrikelnummer}{4279727}
+
+\title{\thesistitle}
+\author{\thesisauthor}
+\date{\today}
+
+% Von Pandoc erzeugte Kapitel verwenden dieses Kommando für kompakte Listen.
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setlength{\emergencystretch}{3em}
+
+\hyphenation{
+  Lern-ressource
+  Lern-ressourcen
+  Lern-zustands-modellierung
+  Adaptions-entscheidung
+  Elo-Verfahren
+  Auf-gaben-schwierig-keit
+  Erfolgs-wahr-schein-lich-keit
+}
+
+\begin{document}
+\sffamily
+\pagestyle{empty}
+
+%% Die erste Seite eines Buches
+\thesisauthor\\{\textbf{\thesistitle}}\vfill\newpage~\newpage
+
+%% Die Seite mit den Titelangaben
+\vspace{2cm}
+\begin{center}\LARGE
+\vfill
+{\Huge\thesistitle}\\
+\vfill
+\thesistype\\
+im Studiengang \course
+\vfill
+eingereicht von\\[4pt]
+\textbf{\thesisauthor}\\[4pt]
+(Matrikelnummer \thesismatrikelnummer)\\
+\vfill
+angefertigt am\\
+Lehrgebiet Kooperative Systeme\\
+Fakultät Mathematik und Informatik\\
+FernUniversität in Hagen\\
+\vfill
+Betreut durch\\
+\thesissupervidsor
+\vfill
+\monthname[\the\month] \the\year
+\end{center}
+\newpage~\newpage
+
+%% Leerseite mit Titel
+{\large\textbf{\thesisauthor}\\\textbf{\thesistitle}\vfill}
+\newpage~\newpage
+
+%% Kurzfassungen
+\section*{Zusammenfassung}
+\input{vorspann/zusammenfassung}
+\vfill
+\section*{Summary}
+\input{vorspann/summary}
+\vfill\newpage
+
+%% Bibliografische Angaben
+{\small
+\thesisauthor. \textit{\thesistitle}. \thesistype.
+Fakultät Mathematik und Informatik, FernUniversität in Hagen, \the\year.
+\\\vfill
+
+Diese Publikation ist unter \emph{Creative Commons -- Namensnennung 3.0 Deutschland}
+lizenziert und darf als Ganzes oder ausschnittweise vervielfältigt, verbreitet und
+öffentlich zugänglich gemacht werden, sofern dies im Text nicht anders vermerkt
+ist.\newline\vspace{10pt}
+\hspace{-9pt}\includegraphics[height=10mm,viewport=0 1080 210 1200,clip]{logo-cc.png}
+\\\vspace{10pt}
+
+Autor: \thesisauthor\\
+Gestaltung und Satz: \thesisauthor{} / \LaTeX\\
+Datum: \today\\
+\cleardoublepage
+}
+
+%% Inhaltsverzeichnis
+\pagestyle{headings}
+\tableofcontents
+
+%% Hauptteil
+\include{kapitel/01-einleitung}
+\include{kapitel/02-analyse}
+\include{kapitel/03-klassifikation}
+\include{kapitel/04-konzeption}
+\include{kapitel/05-umsetzung}
+\include{kapitel/06-evaluation}
+\include{kapitel/07-fazit}
+
+%% Anhang
+\appendix
+\include{anhang/materialien}
+
+%% Verzeichnisse
+\backmatter
+\pagestyle{fancyclear}
+
+%% Literaturverzeichnis
+{\footnotesize
+\flushleft
+\setlength{\itemsep}{-3pt}
+\bibliography{references}
+}
+\cleardoublepage
+
+%% Abbildungsverzeichnis
+\phantomsection\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+\cleardoublepage
+
+%% Tabellenverzeichnis
+\phantomsection\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+\listoftables
+\cleardoublepage
+
+%% Auflistungsverzeichnis
+\phantomsection\addcontentsline{toc}{chapter}{Auflistungsverzeichnis}
+\renewcommand\lstlistlistingname{Verzeichnis der Auflistungen}
+\lstlistoflistings
+\cleardoublepage
+
+%% Verzeichnis von Algorithmen
+\phantomsection\addcontentsline{toc}{chapter}{Verzeichnis der Algorithmen}
+\renewcommand*\listalgorithmcfname{Verzeichnis der Algorithmen}
+\listofalgorithms
+\cleardoublepage
+
+%% Abkürzungsverzeichnis
+\phantomsection\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+\chapter*{Abkürzungsverzeichnis}
+\input{nachspann/abkuerzungen}
+\cleardoublepage
+
+%% Eidesstattliche Erklärung
+Name: \thesisauthor \hfill
+Matrikelnummer: \thesismatrikelnummer
+\vspace{2cm}
+
+\subsection*{Eidesstattliche Erklärung}
+Ich erkläre hiermit, dass ich diese \thesistype~selbständig verfasst,
+noch nicht anderweitig für Prüfungszwecke vorgelegt, keine anderen als
+die angegebenen Quellen und Hilfsmittel benutzt sowie wörtliche und
+sinngemäße Zitate als solche gekennzeichnet habe.\\[1cm]
+
+Hagen, den \dotfill
+
+\hspace{2cm}{\footnotesize Datum}
+\hspace{5cm}{\footnotesize \thesisauthor}
+
+\end{document}
