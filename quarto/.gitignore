@@ -15,9 +15,6 @@ vorlagen/
 output/
 output/pdf/
 
-# alte docs
-docs/
-
 # Quarto
 .quarto/
 **/.quarto/
@@ -37,3 +34,4 @@ quarto/_book/
 *.toc
 *.blg
 *.bbl
+/.quarto/
