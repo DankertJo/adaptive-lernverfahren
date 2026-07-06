@@ -6,11 +6,13 @@ Adaptive Lernsysteme verfolgen das Ziel, Lerninhalte an die individuellen Voraus
 
 Aus funktionaler Sicht lassen sich adaptive Lernverfahren daher in zwei grundlegende Bereiche einteilen:
 
-- **Lernzustandsmodellierung**: Verfahren zur Schätzung des aktuellen Wissensstands eines Lernenden auf Grundlage seiner bisherigen Interaktionen.
+- **Zustandsmodellierung**: Verfahren zur Schätzung des aktuellen Wissensstands eines Lernenden auf Grundlage seiner bisherigen Interaktionen.
 
 - **Adaptionsentscheidung**: Verfahren, die auf Basis dieses geschätzten Lernzustands geeignete Aufgaben, Lernpfade oder Lernressourcen auswählen.
 
-Die vorliegende Lernressource behandelt exemplarisch das **Elo-Verfahren**. Innerhalb der entwickelten Klassifikation gehört es zum Bereich der **Lernzustandsmodellierung** und dort zur Unterklasse der **logistischen und online aktualisierten Performanzmodelle**. Diese Verfahren aktualisieren die Schätzung des Wissensstands fortlaufend auf Grundlage beobachtbarer Lerninteraktionen. Das Elo-Verfahren wurde ausgewählt, da es einen weit verbreiteten Vertreter dieser Unterklasse darstellt und sich aufgrund seiner vergleichsweise übersichtlichen Modellstruktur besonders gut für eine didaktische Aufbereitung eignet. 
+![Einordnung des Elo-Verfahrens innerhalb der entwickelten Taxonomie adaptiver Lernverfahren. Quelle: Eigene Darstellung auf Grundlage der in dieser Arbeit entwickelten Taxonomie.](abbildungen/taxonomie_adaptive_lernverfahren.svg){#fig-taxonomie fig-align="center" width=90% fig-pos="H"}
+
+Wie in @fig-taxonomie dargestellt, gehört das Elo-Verfahren innerhalb der entwickelten Klassifikation zum Bereich der Zustandsmodellierung und dort zur Unterklasse der logistischen und online aktualisierten Performanzmodelle. Diese Verfahren aktualisieren die Schätzung des Wissensstands fortlaufend auf Grundlage beobachtbarer Lerninteraktionen. Das Elo-Verfahren wurde ausgewählt, da es einen weit verbreiteten Vertreter dieser Unterklasse darstellt und sich aufgrund seiner vergleichsweise übersichtlichen Modellstruktur besonders gut für eine didaktische Aufbereitung eignet. 
 
 Neben den theoretischen Grundlagen werden das Verfahren anhand eines Zahlenbeispiels erläutert, in Python implementiert und durch interaktive Simulationen veranschaulicht.
 Ziel ist es, ein konzeptionelles Verständnis des Elo-Verfahrens zu vermitteln und zugleich einen Einblick in dessen praktische Umsetzung zu geben.
@@ -3111,7 +3113,7 @@ Ausgabe:
 ```python
 0.27
 ```
-Das System erwartet in diesem Fall also, dass der Lernende die Aufgabe mit einer Wahrscheinlichkeit von etwa 27 % korrekt beantwortet.
+Das System erwartet in diesem Fall also, dass der Lernende die Aufgabe mit einer Wahrscheinlichkeit von etwa 27% korrekt beantwortet.
 
 ### Aktualisierung der Bewertungen
 
