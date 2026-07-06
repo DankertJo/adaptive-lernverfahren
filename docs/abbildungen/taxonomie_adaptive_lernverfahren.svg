@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1250" viewBox="0 0 2000 1250" role="img" aria-labelledby="title desc">
+<title>Taxonomie adaptiver Lernverfahren</title>
+<desc>Zweispaltige wissenschaftliche Taxonomie. Der Pfad von adaptiven Lernverfahren über Zustandsmodellierung und logistische Performanzmodelle zum Elo-Verfahren ist dezent blau hervorgehoben.</desc>
+<rect x="0" y="0" width="2000" height="1250" fill="#FFFFFF"/>
+<g fill="none" stroke-linecap="butt" stroke-linejoin="miter">
+<polyline points="1000,135 1000,175 1485,175 1485,220" fill="none" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<polyline points="515,315 515,365 130,365" fill="none" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="130" y1="365" x2="130" y2="1170" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="130" y1="470" x2="190" y2="470" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="130" y1="610" x2="190" y2="610" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="130" y1="750" x2="190" y2="750" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="130" y1="1030" x2="190" y2="1030" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="130" y1="1170" x2="190" y2="1170" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<polyline points="1485,315 1485,365 1870,365" fill="none" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="1870" y1="365" x2="1870" y2="1170" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="1810" y1="470" x2="1870" y2="470" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="1810" y1="610" x2="1870" y2="610" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="1810" y1="750" x2="1870" y2="750" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="1810" y1="1030" x2="1870" y2="1030" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<line x1="1810" y1="1170" x2="1870" y2="1170" stroke="#111111" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+<polyline points="1000,135 1000,175 515,175 515,220" fill="none" stroke="#456F91" stroke-width="3.3" vector-effect="non-scaling-stroke"/>
+<polyline points="515,315 515,365 130,365 130,750 190,750" fill="none" stroke="#456F91" stroke-width="3.3" vector-effect="non-scaling-stroke"/>
+<line x1="515" y1="800" x2="515" y2="850" stroke="#456F91" stroke-width="3.3" vector-effect="non-scaling-stroke"/>
+</g>
+<g shape-rendering="geometricPrecision">
+<rect x="700" y="40" width="600" height="95" fill="#F2F6FA" stroke="#456F91" stroke-width="2.6" vector-effect="non-scaling-stroke"/>
+<text x="1000.0" y="93.6" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#244E70">Adaptive Lernverfahren</text>
+<rect x="190" y="220" width="650" height="95" fill="#F2F6FA" stroke="#456F91" stroke-width="2.6" vector-effect="non-scaling-stroke"/>
+<text x="515.0" y="273.1" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="31" font-weight="700" fill="#244E70">Zustandsmodellierung</text>
+<rect x="1160" y="220" width="650" height="95" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="1485.0" y="273.1" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="31" font-weight="700" fill="#111111">Adaptionsentscheidung</text>
+<rect x="190" y="420" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="515.0" y="474.7" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Psychometrische Fähigkeitsmodelle</text>
+<rect x="190" y="560" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="515.0" y="598.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Probabilistisch-temporale</text>
+<text x="515.0" y="631.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Wissensmodelle</text>
+<rect x="190" y="700" width="650" height="100" fill="#F2F6FA" stroke="#456F91" stroke-width="2.6" vector-effect="non-scaling-stroke"/>
+<text x="515.0" y="738.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#244E70">Logistische und online aktualisierte</text>
+<text x="515.0" y="771.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#244E70">Performanzmodelle</text>
+<rect x="190" y="980" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="515.0" y="1018.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Merkmalsbasierte</text>
+<text x="515.0" y="1051.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Machine-Learning-Modelle</text>
+<rect x="190" y="1120" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="515.0" y="1158.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Tiefe sequenzielle und</text>
+<text x="515.0" y="1191.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">repräsentationslernende Modelle</text>
+<rect x="1160" y="420" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="1485.0" y="458.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Regel- und wissensbasierte</text>
+<text x="1485.0" y="491.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Adaptionsverfahren</text>
+<rect x="1160" y="560" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="1485.0" y="598.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Informationsmaximierende</text>
+<text x="1485.0" y="631.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Selektionsverfahren</text>
+<rect x="1160" y="700" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="1485.0" y="754.7" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Ressourcenempfehlung</text>
+<rect x="1160" y="980" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="1485.0" y="1018.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Lernpfadempfehlung und</text>
+<text x="1485.0" y="1051.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Sequenzplanung</text>
+<rect x="1160" y="1120" width="650" height="100" fill="#FFFFFF" stroke="#111111" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<text x="1485.0" y="1158.0" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Sequentielle</text>
+<text x="1485.0" y="1191.3" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="400" fill="#111111">Entscheidungsoptimierung</text>
+<rect x="290" y="850" width="450" height="90" fill="#F2F6FA" stroke="#456F91" stroke-width="2.6" vector-effect="non-scaling-stroke"/>
+<text x="515.0" y="888.5" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#244E70">Elo-Verfahren</text>
+<text x="515.0" y="916.2" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#244E70">(Schwerpunkt dieser Lernressource)</text>
+</g>
+</svg>

@@ -20,7 +20,8 @@ output/pdf/
 **/.quarto/
 _book/
 quarto/_book/
-**/*_files/
+!docs/umsetzung_files/
+!docs/umsetzung_files/**
 **/*.quarto_ipynb
 
 # LaTeX
