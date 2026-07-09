@@ -1,6 +1,6 @@
 # Wissensüberprüfung: Formaler Zugang
 
-Diese Datei enthält den OJS-Quellcode des Multiple-Choice-Selbsttests zum formalen Zugang.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Fragen und Antwortoptionen
 
@@ -13,7 +13,7 @@ eloMathQuizQuestions = [
   {
     id: "mq1",
     title: "Frage 1 – Erfolgswahrscheinlichkeit",
-    prompt: "Wovon hängt die erwartete Erfolgswahrscheinlichkeit im Elo-Verfahren hauptsächlich ab?",
+    prompt: "Wovon hängt die erwartete Erfolgswahrscheinlichkeit im Elo Rating hauptsächlich ab?",
     correct: "mq1-c",
     options: [
       {id: "mq1-a", text: "Nur von der Fähigkeit des Lernenden."},
@@ -63,7 +63,7 @@ eloMathQuizQuestions = [
 
 ## 2. Eingabeelemente
 
-Dieser Block erzeugt die Radio-Button-Eingaben für die einzelnen Fragen.
+Dieser Block erzeugt die Radio-Button-Eingaben und einen Prüfen-Button für die einzelnen Fragen.
 
 ```{ojs}
 //| echo: false
@@ -71,6 +71,8 @@ Dieser Block erzeugt die Radio-Button-Eingaben für die einzelnen Fragen.
 eloMathQuizInput = question => {
   const form = document.createElement("form")
   form.value = null
+  let selectedAnswer = null
+  const radioInputs = []
 
   const questionText = document.createElement("div")
   questionText.className = "elo-quiz-question"
@@ -86,15 +88,50 @@ eloMathQuizInput = question => {
     input.name = `elo-${question.id}`
     input.value = option.id
     text.textContent = option.text
+    radioInputs.push(input)
 
     input.addEventListener("change", () => {
-      form.value = input.value
-      form.dispatchEvent(new Event("input", {bubbles: true}))
+      selectedAnswer = input.value
     })
 
     label.append(input, text)
     form.append(label)
   })
+
+  const checkButton = document.createElement("button")
+  checkButton.type = "button"
+  checkButton.className = "elo-quiz-check"
+  checkButton.textContent = "Antwort prüfen"
+
+  const feedback = document.createElement("div")
+  feedback.className = "elo-quiz-local-feedback pending"
+  feedback.textContent = "Wählen Sie eine Antwort aus und prüfen Sie diese anschließend."
+
+  checkButton.addEventListener("click", () => {
+    if (selectedAnswer === null) {
+      feedback.className = "elo-quiz-local-feedback pending"
+      feedback.textContent = "Wählen Sie zunächst eine Antwort aus."
+      return
+    }
+
+    const isCorrect = selectedAnswer === question.correct
+    const correct = question.options.find(option => option.id === question.correct)
+    form.value = selectedAnswer
+    radioInputs.forEach(input => {
+      input.disabled = true
+    })
+    checkButton.disabled = true
+    checkButton.textContent = "Antwort geprüft"
+
+    feedback.className = `elo-quiz-local-feedback ${isCorrect ? "correct" : "incorrect"}`
+    feedback.innerHTML = isCorrect
+      ? `<strong>Richtig.</strong> Die Antwort ist korrekt.`
+      : `<strong>Noch einmal ansehen.</strong><br>Richtige Antwort: ${correct.text}`
+
+    form.dispatchEvent(new Event("input", {bubbles: true}))
+  })
+
+  form.append(checkButton, feedback)
 
   return form
 }
@@ -110,7 +147,7 @@ viewof eloMathQuizQ4 = eloMathQuizInput(eloMathQuizQuestions[3])
 
 ## 3. Auswertung
 
-Dieser Block sammelt die Antworten, berechnet das Ergebnis und erzeugt Gesamt- und Detailfeedback.
+Dieser Block sammelt die geprüften Antworten, berechnet das Ergebnis und erzeugt Gesamt- und Detailfeedback.
 
 ```{ojs}
 //| echo: false
@@ -161,7 +198,7 @@ eloMathQuizEvaluations = [
   {
     level: "reached",
     title: "✅ Lernziel erreicht.",
-    text: "Sie haben die zentralen Konzepte der mathematischen Modellierung des Elo-Verfahrens verstanden und können mit der Implementierung fortfahren."
+    text: "Sie haben die zentralen Konzepte der mathematischen Modellierung des Elo Ratings verstanden und können mit der Implementierung fortfahren."
   }
 ]
 eloMathQuizEvaluationBase = eloMathQuizEvaluations[eloMathQuizScore]
@@ -190,7 +227,7 @@ html`
     <div class="elo-quiz-card">${viewof eloMathQuizQ4}</div>
   </div>
   ${!eloMathQuizComplete
-    ? html`<div class="elo-quiz-result pending">Beantworten Sie alle vier Fragen, um eine Rückmeldung zu erhalten.</div>`
+    ? html`<div class="elo-quiz-result pending">Prüfen Sie alle vier Fragen, um eine Gesamtrückmeldung zu erhalten.</div>`
     : html`
       <div class="elo-quiz-summary">
         <div class="elo-quiz-score">
@@ -205,7 +242,7 @@ html`
             <div>
               <strong>${item.ok ? "✅ Richtig" : "❌ Noch einmal ansehen"}: ${item.title}</strong>
               ${item.ok
-                ? html`<br>Diese Antwort passt zum jeweiligen Lernziel.`
+                ? html`<br>Die Antwort ist korrekt.`
                 : html`<br>Richtige Antwort: ${item.correct}`}
             </div>
           `)}

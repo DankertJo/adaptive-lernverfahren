@@ -1,6 +1,6 @@
 # Interaktivität: Multivariate Elo-Modelle
 
-Diese Datei enthält den OJS-Quellcode der Interaktivität zum Informationsfluss zwischen Wissenskomponenten in multivariaten Elo-Modellen.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Ablaufgeschichte und Mitaktualisierung
 
@@ -250,7 +250,7 @@ const multivariateDemoContainer = html`
   width: 100%;
 }
 .multi-elo-arrow-line {
-  background: linear-gradient(90deg, #2563eb, #16a34a);
+  background: #64748b;
   border-radius: 999px;
   height: 0.35rem;
   min-width: 0.6rem;
@@ -259,7 +259,7 @@ const multivariateDemoContainer = html`
 }
 .multi-elo-arrow-head {
   border-bottom: 0.55rem solid transparent;
-  border-left: 0.75rem solid #16a34a;
+  border-left: 0.75rem solid #64748b;
   border-top: 0.55rem solid transparent;
   transition: opacity 180ms ease;
 }

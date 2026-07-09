@@ -1,10 +1,10 @@
 # Interaktivität: Multiple Choice und Ratewahrscheinlichkeit
 
-Diese Datei enthält den OJS-Quellcode der Interaktivität zur Ratewahrscheinlichkeit bei Multiple-Choice-Aufgaben.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. MC-Vergleich
 
-Dieser Block erzeugt Beispielaufgabe, Slider, Schalter, Wahrscheinlichkeitsanzeige und die dynamische Gegenüberstellung von Standard-Elo und MC-Erweiterung.
+Dieser Block erzeugt Beispielaufgabe, Slider, Schalter, Wahrscheinlichkeitsanzeige und die dynamische Gegenüberstellung von Standard Elo und MC-Erweiterung.
 
 ```{ojs}
 //| echo: false
@@ -365,7 +365,7 @@ const updateMcGuessDemo = () => {
   rateStatus.style.background = includeGuessing ? "#dcfce7" : "#f1f5f9"
   rateStatus.style.borderColor = includeGuessing ? "#86efac" : "#cbd5e1"
   rateStatus.style.color = includeGuessing ? "#166534" : "#475569"
-  resultTitle.textContent = includeGuessing ? "MC-Erweiterung" : "Standard-Elo"
+  resultTitle.textContent = includeGuessing ? "MC-Erweiterung" : "Standard Elo"
   resultNote.textContent = includeGuessing
     ? "Erfolgswahrscheinlichkeit mit Rateanteil bei vier Antworten"
     : "Erfolgswahrscheinlichkeit ohne Berücksichtigung des Ratens"

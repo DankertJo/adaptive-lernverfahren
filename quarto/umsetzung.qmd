@@ -1,21 +1,79 @@
-# Umsetzung einer Lernressource 
+# Das Elo Rating in adaptiven Lernsystemen
 
-## Einleitung
+## Adaptive Lernverfahren
 
-Adaptive Lernsysteme verfolgen das Ziel, Lerninhalte an die individuellen Voraussetzungen und den aktuellen Wissensstand von Lernenden anzupassen. Dazu müssen sie zunächst möglichst zuverlässig einschätzen, wie gut eine Person ein bestimmtes Themengebiet bereits beherrscht. Auf Grundlage dieser Einschätzung können anschließend geeignete Aufgaben oder Lernressourcen ausgewählt werden.
+Adaptive Lernsysteme verfolgen das Ziel, Lerninhalte an die individuellen Voraussetzungen und den aktuellen Wissensstand von Lernenden anzupassen. Um eine solche Personalisierung zu ermöglichen, müssen sie Informationen über den aktuellen Wissensstand erfassen und auf dieser Grundlage geeignete Aufgaben, Lernpfade oder Lernressourcen auswählen. Adaptive Lernverfahren bilden die algorithmische Grundlage dieser beiden Aufgaben und ermöglichen es, Lernprozesse dynamisch an den individuellen Lernfortschritt anzupassen [@Wang2025].
 
-Aus funktionaler Sicht lassen sich adaptive Lernverfahren daher in zwei grundlegende Bereiche einteilen:
+Die Vielfalt adaptiver Lernverfahren erschwert jedoch den Überblick über ihre unterschiedlichen Aufgaben, Modellierungsansätze und Einsatzgebiete. Für ein systematisches Verständnis lassen sich die Verfahren nach ihrer funktionalen Rolle innerhalb adaptiver Lernsysteme gliedern. Dabei wird zwischen Verfahren der Zustandsmodellierung und Verfahren der Adaptionsentscheidung unterschieden. 
 
-- **Zustandsmodellierung**: Verfahren zur Schätzung des aktuellen Wissensstands eines Lernenden auf Grundlage seiner bisherigen Interaktionen.
+Verfahren der Zustandsmodellierung dienen der Schätzung des aktuellen Wissensstands von Lernenden. Hierzu werden beobachtbare Lerndaten, beispielsweise bisherige Bearbeitungsergebnisse, Leistungsdaten oder Lernaktivitäten, ausgewertet, um den Wissensstand oder weitere lernendenbezogene Merkmale möglichst zuverlässig zu modellieren. Die resultierende Wissensstandsrepräsentation bildet die Grundlage für nachgelagerte adaptive Entscheidungen [@Desmarais2012; @Wang2025].
 
-- **Adaptionsentscheidung**: Verfahren, die auf Basis dieses geschätzten Lernzustands geeignete Aufgaben, Lernpfade oder Lernressourcen auswählen.
+Verfahren der Adaptionsentscheidung bauen auf der zuvor ermittelten Wissensstandsrepräsentation auf. Sie nutzen die Informationen, um geeignete Aufgaben, Lernpfade, Lernressourcen oder andere Unterstützungsmaßnahmen auszuwählen und den weiteren Lernprozess individuell anzupassen. Auf diese Weise wird die Personalisierung der Lernumgebung auf Grundlage der Merkmale des jeweiligen Lernenden umgesetzt [@Wang2025].
 
-![Einordnung des Elo-Verfahrens innerhalb der entwickelten Taxonomie adaptiver Lernverfahren. Quelle: Eigene Darstellung auf Grundlage der in dieser Arbeit entwickelten Taxonomie.](abbildungen/taxonomie_adaptive_lernverfahren.svg){#fig-taxonomie fig-align="center" width=90% fig-pos="H"}
+Innerhalb der beiden Hauptklassen lassen sich unterschiedliche Verfahrensfamilien unterscheiden. Diese unterscheiden sich insbesondere hinsichtlich ihres zugrunde liegenden Modellierungsansatzes sowie der Art, wie sie den Wissensstand repräsentieren beziehungsweise adaptive Entscheidungen treffen. @fig-taxonomie zeigt die dieser Lernressource zugrunde liegende Systematisierung adaptiver Lernverfahren.
 
-Wie in @fig-taxonomie dargestellt, gehört das Elo-Verfahren innerhalb der entwickelten Klassifikation zum Bereich der Zustandsmodellierung und dort zur Unterklasse der logistischen und online aktualisierten Performanzmodelle. Diese Verfahren aktualisieren die Schätzung des Wissensstands fortlaufend auf Grundlage beobachtbarer Lerninteraktionen. Das Elo-Verfahren wurde ausgewählt, da es einen weit verbreiteten Vertreter dieser Unterklasse darstellt und sich aufgrund seiner vergleichsweise übersichtlichen Modellstruktur besonders gut für eine didaktische Aufbereitung eignet. 
+![Einordnung des Elo Ratings innerhalb der entwickelten Taxonomie adaptiver Lernverfahren. Quelle: Eigene Darstellung](/abbildungen/taxonomie_adaptive_lernverfahren2.svg){#fig-taxonomie fig-align="center" width=90% fig-pos="H"}
 
-Neben den theoretischen Grundlagen werden das Verfahren anhand eines Zahlenbeispiels erläutert, in Python implementiert und durch interaktive Simulationen veranschaulicht.
-Ziel ist es, ein konzeptionelles Verständnis des Elo-Verfahrens zu vermitteln und zugleich einen Einblick in dessen praktische Umsetzung zu geben.
+\
+Die Verfahren der Zustandsmodellierung lassen sich in fünf Modellfamilien gliedern. Die wichtigsten Unterschiede zwischen diesen Modellfamilien sind in @tbl-zustandsmodellierung zusammengefasst.
+
+
+| Modellfamilie | Art der Wissensrepräsentation | Charakteristik | Beispielverfahren |
+|:---|:---|:---|:---|
+| **Psychometrische Fähigkeitsmodelle** | Latente Fähigkeit | Präzise Schätzung eines aktuellen Fähigkeitsniveaus | Rasch-Modell, IRT |
+| **Probabilistisch-temporale Wissensmodelle** | Beherrschung einzelner Wissenskomponenten | Modellieren den Lernverlauf einzelner Wissenskomponenten | Bayesian Knowledge Tracing (BKT) |
+| **Logistische und online aktualisierte Performanzmodelle** | Performanz | Schätzen die Wahrscheinlichkeit einer korrekten Antwort auf Grundlage bisheriger Bearbeitungsergebnisse | Elo Rating, PFA, LFA |
+| **Merkmalsbasierte Machine-Learning-Modelle** | Merkmalsbasierte Repräsentation | Nutzen explizit definierte Merkmale (*Features*) für Vorhersagen | Random Forest, SVM |
+| **Deep Learning Models** | Latente Repräsentationen | Lernen latente Repräsentationen aus Interaktionsdaten | Deep Knowledge Tracing (DKT), Transformer |
+: Überblick über die Modellfamilien der Zustandsmodellierung innerhalb der entwickelten Taxonomie adaptiver Lernverfahren {#tbl-zustandsmodellierung}
+: Modellfamilien der Zustandsmodellierung innerhalb der entwickelten Taxonomie adaptiver Lernverfahren {#tbl-zustandsmodellierung}
+
+Die Einordnung der Modellfamilien basiert auf der in dieser Arbeit entwickelten Systematisierung. Die Charakterisierung der einzelnen Modellfamilien orientiert sich an der zugrunde liegenden Fachliteratur [@Liu2024; @Han2018; @Shen2024;@Abdelrahman2023; @Pelanek2017;  @Wang2025; @Orji2022].
+
+\
+Auch die Verfahren der Adaptionsentscheidung lassen sich in verschiedene Modellfamilien gliedern. Sie unterscheiden sich insbesondere darin, nach welchen Strategien sie Aufgaben, Lernpfade oder Lernressourcen auf Grundlage der zuvor geschätzten Wissensstandsrepräsentation auswählen.
+
+
+| Modellfamilie | Grundprinzip | Beispielverfahren |
+|:---|:---|:---|
+| **Regel- und wissensbasierte Adaptionsverfahren** | Auswahl geeigneter Aktionen anhand explizit definierter Regeln oder Wissensstrukturen | Regelbasierte Tutorensysteme, Expertensysteme |
+| **Informationsmaximierende Selektionsverfahren** | Auswahl der Aufgabe mit dem größten erwarteten diagnostischen Informationsgewinn | Maximum Fisher Information, Kullback-Leibler-Auswahl |
+| **Ressourcenempfehlung** | Empfehlung geeigneter Lernressourcen oder Aufgaben auf Grundlage ihrer erwarteten Relevanz oder Passung | Content-basierte, kollaborative und hybride Recommender |
+| **Lernpfadempfehlung und Sequenzplanung** | Planung vollständiger personalisierter Lernpfade unter Berücksichtigung zeitlicher und inhaltlicher Abhängigkeiten | Course Generation, Course Sequence, Sequential Pattern Recognition |
+| **Sequentielle Entscheidungsoptimierung** | Lernen, welche Entscheidung in jeder Situation langfristig den größten Lernerfolg erzielt | Kontextuelle Bandits, Q-Learning, Deep Q-Networks (DQN), PPO |
+: Überblick über die Modellfamilien der Adaptionsentscheidung {#tbl-adaptionsentscheidung}
+
+
+Die Einordnung der Modellfamilien basiert auf der in dieser Arbeit entwickelten Systematisierung. Die Charakterisierung der einzelnen Modellfamilien orientiert sich an der zugrunde liegenden Fachliteratur [@Wang2025; @Liu2024; @daSilva2023; @Nabizadeh2020; @Riedmann2025].
+
+Die vorgeschlagene Klassifikation versteht sich als funktionale Systematisierung adaptiver Lernverfahren. Einzelne Verfahren können Merkmale mehrerer Modellfamilien aufweisen oder verschiedene Ansätze miteinander kombinieren. Die Zuordnung erfolgt daher nach der jeweils dominierenden Funktion eines Verfahrens innerhalb des adaptiven Lernsystems.
+
+Im Folgenden wird mit dem Elo Rating exemplarisch ein Vertreter der logistischen und online aktualisierten Performanzmodelle vorgestellt. Aufgrund seiner vergleichsweise einfachen Modellstruktur eignet sich dieses Verfahren besonders gut, um die grundlegenden Prinzipien der Zustandsmodellierung in adaptiven Lernsystemen nachzuvollziehen.
+
+
+# Das Elo Rating
+
+**Lernziele**
+
+Nach der Bearbeitung dieser Lernressource können Sie
+
+- die Grundidee des Elo Ratings erläutern,
+- den Zusammenhang zwischen Fähigkeit, Aufgabenschwierigkeit und Erfolgswahrscheinlichkeit erklären,
+- den Aktualisierungsschritt mathematisch nachvollziehen,
+- das Verfahren anhand einer Python-Implementierung umsetzen,
+- typische Einsatzgebiete sowie Grenzen und Erweiterungen des Elo Ratings beschreiben.
+
+**Wie möchten Sie beginnen?**
+
+Die Inhalte dieser Lernressource können aus unterschiedlichen Perspektiven erschlossen werden. Je nach Vorwissen und Interesse können Sie einen der folgenden Zugänge wählen. Zwischen den einzelnen Zugängen kann jederzeit gewechselt werden.
+
+|  | **Konzeptueller Zugang** | **Formaler Zugang** | **Implementierungszugang** |
+|:---|:---|:---|:---|
+| **Zielgruppe** | Für Lernende, die zunächst verstehen möchten, welches Problem das Elo Rating löst und wie es grundsätzlich funktioniert. | Für Lernende, die die mathematischen Grundlagen und den Aktualisierungsmechanismus nachvollziehen möchten. | Für Lernende, die das Verfahren praktisch in Python umsetzen möchten. |
+| **Inhalte** | Motivation, Grundidee des Elo Ratings, interaktives Experiment, Ablauf des Algorithmus, Einsatzgebiete | Erfolgswahrscheinlichkeit, Aktualisierungsregeln, Zahlenbeispiel, interaktive Simulation | Python-Implementierung, Funktionen, Codebeispiele, interaktive Programmieraufgaben, Optionale Vertiefung: Grenzen und Erweiterungen |
+| **Einstieg** | [Zum konzeptuellen Zugang](#konzeptueller-zugang) | [Zum formalen Zugang](#formaler-zugang) | [Zum Implementierungszugang](#implementierungszugang) |
+
+\
 
 **Quellcode der interaktiven Elemente**
 
@@ -24,54 +82,29 @@ Die vollständigen Quelltexte aller in dieser Lernressource verwendeten interakt
 [GitHub-Repository (Ordner `code`)](https://github.com/DankertJo/adaptive-lernverfahren-code/tree/main/code)
 
 
-**Lernziele**
-
-Nach der Bearbeitung dieser Lernressource können Sie
-
-- die Grundidee des Elo-Verfahrens erläutern,
-- den Zusammenhang zwischen Fähigkeit, Aufgabenschwierigkeit und Erfolgswahrscheinlichkeit erklären,
-- den Aktualisierungsschritt mathematisch nachvollziehen,
-- das Verfahren anhand einer Python-Implementierung umsetzen,
-- typische Einsatzgebiete sowie Grenzen und Erweiterungen des Elo-Verfahrens beschreiben.
-
-**Wie möchten Sie beginnen?**
-
-Die Inhalte dieser Lernressource können aus unterschiedlichen Perspektiven erschlossen werden. Je nach Vorwissen und Interesse können Sie einen der folgenden Zugänge wählen. Zwischen den einzelnen Zugängen kann jederzeit gewechselt werden.
-
-|  | **Konzeptueller Zugang** | **Formaler Zugang** | **Implementierungszugang** |
-|:---|:---|:---|:---|
-| **Zielgruppe** | Für Lernende, die zunächst verstehen möchten, welches Problem das Elo-Verfahren löst und wie es grundsätzlich funktioniert. | Für Lernende, die die mathematischen Grundlagen und den Aktualisierungsmechanismus nachvollziehen möchten. | Für Lernende, die das Verfahren praktisch in Python umsetzen möchten. |
-| **Inhalte** | Motivation, Grundidee des Elo-Verfahrens, interaktives Experiment, Ablauf des Algorithmus, Einsatzgebiete | Erfolgswahrscheinlichkeit, Aktualisierungsregeln, Zahlenbeispiel, interaktive Simulation | Python-Implementierung, Funktionen, Codebeispiele, interaktive Programmieraufgaben, Optionale Vertiefung: Grenzen und Erweiterungen |
-| **Einstieg** | [Zum konzeptuellen Zugang](#konzeptueller-zugang) | [Zum formalen Zugang](#formaler-zugang) | [Zum Implementierungszugang](#implementierungszugang) |
-
 \
 
-## Das Elo-Verfahren in adaptiven Lernsystemen {#konzeptueller-zugang}
+## Das Elo Rating als Verfahren der Zustandsmodellierung {#konzeptueller-zugang}
 
 **Lernziele dieses Abschnitts**
 
 Nach diesem Abschnitt können Sie
 
-- erläutern, weshalb das Elo-Verfahren zur Lernstandsschätzung eingesetzt werden kann,
-- die Grundidee und den grundlegenden Ablauf des Elo-Verfahrens beschreiben,
-- typische Einsatzgebiete des Elo-Verfahrens in adaptiven Lernsystemen erläutern,
-- die Rolle des Elo-Verfahrens bei adaptiven Entscheidungen erläutern.
+- erläutern, weshalb das Elo Rating zur Lernstandsschätzung eingesetzt werden kann,
+- die Grundidee und den grundlegenden Ablauf des Elo Ratings beschreiben,
+- typische Einsatzgebiete des Elo Ratings in adaptiven Lernsystemen erläutern,
+- die Rolle des Elo Ratings bei adaptiven Entscheidungen erläutern.
 
-Adaptive Lernsysteme verfolgen das Ziel, Lerninhalte an die individuellen Voraussetzungen und den aktuellen Wissensstand von Lernenden anzupassen. Um geeignete Aufgaben oder Lernressourcen auswählen zu können, müssen sie daher zunächst möglichst zuverlässig abschätzen, wie gut ein Lernender ein bestimmtes Themengebiet bereits beherrscht. Die Modellierung dieses aktuellen Leistungs- oder Wissensstands stellt eine zentrale Aufgabe adaptiver Lernsysteme dar [@Pelanek2017; @Abdi2019].
+\
 
-Für diese Schätzung wurden unterschiedliche Verfahren entwickelt. Während einige Ansätze auf psychometrischen oder probabilistischen Modellen beruhen, existieren auch Verfahren, die ihre Schätzungen nach jeder neuen Interaktion kontinuierlich aktualisieren. Ein vergleichsweise einfaches und weit verbreitetes Verfahren dieser Art ist das Elo-Verfahren. Es wurde ursprünglich zur Bewertung von Schachspielern entwickelt [@Elo1978] und später für verschiedene Anwendungsgebiete, darunter auch adaptive Lernsysteme, weiterentwickelt und eingesetzt [@Abdi2019].
+Innerhalb der verschiedenen Verfahren zur Zustandsmodellierung zählen logistische und online aktualisierte Performanzmodelle zu den Ansätzen, die den Wissensstand eines Lernenden nach jeder neuen Bearbeitung kontinuierlich aktualisieren. Ein besonders bekannter Vertreter dieser Modellfamilie ist das Elo Rating. Es wurde ursprünglich zur Bewertung von Schachspielern entwickelt und später für zahlreiche weitere Anwendungsgebiete – darunter auch adaptive Lernsysteme – weiterentwickelt [@Elo1978; @Abdi2019].
 
-Im Vergleich zu vielen komplexeren Modellierungsansätzen zeichnet sich das Elo-Verfahren durch eine vergleichsweise einfache Struktur sowie die Möglichkeit einer kontinuierlichen Aktualisierung aus. Diese Eigenschaften machen es für den Einsatz in digitalen Lernumgebungen interessant und haben dazu geführt, dass Elo-basierte Verfahren in der Literatur als geeignete Ansätze zur Lernendenmodellierung diskutiert werden [@Pelanek2016; @Abdi2019].
+Im Vergleich zu vielen komplexeren Modellierungsansätzen zeichnet sich das Elo Rating durch eine vergleichsweise einfache Struktur sowie die Möglichkeit einer kontinuierlichen Aktualisierung aus. Diese Eigenschaften machen es für den Einsatz in digitalen Lernumgebungen interessant und haben dazu geführt, dass Elo-basierte Verfahren in der Literatur als geeignete Ansätze zur Lernendenmodellierung diskutiert werden [@Pelanek2016; @Abdi2019].
 
 ### Experiment: Wie reagiert ein adaptives Lernsystem?
 
-Bevor die Funktionsweise des Elo-Verfahrens erläutert wird, können Sie dessen Grundidee zunächst selbst erkunden. Im folgenden Experiment beobachten Sie, wie ein adaptives Lernsystem seine Einschätzung eines Lernenden sowie der Schwierigkeit einzelner Aufgaben nach jeder bearbeiteten Aufgabe aktualisiert.
+Bevor die Funktionsweise des Elo Ratings erläutert wird, können Sie dessen Grundidee zunächst selbst erkunden. Im folgenden Experiment beobachten Sie an einer festen Beispielaufgabe, wie ein adaptives Lernsystem seine Einschätzung eines Lernenden sowie der Aufgabenschwierigkeit nach jeder Bearbeitung aktualisiert.
 
-Beobachten Sie während der Simulation insbesondere folgende Aspekte:
-
-* Wann verändert das System seine Einschätzung von Lisa nur geringfügig und wann deutlich?
-* Verändert das System nur seine Einschätzung von Lisa oder auch die der Aufgabe?
-* Wie reagiert das System auf unerwartete Ergebnisse?
 
 ::: {.content-visible when-format="pdf"}
 **// CSS-Definitionen:** Die folgenden CSS-Regeln definieren das Layout und das Erscheinungsbild der interaktiven Simulation.
@@ -89,11 +122,8 @@ html`<style>
   --elo-line: #d8e0ea;
   --elo-blue: #2563eb;
   --elo-blue-soft: #dbeafe;
-  --elo-green: #15803d;
-  --elo-green-soft: #dcfce7;
-  --elo-orange: #c2410c;
-  --elo-orange-soft: #ffedd5;
-  --elo-violet: #6d28d9;
+  --elo-slate: #475569;
+  --elo-slate-soft: #f1f5f9;
   --elo-shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
   background: var(--elo-bg);
   border: 1px solid var(--elo-line);
@@ -112,7 +142,7 @@ html`<style>
   gap: 0.85rem;
   align-items: center;
   padding: 1.05rem 1.15rem;
-  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 55%, #f5f3ff 100%);
+  background: #ffffff;
   border-bottom: 1px solid var(--elo-line);
 }
 .elo-exp-kicker {
@@ -167,49 +197,42 @@ html`<style>
 }
 .elo-exp-body {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.9rem;
   grid-template-columns: 1fr;
   padding: 1rem;
-}
-.elo-guide {
-  background: #ffffff;
-  border: 1px solid var(--elo-line);
-  border-radius: 10px;
-  margin: 1rem 1rem 0;
-  padding: 0.95rem;
-}
-.elo-guide h4 {
-  font-size: 1rem;
-  margin: 0 0 0.7rem;
-}
-.elo-guide ol {
-  display: grid;
-  gap: 0.55rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.elo-guide li {
-  background: #f8fafc;
-  border: 1px solid var(--elo-line);
-  border-radius: 8px;
-  color: #334155;
-  font-size: 0.86rem;
-  padding: 0.7rem;
-}
-.elo-guide strong {
-  color: var(--elo-blue);
-  display: block;
-  font-size: 0.78rem;
-  margin-bottom: 0.25rem;
-  text-transform: uppercase;
 }
 .elo-exp-card {
   background: var(--elo-card);
   border: 1px solid var(--elo-line);
   border-radius: 10px;
   padding: 0.85rem;
+}
+.elo-step-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.65rem;
+  margin-bottom: 0.7rem;
+}
+.elo-step-number {
+  align-items: center;
+  color: var(--elo-blue);
+  display: inline-flex;
+  flex: 0 0 1.4rem;
+  font-size: 1rem;
+  font-weight: 900;
+  height: 1.5rem;
+  justify-content: center;
+  width: 1.4rem;
+}
+.elo-step-head h4 {
+  font-size: 1.02rem;
+  margin: 0 0 0.15rem;
+}
+.elo-step-head p {
+  color: var(--elo-muted);
+  font-size: 1rem;
+  line-height: 1.45;
+  margin: 0;
 }
 .elo-exp-card h4 {
   font-size: 1.02rem;
@@ -218,60 +241,9 @@ html`<style>
 .elo-exp-card p {
   color: var(--elo-muted);
 }
-.elo-start-control {
-  margin-bottom: 1rem;
-}
-.elo-start-control .observablehq {
-  margin: 0;
-}
 .elo-experiment .observablehq input[type="range"] {
   accent-color: var(--elo-blue);
   width: 100%;
-}
-.elo-radio-group .observablehq {
-  margin: 0;
-}
-.elo-radio-group form{
-  display:grid;
-  gap:0.55rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.elo-radio-group label {
-  align-items: center;
-  background: #f8fafc;
-  border: 1px solid var(--elo-line);
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  font-size: 0.82rem;
-  gap: 0.45rem;
-  margin: 0;
-  padding:0.55rem 0.65rem;
-}
-.elo-radio-group label:has(input:checked) {
-  background: #eff6ff;
-  border-color: #93c5fd;
-}
-.elo-radio-group input {
-  accent-color: var(--elo-blue);
-}
-.elo-task-card {
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
-  border-radius: 10px;
-  color: #7c2d12;
-  display: grid;
-  gap: 0.42rem;
-  margin-top: 0.75rem;
-  padding: 0.75rem;
-}
-.elo-task-card h4 {
-  color: #9a3412;
-  margin: 0;
-}
-.elo-task-card p {
-  color: #7c2d12;
-  margin: 0;
 }
 .elo-mini-label{
     display:grid;
@@ -289,13 +261,13 @@ html`<style>
   overflow: hidden;
 }
 .elo-scale-fill {
-  background: linear-gradient(90deg, #38bdf8, #2563eb, #16a34a);
+  background: var(--elo-blue);
   border-radius: 999px;
   height: 100%;
   transition: width 220ms ease;
 }
 .elo-scale-fill.task {
-  background: linear-gradient(90deg, #fbbf24, #f97316, #b91c1c);
+  background: var(--elo-slate);
 }
 .elo-status-grid {
   display: grid;
@@ -306,6 +278,8 @@ html`<style>
   background: #f8fafc;
   border: 1px solid var(--elo-line);
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   padding: 0.85rem;
 }
@@ -322,6 +296,9 @@ html`<style>
   line-height: 1.1;
   margin-bottom: 0.85rem;
   overflow-wrap: anywhere;
+}
+.elo-status-scale {
+  margin-top: auto;
 }
 .elo-change-list {
   display: grid;
@@ -361,11 +338,12 @@ html`<style>
   margin: 0;
 }
 .elo-experiment .observablehq button {
-  border: 0 !important;
+  background: #ffffff !important;
+  border: 1px solid var(--elo-line) !important;
   border-radius: 8px !important;
-  color: #ffffff !important;
+  color: var(--elo-ink) !important;
   cursor: pointer;
-  font-size: 0.82rem !important;
+  font-size: 0.9rem !important;
   font-weight: 800 !important;
   line-height: 1.15 !important;
   min-height: 46px;
@@ -375,20 +353,25 @@ html`<style>
   width: 100%;
 }
 .elo-good button {
-  background: var(--elo-green) !important;
+  background: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+  color: #166534 !important;
 }
 .elo-bad button {
-  background: var(--elo-orange) !important;
+  background: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #9f1239 !important;
 }
 .elo-reset button {
-  background: #475569 !important;
+  background: #ffffff !important;
+  color: var(--elo-muted) !important;
 }
 .elo-message {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
+  background: #f8fafc;
+  border: 1px solid var(--elo-line);
   border-left: 5px solid var(--elo-blue);
   border-radius: 8px;
-  color: #1e3a8a;
+  color: #334155;
   margin: 1rem 0 0;
   padding: 0.8rem 0.9rem;
 }
@@ -432,16 +415,7 @@ html`<style>
   background: var(--elo-blue);
 }
 .elo-dot.task {
-  background: var(--elo-orange);
-}
-.elo-dot.multiplication {
-  background: #16a34a;
-}
-.elo-dot.fractions {
-  background: #f59e0b;
-}
-.elo-dot.integrals {
-  background: #dc2626;
+  background: var(--elo-slate);
 }
 .elo-trend svg {
   background: #ffffff;
@@ -452,31 +426,10 @@ html`<style>
   margin-top: 0.45rem;
   width: 100%;
 }
-.elo-pill {
-  border-radius: 999px;
-  display: inline-block;
-  font-size: 0.82rem;
-  font-weight: 800;
-  padding: 0.22rem 0.58rem;
-}
-.elo-pill.good {
-  background: var(--elo-green-soft);
-  color: #166534;
-}
-.elo-pill.bad {
-  background: var(--elo-orange-soft);
-  color: #9a3412;
-}
-.elo-empty {
-  color: var(--elo-muted);
-  margin: 0;
-}
 @media (max-width: 820px) {
   .elo-exp-head,
   .elo-exp-body,
-  .elo-status-grid,
-  .elo-guide ol,
-  .elo-radio-group form {
+  .elo-status-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -489,7 +442,7 @@ html`<style>
 ```
 
 ::: {.content-visible when-format="pdf"}
-**// Definition der Beispielaufgaben:** Dieser Block definiert die Beispielaufgaben, ihre Startschwierigkeiten und die Beschreibungstexte.
+**// Definition der festen Beispielaufgabe:** Dieser Block definiert die Beispielaufgabe und ihren Startwert für die Schwierigkeitsschätzung.
 :::
 
 ```{ojs}
@@ -497,28 +450,11 @@ html`<style>
 
 conceptTasksInitial = [
   {
-    id: "multiplication",
-    title: "Einmaleins",
-    stars: "⭐",
-    level: "leicht",
-    description: "Lisa berechnet 7 × 8.",
-    startDifficulty: -2
-  },
-  {
-    id: "fractions",
-    title: "Bruchrechnung",
-    stars: "⭐⭐",
+    id: "exampleTask",
+    title: "Feste Beispielaufgabe",
     level: "mittel",
-    description: "Lisa kürzt und addiert einfache Brüche.",
+    description: "Das System besitzt auch für diese Aufgabe eine aktuelle Schwierigkeitseinschätzung.",
     startDifficulty: 0
-  },
-  {
-    id: "integrals",
-    title: "Integralrechnung",
-    stars: "⭐⭐⭐⭐⭐",
-    level: "sehr schwierig",
-    description: "Lisa bestimmt den Flächeninhalt unter einer Kurve.",
-    startDifficulty: 2
   }
 ]
 ```
@@ -545,10 +481,10 @@ mutable conceptModel = ({
   learnerBefore: conceptStart,
   learnerAfter: conceptStart,
   tasks: conceptTasksInitial.map(task => ({...task, difficulty: task.startDifficulty})),
-  lastTaskId: "fractions",
-  lastTaskBefore: conceptTasksInitial.find(task => task.id === "fractions").startDifficulty,
-  lastTaskAfter: conceptTasksInitial.find(task => task.id === "fractions").startDifficulty,
-  message: "Wählen Sie eine Aufgabe und tragen Sie ein, ob Lisa sie lösen konnte. Danach passt das System seine Einschätzung zu Lisa und zur Aufgabe an.",
+  lastTaskId: conceptTasksInitial[0].id,
+  lastTaskBefore: conceptTasksInitial[0].startDifficulty,
+  lastTaskAfter: conceptTasksInitial[0].startDifficulty,
+  message: "Wählen Sie aus, ob Lisa die Beispielaufgabe richtig oder falsch gelöst hat. Danach aktualisiert das System seine Einschätzung zu Lisa und zur Aufgabe.",
   history: []
 })
 ```
@@ -564,16 +500,7 @@ conceptStepSize = 0.65
 conceptClamp = (value, min, max) => Math.max(min, Math.min(max, value))
 conceptScale = value => conceptClamp(Math.round(((value + 2.5) / 5) * 100), 4, 96)
 conceptTaskById = id => conceptModel.tasks.find(task => task.id === id)
-conceptStars = value => {
-  const count =
-    value < -1.5 ? 1
-    : value < -0.5 ? 2
-    : value < 0.5 ? 3
-    : value < 1.5 ? 4
-    : 5
-  return "⭐".repeat(count)
-}
-conceptTaskLabel = task => `${task.title} ${conceptStars(task.difficulty)}`
+conceptTaskLabel = task => task.title
 conceptLearnerText = value =>
   value < -1.5 ? "Anfängerin"
   : value < -0.5 ? "Grundkenntnisse"
@@ -585,16 +512,7 @@ conceptDifficultyText = value =>
   : value < 0.35 ? "mittel"
   : value < 1.35 ? "schwierig"
   : "sehr schwierig"
-conceptTaskColor = id => ({
-  multiplication: "#16a34a",
-  fractions: "#f59e0b",
-  integrals: "#dc2626"
-})[id]
-conceptDirectionText = (before, after, kind) => {
-  const delta = after - before
-  if (Math.abs(delta) < 0.08) return `${kind} bleibt fast gleich`
-  return delta > 0 ? `${kind} wird höher eingeschätzt` : `${kind} wird niedriger eingeschätzt`
-}
+conceptTaskColor = id => "#475569"
 conceptShortChange = (before, after, upText, downText) => {
   const delta = after - before
   if (Math.abs(delta) < 0.08) return "kaum verändert"
@@ -694,20 +612,13 @@ conceptTrendChart = model => html`
 ```
 
 ::: {.content-visible when-format="pdf"}
-**// Aufgabenauswahl:** Dieser Block erzeugt die Radio-Buttons zur Auswahl der Aufgabe.
+**// Feste Aufgaben-ID:** Dieser Block legt fest, dass das Experiment immer mit derselben Beispielaufgabe arbeitet.
 :::
 
 ```{ojs}
 //| echo: false
 
-viewof conceptTaskId = Inputs.radio(conceptModel.tasks.map(task => task.id), {
-  value: conceptModel.lastTaskId,
-  label: "Aufgabe auswählen",
-  format: id => {
-    const task = conceptModel.tasks.find(task => task.id === id)
-    return `${task.title} ${conceptStars(task.difficulty)} (derzeit: ${conceptDifficultyText(task.difficulty)})`
-  }
-})
+conceptTaskId = conceptTasksInitial[0].id
 ```
 
 ::: {.content-visible when-format="pdf"}
@@ -764,7 +675,7 @@ conceptUpdate = (solved) => {
 ```{ojs}
 //| echo: false
 
-viewof conceptSolved = Inputs.button("Aufgabe richtig gelöst", {
+viewof conceptSolved = Inputs.button("Richtig gelöst", {
   reduce: () => {
     mutable conceptModel = conceptUpdate(true)
   }
@@ -778,7 +689,7 @@ viewof conceptSolved = Inputs.button("Aufgabe richtig gelöst", {
 ```{ojs}
 //| echo: false
 
-viewof conceptFailed = Inputs.button("Aufgabe falsch gelöst", {
+viewof conceptFailed = Inputs.button("Falsch gelöst", {
   reduce: () => {
     mutable conceptModel = conceptUpdate(false)
   }
@@ -792,7 +703,7 @@ viewof conceptFailed = Inputs.button("Aufgabe falsch gelöst", {
 ```{ojs}
 //| echo: false
 
-viewof conceptReset = Inputs.button("Reset", {
+viewof conceptReset = Inputs.button("Zurücksetzen", {
   reduce: () => {
     const selected = conceptTasksInitial.find(task => task.id === conceptTaskId)
     mutable conceptModel = ({
@@ -834,7 +745,7 @@ html`
       <div class="elo-exp-kicker">Interaktives Experiment</div>
       <h3>Wie reagiert ein adaptives Lernsystem?</h3>
       <p>
-        Bearbeiten Sie verschiedene Aufgaben mit Lisa und beobachten Sie, wie sich die Einschätzung des Systems nach jeder Antwort verändert.
+        Lisa bearbeitet wiederholt dieselbe Beispielaufgabe. Beobachten Sie, wie das System nach jeder Antwort seine Einschätzung zu Lisa und zur Aufgabenschwierigkeit aktualisiert.
       </p>
     </div>
     <div class="elo-lisa-badge">
@@ -846,73 +757,53 @@ html`
     </div>
 	  </section>
 
-  <section class="elo-guide">
-    <h4>So nutzen Sie das Experiment</h4>
-    <ol>
-      <li><strong>1. Aufgabe wählen</strong> Wählen Sie eine Aufgabe aus, die Lisa bearbeiten soll.</li>
-      <li><strong>2. Ergebnis einschätzen</strong> Überlegen Sie zunächst, wie das System auf eine richtige oder falsche Antwort reagieren könnte.</li>
-      <li><strong>3. Ergebnis auswählen</strong> Geben Sie an, ob Lisa die Aufgabe richtig oder falsch gelöst hat.</li>
-      <li><strong>4. Veränderungen beobachten</strong> Vergleichen Sie anschließend die aktualisierte Einschätzung von Lisa und der ausgewählten Aufgabe. Wiederholen Sie das Experiment mit verschiedenen Aufgaben und Ergebnissen.</li>
-    </ol>
-  </section>
-
   <section class="elo-exp-body">
     <div class="elo-exp-card">
-      <h4>1. Aufgabe auswählen</h4>
-      <div class="elo-radio-group">${viewof conceptTaskId}</div>
-
-      <div class="elo-task-card">
-        <h4>${conceptTaskLabel(selectedConceptTask)}</h4>
-        <p><strong>Vom System derzeit eingeschätzt als:</strong> ${conceptDifficultyText(selectedConceptTask.difficulty)}</p>
-        <p>${selectedConceptTask.description}</p>
+      <div class="elo-step-head">
+        <span class="elo-step-number">1</span>
         <div>
-          <div class="elo-mini-label">
-            <span>Derzeitige Systemeinschätzung</span>
-            <span>${conceptDifficultyText(selectedConceptTask.difficulty)}</span>
-          </div>
-          <div class="elo-scale">
-            <div class="elo-scale-fill task" style="width: ${conceptScale(selectedConceptTask.difficulty)}%"></div>
-          </div>
+          <h4>Aktuelle Einschätzung</h4>
+          <p>Ausgangspunkt sind zwei aktuelle Einschätzungen: Lisas Fähigkeit und die Schwierigkeit der festen Beispielaufgabe.</p>
         </div>
       </div>
 
-      <div class="elo-reset">${viewof conceptReset}</div>
-    </div>
-
-    <div class="elo-exp-card">
-      <h4>2. Ergebnis auswählen</h4>
       <div class="elo-status-grid">
         <div class="elo-status">
           <div class="elo-status-title">Aktuelle Einschätzung des Systems zu Lisa</div>
           <div class="elo-status-main">${conceptLearnerText(conceptModel.learnerSkill)}</div>
-          <div class="elo-mini-label">
-            <span>Anfängerin</span>
-            <span>Sehr sicher</span>
-          </div>
-          <div class="elo-scale">
-            <div class="elo-scale-fill" style="width: ${conceptScale(conceptModel.learnerSkill)}%"></div>
+          <div class="elo-status-scale">
+            <div class="elo-mini-label">
+              <span>Anfängerin</span>
+              <span>Sehr sicher</span>
+            </div>
+            <div class="elo-scale">
+              <div class="elo-scale-fill" style="width: ${conceptScale(conceptModel.learnerSkill)}%"></div>
+            </div>
           </div>
         </div>
 
         <div class="elo-status">
-          <div class="elo-status-title">Letzte Veränderung</div>
-          <div class="elo-change-list">
-            <div class="elo-change-item">
-              <span>Lisa</span>
-              <strong>${conceptShortChange(conceptModel.learnerBefore, conceptModel.learnerAfter, "höher", "niedriger")}</strong>
+          <div class="elo-status-title">Aktuelle Einschätzung der Beispielaufgabe</div>
+          <div class="elo-status-main">${conceptDifficultyText(selectedConceptTask.difficulty)}</div>
+          <div class="elo-status-scale">
+            <div class="elo-mini-label">
+              <span>leichter</span>
+              <span>schwieriger</span>
             </div>
-            <div class="elo-change-item">
-              <span>Aufgabe</span>
-              <strong>${conceptShortChange(conceptModel.lastTaskBefore, conceptModel.lastTaskAfter, "schwieriger", "leichter")}</strong>
+            <div class="elo-scale">
+              <div class="elo-scale-fill task" style="width: ${conceptScale(selectedConceptTask.difficulty)}%"></div>
             </div>
           </div>
-          <div class="elo-mini-label" style="margin-top:0.75rem;">
-            <span>leichter</span>
-            <span>schwieriger</span>
-          </div>
-          <div class="elo-scale">
-            <div class="elo-scale-fill task" style="width: ${conceptScale(conceptModel.lastTaskAfter)}%"></div>
-          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="elo-exp-card">
+      <div class="elo-step-head">
+        <span class="elo-step-number">2</span>
+        <div>
+          <h4>Ergebnis auswählen</h4>
+          <p>Wählen Sie aus, ob Lisa die Beispielaufgabe richtig oder falsch gelöst hat. Klicken Sie mehrfach, um mehrere Bearbeitungen zu simulieren.</p>
         </div>
       </div>
 
@@ -920,10 +811,20 @@ html`
         <div class="elo-good">${viewof conceptSolved}</div>
         <div class="elo-bad">${viewof conceptFailed}</div>
       </div>
-
-      <p class="elo-message">${conceptModel.message}</p>
-      ${conceptTrendChart(conceptModel)}
+      <div class="elo-reset" style="margin-top:0.65rem;">${viewof conceptReset}</div>
     </div>
+
+    <div class="elo-exp-card">
+      <div class="elo-step-head">
+        <span class="elo-step-number">3</span>
+        <div>
+          <h4>Beobachtung</h4>
+          <p>Nach jeder Auswahl beschreibt das System kurz, warum es Lisa und die Aufgabe höher oder niedriger einschätzt.</p>
+        </div>
+      </div>
+      <p class="elo-message">${conceptModel.message}</p>
+    </div>
+
   </section>
 </div>
 `
@@ -933,25 +834,25 @@ html`
 
 Im vorherigen Experiment konnten Sie beobachten, dass ein adaptives Lernsystem seine Einschätzung eines Lernenden und der Aufgabenschwierigkeit nach jeder bearbeiteten Aufgabe aktualisiert. Dabei wurde bereits deutlich, dass manche Ergebnisse nur zu kleinen Veränderungen führen, während andere die Einschätzungen deutlich stärker beeinflussen.
 
-Doch warum reagiert das System auf diese Weise? Um diese Frage zu beantworten, lohnt sich ein Blick auf den Ursprung des Elo-Verfahrens. Die Grundidee entstand ursprünglich im Schachsport und bildet bis heute die Grundlage vieler Elo-basierter Verfahren in adaptiven Lernsystemen.
+Doch warum reagiert das System auf diese Weise? Um diese Frage zu beantworten, lohnt sich ein Blick auf den Ursprung des Elo Ratings. Die Grundidee entstand ursprünglich im Schachsport und bildet bis heute die Grundlage vieler Elo-basierter Verfahren in adaptiven Lernsystemen.
 Ziel war es, die relative Spielstärke verschiedener Spieler möglichst objektiv abzuschätzen. Hierzu wird jedem Spieler eine numerische Bewertung, das sogenannte Rating, zugeordnet. Treffen zwei Spieler aufeinander, kann aus ihren Ratings abgeschätzt werden, welcher Spieler mit höherer Wahrscheinlichkeit gewinnen sollte [@Elo1978].
-Betrachtet man beispielsweise zwei Schachspieler mit einem Rating von 1600 beziehungsweise 1400 Punkten, so würde das Elo-Verfahren erwarten, dass der Spieler mit dem höheren Rating häufiger gewinnt. Das tatsächliche Ergebnis einer einzelnen Partie ist jedoch nicht sicher vorhersagbar. Auch ein schwächer eingeschätzter Spieler kann gewinnen und für eine Überraschung sorgen.
+Betrachtet man beispielsweise zwei Schachspieler mit einem Rating von 1600 beziehungsweise 1400 Punkten, so würde das Elo Rating erwarten, dass der Spieler mit dem höheren Rating häufiger gewinnt. Das tatsächliche Ergebnis einer einzelnen Partie ist jedoch nicht sicher vorhersagbar. Auch ein schwächer eingeschätzter Spieler kann gewinnen und für eine Überraschung sorgen.
 
-Genau diese Kombination aus Erwartung und tatsächlichem Ergebnis bildet den Kern des Elo-Verfahrens. Vor jeder Begegnung wird zunächst abgeschätzt, wie wahrscheinlich ein bestimmter Ausgang ist. Nach dem Spiel wird das tatsächliche Ergebnis mit dieser Erwartung verglichen. Entspricht das Ergebnis der Erwartung, verändern sich die Bewertungen nur geringfügig. Tritt dagegen ein unerwartetes Ergebnis ein, werden die Bewertungen stärker angepasst [@Elo1978].  
+Genau diese Kombination aus Erwartung und tatsächlichem Ergebnis bildet den Kern des Elo Ratings. Vor jeder Begegnung wird zunächst abgeschätzt, wie wahrscheinlich ein bestimmter Ausgang ist. Nach dem Spiel wird das tatsächliche Ergebnis mit dieser Erwartung verglichen. Entspricht das Ergebnis der Erwartung, verändern sich die Bewertungen nur geringfügig. Tritt dagegen ein unerwartetes Ergebnis ein, werden die Bewertungen stärker angepasst [@Elo1978].  
 
 Dieses Prinzip lässt sich auch auf adaptive Lernsysteme übertragen. Anstelle zweier Schachspieler treten hier ein Lernender und eine Aufgabe gegeneinander an. Dem Lernenden wird eine geschätzte Fähigkeit zugeordnet, während die Aufgabe durch einen Schwierigkeitswert beschrieben wird. Aus beiden Werten lässt sich ableiten, wie wahrscheinlich eine erfolgreiche Bearbeitung der Aufgabe ist. Nach jeder Interaktion werden die Schätzwerte anhand des tatsächlichen Ergebnisses aktualisiert, sodass sich die Einschätzung des Lernenden kontinuierlich an neue Informationen anpasst [@Abdi2019].  
 
-Die grundlegende Idee des Elo-Verfahrens lässt sich somit auf drei einfache Schritte zurückführen:
+Die grundlegende Idee des Elo Ratings lässt sich somit auf drei einfache Schritte zurückführen:
 
 1. Aus den vorhandenen Bewertungen wird eine Erwartung gebildet.
 2. Das tatsächliche Ergebnis wird beobachtet.
 3. Die Bewertungen werden entsprechend angepasst.
 
-Diese drei Schritte bilden den Kern des Elo-Verfahrens und werden im weiteren Verlauf der Lernressource zunächst algorithmisch und anschließend wahlweise auch mathematisch genauer betrachtet.
+Diese drei Schritte bilden den Kern des Elo Ratings und werden im weiteren Verlauf der Lernressource zunächst algorithmisch und anschließend wahlweise auch mathematisch genauer betrachtet.
 
-### Algorithmische Funktionsweise des Elo-Verfahrens
+### Algorithmische Funktionsweise des Elo Ratings
 
-Im Experiment konnten Sie beobachten, wie ein adaptives Lernsystem seine Einschätzungen nach jeder bearbeiteten Aufgabe aktualisiert. Im vorherigen Abschnitt wurde anschließend die Grundidee dieses Vorgehens anhand des Elo-Verfahrens aus dem Schachsport erläutert. Im Folgenden wird dieser Aktualisierungsprozess Schritt für Schritt beschrieben.
+Im Experiment konnten Sie beobachten, wie ein adaptives Lernsystem seine Einschätzungen nach jeder bearbeiteten Aufgabe aktualisiert. Im vorherigen Abschnitt wurde anschließend die Grundidee dieses Vorgehens anhand des Elo Ratings aus dem Schachsport erläutert. Im Folgenden wird dieser Aktualisierungsprozess Schritt für Schritt beschrieben.
 
 Zu Beginn einer Interaktion liegen für den Lernenden und die Aufgabe jeweils aktuelle Schätzwerte vor. Der Lernende wird durch eine geschätzte Fähigkeit beschrieben, während für die Aufgabe ein Schwierigkeitswert angenommen wird. Beide Werte repräsentieren den aktuellen Kenntnisstand des Systems über den Lernenden beziehungsweise die Aufgabe [@Pelanek2016; @Abdi2019].
 
@@ -963,7 +864,7 @@ Anschließend wird das beobachtete Ergebnis mit der zuvor berechneten Erwartung 
 
 Im letzten Schritt werden die Schätzwerte aktualisiert. Die neu berechnete Fähigkeit des Lernenden sowie gegebenenfalls die angepasste Schwierigkeit der Aufgabe bilden die Ausgangsbasis für die nächste Interaktion. Durch die wiederholte Anwendung dieses Ablaufs passt sich das Modell kontinuierlich an neue Beobachtungen an und verbessert fortlaufend seine Schätzung des aktuellen Leistungsstands [@Pelanek2016; @Abdi2019].
 
-Der algorithmische Ablauf des Elo-Verfahrens lässt sich somit in fünf Schritte zusammenfassen:
+Der algorithmische Ablauf des Elo Ratings lässt sich somit in fünf Schritte zusammenfassen:
 
 1. Aktuelle Schätzwerte bestimmen.
 2. Erwartete Erfolgswahrscheinlichkeit berechnen.
@@ -971,15 +872,15 @@ Der algorithmische Ablauf des Elo-Verfahrens lässt sich somit in fünf Schritte
 4. Erwartung und Ergebnis vergleichen.
 5. Schätzwerte aktualisieren.
 
-Diese fünf Schritte werden nach jeder bearbeiteten Aufgabe erneut durchlaufen und bilden den grundlegenden Arbeitsablauf des Elo-Verfahrens. Im nächsten Abschnitt werden die verschiedenen Anwendungsbereiche des Verfahrens in adaptiven Lernsystemen näher betrachtet.
+Diese fünf Schritte werden nach jeder bearbeiteten Aufgabe erneut durchlaufen und bilden den grundlegenden Arbeitsablauf des Elo Ratings. Im nächsten Abschnitt werden die verschiedenen Anwendungsbereiche des Verfahrens in adaptiven Lernsystemen näher betrachtet.
 
-### Anwendungen des Elo-Verfahrens in adaptiven Lernsystemen
+### Anwendungen des Elo Ratings in adaptiven Lernsystemen
 
-Das Elo-Verfahren wird in adaptiven Lernsystemen vor allem zur Schätzung von Fähigkeits- und Schwierigkeitswerten eingesetzt. Dabei wird jede Interaktion zwischen einem Lernenden und einer Aufgabe als Beobachtung genutzt, um die zugrunde liegenden Parameter fortlaufend zu aktualisieren. Durch diese kontinuierliche Aktualisierung eignet sich das Verfahren insbesondere für Systeme, die den Wissensstand von Lernenden während des Lernprozesses modellieren möchten [@Pelanek2016].
+Das Elo Rating wird in adaptiven Lernsystemen vor allem zur Schätzung von Fähigkeits- und Schwierigkeitswerten eingesetzt. Dabei wird jede Interaktion zwischen einem Lernenden und einer Aufgabe als Beobachtung genutzt, um die zugrunde liegenden Parameter fortlaufend zu aktualisieren. Durch diese kontinuierliche Aktualisierung eignet sich das Verfahren insbesondere für Systeme, die den Wissensstand von Lernenden während des Lernprozesses modellieren möchten [@Pelanek2016].
 
 #### Lernendenmodellierung
 
-Eine zentrale Anwendung des Elo-Verfahrens besteht in der Schätzung der Fähigkeiten von Lernenden. Nach jeder bearbeiteten Aufgabe wird die Fähigkeitsbewertung anhand des beobachteten Ergebnisses aktualisiert. Dadurch entsteht ein dynamisches Modell des aktuellen Wissensstands, das sich kontinuierlich an neue Beobachtungen anpasst [@Pelanek2016].
+Eine zentrale Anwendung des Elo Ratings besteht in der Schätzung der Fähigkeiten von Lernenden. Nach jeder bearbeiteten Aufgabe wird die Fähigkeitsbewertung anhand des beobachteten Ergebnisses aktualisiert. Dadurch entsteht ein dynamisches Modell des aktuellen Wissensstands, das sich kontinuierlich an neue Beobachtungen anpasst [@Pelanek2016].
 
 #### Schätzung von Aufgabenschwierigkeiten
 
@@ -987,21 +888,21 @@ Neben der Modellierung von Lernenden können auch Schwierigkeitswerte für Aufga
 
 #### Grundlage adaptiver Entscheidungen
 
-Wie in @fig-elo-einordnung dargestellt, können die geschätzten Fähigkeits- und Schwierigkeitswerte anschließend als Grundlage adaptiver Entscheidungen dienen. Beispielsweise können Lernsysteme Aufgaben auswählen, deren Schwierigkeit zum aktuellen Leistungsstand eines Lernenden passt. Die eigentliche Aufgabenwahl ist dabei nicht Bestandteil des Elo-Verfahrens selbst, sondern nutzt die durch das Verfahren bereitgestellten Schätzwerte [@Pelanek2016].
-Ein Beispiel hierfür beschreiben Vesin et al., die ein modifiziertes Elo-Verfahren in Online-Programmierkursen einsetzen, um sowohl den Wissensstand der Lernenden als auch die Schwierigkeit von Programmieraufgaben zu schätzen und darauf aufbauend geeignete Lerninhalte zu empfehlen [@Vesin2022].
+Wie in @fig-elo-einordnung dargestellt, können die geschätzten Fähigkeits- und Schwierigkeitswerte anschließend als Grundlage adaptiver Entscheidungen dienen. Beispielsweise können Lernsysteme Aufgaben auswählen, deren Schwierigkeit zum aktuellen Leistungsstand eines Lernenden passt. Die eigentliche Aufgabenwahl ist dabei nicht Bestandteil des Elo Ratings selbst, sondern nutzt die durch das Verfahren bereitgestellten Schätzwerte [@Pelanek2016].
+Ein Beispiel hierfür beschreiben Vesin et al., die ein modifiziertes Elo Rating in Online-Programmierkursen einsetzen, um sowohl den Wissensstand der Lernenden als auch die Schwierigkeit von Programmieraufgaben zu schätzen und darauf aufbauend geeignete Lerninhalte zu empfehlen [@Vesin2022].
 
-![Schematische Einordnung des Elo-Verfahrens in den adaptiven Entscheidungsprozess. Quelle: Eigene Darstellung nach @Vesin2022.](abbildungen/grundlagen-adaptiver-entscheidungsprozess-elo.jpg){#fig-elo-einordnung width=70% fig-pos="H"}
+![Schematische Einordnung des Elo Ratings in den adaptiven Entscheidungsprozess. Quelle: Eigene Darstellung nach @Vesin2022.](/abbildungen/RATING-adaptiver-entscheidungsprozess-elo.jpg){#fig-elo-einordnung width=70% fig-pos="H"}
 
 #### Open Learner Models
 
 Eine weitere Anwendung besteht in sogenannten Open Learner Models. Dabei werden die durch das System geschätzten Fähigkeitswerte nicht ausschließlich intern verwendet, sondern den Lernenden direkt zugänglich gemacht. Die Lernenden erhalten dadurch Einblick in die Einschätzung ihres aktuellen Wissensstands und können ihre Stärken und Schwächen besser nachvollziehen.
 Abdi et al. beschreiben einen solchen Ansatz auf Basis eines mehrdimensionalen Elo-Modells (M-Elo), bei dem Fähigkeitswerte für verschiedene Themengebiete visualisiert werden. Die Autoren argumentieren, dass transparente Darstellungen des Lernendenmodells die Reflexion des eigenen Lernfortschritts unterstützen und das Vertrauen in die Empfehlungen eines adaptiven Systems fördern können [@Abdi2019].
 
-Die dargestellten Anwendungsbereiche verdeutlichen, dass das Elo-Verfahren nicht nur zur Schätzung von Fähigkeiten eingesetzt werden kann, sondern auch die Grundlage verschiedener adaptiver Funktionen in modernen Lernsystemen bildet.
+Die dargestellten Anwendungsbereiche verdeutlichen, dass das Elo Rating nicht nur zur Schätzung von Fähigkeiten eingesetzt werden kann, sondern auch die Grundlage verschiedener adaptiver Funktionen in modernen Lernsystemen bildet.
 
 ### Wissensüberprüfung
 
-Beantworten Sie die folgenden Fragen, bevor Sie zur mathematischen Herleitung übergehen. Die Auswertung erscheint, sobald alle Fragen beantwortet wurden.
+Beantworten Sie die folgenden Fragen, bevor Sie zur mathematischen Herleitung übergehen. Wählen Sie jeweils eine Antwort aus und prüfen Sie diese anschließend über den Button. Die Gesamtauswertung erscheint, sobald alle Fragen geprüft wurden.
 
 ::: {.content-visible when-format="pdf"}
 **// CSS-Definitionen:** Die folgenden CSS-Regeln gestalten die Quizkarten, Antwortoptionen und Rückmeldungen.
@@ -1055,6 +956,43 @@ html`<style>
 }
 .elo-quiz-card input {
   margin-top: 0.2rem;
+}
+.elo-quiz-check {
+  align-self: start;
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 7px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
+  margin-top: 0.35rem;
+  padding: 0.5rem 0.75rem;
+}
+.elo-quiz-check:disabled {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #475569;
+  cursor: default;
+}
+.elo-quiz-local-feedback {
+  border-radius: 7px;
+  margin-top: 0.35rem;
+  padding: 0.55rem 0.65rem;
+}
+.elo-quiz-local-feedback.pending {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  color: #475569;
+}
+.elo-quiz-local-feedback.correct {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+.elo-quiz-local-feedback.incorrect {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
 }
 .elo-quiz-result {
   border-radius: 8px;
@@ -1127,8 +1065,8 @@ html`<style>
 eloQuizQuestions = [
   {
     id: "q1",
-    title: "Frage 1 – Ziel des Elo-Verfahrens",
-    prompt: "Welches Ziel verfolgt das Elo-Verfahren in adaptiven Lernsystemen?",
+    title: "Frage 1 – Ziel des Elo Ratings",
+    prompt: "Welches Ziel verfolgt das Elo Rating in adaptiven Lernsystemen?",
     correct: "q1-b",
     options: [
       {id: "q1-a", text: "Es erstellt automatisch neue Aufgaben."},
@@ -1140,7 +1078,7 @@ eloQuizQuestions = [
   {
     id: "q2",
     title: "Frage 2 – Grundidee",
-    prompt: "Welche Aussage beschreibt die Grundidee des Elo-Verfahrens am besten?",
+    prompt: "Welche Aussage beschreibt die Grundidee des Elo Ratings am besten?",
     correct: "q2-b",
     options: [
       {id: "q2-a", text: "Der Wissensstand wird nur einmal zu Beginn bestimmt."},
@@ -1164,7 +1102,7 @@ eloQuizQuestions = [
   {
     id: "q4",
     title: "Frage 4 – Verständnis des Algorithmus",
-    prompt: "Welche Reihenfolge beschreibt den grundlegenden Ablauf des Elo-Verfahrens?",
+    prompt: "Welche Reihenfolge beschreibt den grundlegenden Ablauf des Elo Ratings?",
     correct: "q4-b",
     options: [
       {id: "q4-a", text: "Tatsächliches Ergebnis beobachten → Schätzwerte aktualisieren → Erwartung bilden"},
@@ -1176,7 +1114,7 @@ eloQuizQuestions = [
   {
     id: "q5",
     title: "Frage 5 – Anwendungsszenario",
-    prompt: "Für welches Szenario eignet sich das Elo-Verfahren besonders gut?",
+    prompt: "Für welches Szenario eignet sich das Elo Rating besonders gut?",
     correct: "q5-a",
     options: [
       {id: "q5-a", text: "Ein Mathematik-Lernsystem soll nach jeder bearbeiteten Aufgabe die Fähigkeit der Lernenden neu einschätzen und anschließend passende Aufgaben auswählen."},
@@ -1189,7 +1127,7 @@ eloQuizQuestions = [
 ```
 
 ::: {.content-visible when-format="pdf"}
-**// Eingabeelemente:** Dieser Block erzeugt die Radio-Button-Eingaben für einzelne Multiple-Choice-Fragen.
+**// Eingabeelemente:** Dieser Block erzeugt die Radio-Button-Eingaben und einen Prüfen-Button für jede Multiple-Choice-Frage.
 :::
 
 ```{ojs}
@@ -1198,6 +1136,8 @@ eloQuizQuestions = [
 eloQuizInput = question => {
   const form = document.createElement("form")
   form.value = null
+  let selectedAnswer = null
+  const radioInputs = []
 
   const questionText = document.createElement("div")
   questionText.className = "elo-quiz-question"
@@ -1213,15 +1153,50 @@ eloQuizInput = question => {
     input.name = `elo-${question.id}`
     input.value = option.id
     text.textContent = option.text
+    radioInputs.push(input)
 
     input.addEventListener("change", () => {
-      form.value = input.value
-      form.dispatchEvent(new Event("input", {bubbles: true}))
+      selectedAnswer = input.value
     })
 
     label.append(input, text)
     form.append(label)
   })
+
+  const checkButton = document.createElement("button")
+  checkButton.type = "button"
+  checkButton.className = "elo-quiz-check"
+  checkButton.textContent = "Antwort prüfen"
+
+  const feedback = document.createElement("div")
+  feedback.className = "elo-quiz-local-feedback pending"
+  feedback.textContent = "Wählen Sie eine Antwort aus und prüfen Sie diese anschließend."
+
+  checkButton.addEventListener("click", () => {
+    if (selectedAnswer === null) {
+      feedback.className = "elo-quiz-local-feedback pending"
+      feedback.textContent = "Wählen Sie zunächst eine Antwort aus."
+      return
+    }
+
+    const isCorrect = selectedAnswer === question.correct
+    const correct = question.options.find(option => option.id === question.correct)
+    form.value = selectedAnswer
+    radioInputs.forEach(input => {
+      input.disabled = true
+    })
+    checkButton.disabled = true
+    checkButton.textContent = "Antwort geprüft"
+
+    feedback.className = `elo-quiz-local-feedback ${isCorrect ? "correct" : "incorrect"}`
+    feedback.innerHTML = isCorrect
+      ? `<strong>Richtig.</strong> Die Antwort ist korrekt.`
+      : `<strong>Noch einmal ansehen.</strong><br>Richtige Antwort: ${correct.text}`
+
+    form.dispatchEvent(new Event("input", {bubbles: true}))
+  })
+
+  form.append(checkButton, feedback)
 
   return form
 }
@@ -1238,7 +1213,7 @@ viewof eloQuizQ5 = eloQuizInput(eloQuizQuestions[4])
 ```
 
 ::: {.content-visible when-format="pdf"}
-**// Auswertung:** Dieser Block sammelt die Antworten, berechnet den Punktestand und erzeugt Gesamt- und Detailfeedback.
+**// Auswertung:** Dieser Block sammelt die geprüften Antworten, berechnet den Punktestand und erzeugt Gesamt- und Detailfeedback.
 :::
 
 ```{ojs}
@@ -1263,22 +1238,22 @@ eloQuizEvaluations = [
   {
     level: "partial",
     title: "↺ Lernziel noch nicht vollständig erreicht.",
-    text: "Einige grundlegende Konzepte sind noch nicht vollständig verstanden. Wiederholen Sie insbesondere die Grundidee des Elo-Verfahrens sowie den grundlegenden Ablauf und bearbeiten Sie den Test anschließend erneut."
+    text: "Einige grundlegende Konzepte sind noch nicht vollständig verstanden. Wiederholen Sie insbesondere die Grundidee des Elo Ratings sowie den grundlegenden Ablauf und bearbeiten Sie den Test anschließend erneut."
   },
   {
     level: "partial",
     title: "↺ Lernziel noch nicht vollständig erreicht.",
-    text: "Die Grundidee ist teilweise verstanden. Wiederholen Sie bei Bedarf die Abschnitte zur Anwendung des Elo-Verfahrens in adaptiven Lernsystemen und zum grundlegenden Ablauf."
+    text: "Die Grundidee ist teilweise verstanden. Wiederholen Sie bei Bedarf die Abschnitte zur Anwendung des Elo Ratings in adaptiven Lernsystemen und zum grundlegenden Ablauf."
   },
   {
     level: "reached",
     title: "✅ Lernziel erreicht.",
-    text: "Sie haben die wichtigsten Konzepte des Elo-Verfahrens verstanden. Lesen Sie bei Bedarf die Rückmeldung zur falsch beantworteten Frage und fahren Sie anschließend mit dem nächsten Kapitel fort."
+    text: "Sie haben die wichtigsten Konzepte des Elo Ratings verstanden. Lesen Sie bei Bedarf die Rückmeldung zur falsch beantworteten Frage und fahren Sie anschließend mit dem nächsten Kapitel fort."
   },
   {
     level: "reached",
     title: "✅ Lernziel erreicht.",
-    text: "Sie haben die grundlegenden Konzepte des Elo-Verfahrens verstanden und können mit dem nächsten Kapitel zur mathematischen Beschreibung fortfahren."
+    text: "Sie haben die grundlegenden Konzepte des Elo Ratings verstanden und können mit dem nächsten Kapitel zur mathematischen Beschreibung fortfahren."
   }
 ]
 eloQuizEvaluation = eloQuizEvaluations[eloQuizScore]
@@ -1311,7 +1286,7 @@ html`
     <div class="elo-quiz-card">${viewof eloQuizQ5}</div>
   </div>
   ${!eloQuizComplete
-    ? html`<div class="elo-quiz-result pending">Beantworten Sie alle fünf Fragen, um eine Rückmeldung zu erhalten.</div>`
+    ? html`<div class="elo-quiz-result pending">Prüfen Sie alle fünf Fragen, um eine Gesamtrückmeldung zu erhalten.</div>`
     : html`
       <div class="elo-quiz-summary">
         <div class="elo-quiz-score">
@@ -1326,7 +1301,7 @@ html`
             <div>
               <strong>${item.ok ? "✅ Richtig" : "❌ Noch einmal ansehen"}: ${item.title}</strong>
               ${item.ok
-                ? html`<br>Diese Antwort passt zum jeweiligen Lernziel.`
+                ? html`<br>Die Antwort ist korrekt.`
                 : html`<br>Richtige Antwort: ${item.correct}`}
             </div>
           `)}
@@ -1339,13 +1314,13 @@ html`
 
 
 ::: {.callout-note title="Weiterer Zugang"}
-Möchten Sie tiefer in das Elo-Verfahren einsteigen?
+Möchten Sie tiefer in das Elo Rating einsteigen?
 
 * Die mathematischen Grundlagen erläutern, wie die Erfolgswahrscheinlichkeit und die Aktualisierung der Schätzwerte berechnet werden. → [Zum formalen Zugang](#formaler-zugang)
-* Die Implementierung zeigt, wie sich das Elo-Verfahren Schritt für Schritt in Python umsetzen lässt. → [Zum Implementierungszugang](#implementierungszugang)
+* Die Implementierung zeigt, wie sich das Elo Rating Schritt für Schritt in Python umsetzen lässt. → [Zum Implementierungszugang](#implementierungszugang)
 :::
 
-## Mathematische Modellierung im Elo-Verfahren {#formaler-zugang}
+## Mathematische Modellierung im Elo Rating {#formaler-zugang}
 
 **Lernziele**
 
@@ -1353,15 +1328,15 @@ Nach Abschluss dieses Kapitels können Sie …
 
 * erläutern, wie aus der Fähigkeit eines Lernenden und der Schwierigkeit einer Aufgabe die erwartete Erfolgswahrscheinlichkeit berechnet wird.
 * die Bedeutung der Größen $\theta_s$, $d_i$, $P_{si}$, $correct_{si}$ und $K$ erklären.
-* nachvollziehen, wie das Elo-Verfahren seine Schätzwerte nach jeder Bearbeitung aktualisiert.
+* nachvollziehen, wie das Elo Rating seine Schätzwerte nach jeder Bearbeitung aktualisiert.
 * die Auswirkungen verschiedener Parameter in der interaktiven Simulation interpretieren.
 * die Berechnung einer Aktualisierung anhand eines Zahlenbeispiels Schritt für Schritt nachvollziehen.
 
-Damit ein adaptives Lernsystem den Wissensstand eines Lernenden abschätzen kann, muss es dessen Beobachtungen mathematisch beschreiben. Das Elo-Verfahren modelliert dazu zwei zentrale Größen: die geschätzte Fähigkeit eines Lernenden und die geschätzte Schwierigkeit einer Aufgabe. Beide Werte werden nach jeder bearbeiteten Aufgabe anhand des beobachteten Ergebnisses aktualisiert und bilden die Grundlage für alle weiteren Berechnungen [@Pelanek2016; @Elo1978].
+Damit ein adaptives Lernsystem den Wissensstand eines Lernenden abschätzen kann, muss es dessen Beobachtungen mathematisch beschreiben. Das Elo Rating modelliert dazu zwei zentrale Größen: die geschätzte Fähigkeit eines Lernenden und die geschätzte Schwierigkeit einer Aufgabe. Beide Werte werden nach jeder bearbeiteten Aufgabe anhand des beobachteten Ergebnisses aktualisiert und bilden die Grundlage für alle weiteren Berechnungen [@Pelanek2016; @Elo1978].
 
 Die zentrale Idee besteht darin, aus der Beziehung zwischen Fähigkeit und Aufgabenschwierigkeit die Wahrscheinlichkeit einer erfolgreichen Bearbeitung abzuleiten. Besitzt ein Lernender eine höhere geschätzte Fähigkeit als die Schwierigkeit der Aufgabe, sollte die Erfolgswahrscheinlichkeit entsprechend größer ausfallen. Umgekehrt sinkt diese Wahrscheinlichkeit, wenn die Aufgabe schwieriger eingeschätzt wird als die Fähigkeit des Lernenden [@Pelanek2016].
 
-Im Folgenden wird zunächst gezeigt, wie das Elo-Verfahren diese Erfolgswahrscheinlichkeit mathematisch berechnet. Anschließend wird erläutert, wie die Schätzwerte nach einer bearbeiteten Aufgabe aktualisiert werden.
+Im Folgenden wird zunächst gezeigt, wie das Elo Rating diese Erfolgswahrscheinlichkeit mathematisch berechnet. Anschließend wird erläutert, wie die Schätzwerte nach einer bearbeiteten Aufgabe aktualisiert werden.
 
 ### Wovon hängt die Erfolgswahrscheinlichkeit ab?
 
@@ -1395,7 +1370,7 @@ html`<style>
   box-sizing: border-box;
 }
 .elo-expect-head {
-  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 58%, #f5f3ff 100%);
+  background: #ffffff;
   border-bottom: 1px solid var(--expect-line);
   padding: 1rem 1.1rem;
 }
@@ -1481,7 +1456,7 @@ html`<style>
   overflow: hidden;
 }
 .elo-expect-fill {
-  background: linear-gradient(90deg, #38bdf8, #2563eb, #15803d);
+  background: #2563eb;
   border-radius: 999px;
   height: 100%;
   transition: width 180ms ease;
@@ -1604,7 +1579,7 @@ Im vorherigen Experiment konnten Sie beobachten, dass sich die Einschätzung des
 
 Die entscheidende Frage lautet nun: Wie berechnet das System diese Einschätzung?
 
-Dazu beschreibt das Elo-Verfahren sowohl die Fähigkeit eines Lernenden als auch die Schwierigkeit einer Aufgabe durch numerische Werte. Aus der Beziehung zwischen beiden Größen wird anschließend die Wahrscheinlichkeit berechnet, mit der ein Lernender eine Aufgabe voraussichtlich erfolgreich bearbeiten wird. Diese Wahrscheinlichkeit wird als erwartete Erfolgswahrscheinlichkeit bezeichnet [@Pelanek2016; @Abdi2019].
+Dazu beschreibt das Elo Rating sowohl die Fähigkeit eines Lernenden als auch die Schwierigkeit einer Aufgabe durch numerische Werte. Aus der Beziehung zwischen beiden Größen wird anschließend die Wahrscheinlichkeit berechnet, mit der ein Lernender eine Aufgabe voraussichtlich erfolgreich bearbeiten wird. Diese Wahrscheinlichkeit wird als erwartete Erfolgswahrscheinlichkeit bezeichnet [@Pelanek2016; @Abdi2019].
 
 Im Bildungsbereich hängt die erwartete Erfolgswahrscheinlichkeit von der Differenz zwischen der geschätzten Fähigkeit eines Lernenden und der Schwierigkeit einer Aufgabe ab. Besitzt ein Lernender eine höhere Fähigkeit als die Schwierigkeit der Aufgabe, wird eine erfolgreiche Bearbeitung wahrscheinlicher eingeschätzt. Ist die Aufgabe schwieriger als die geschätzte Fähigkeit des Lernenden, fällt die erwartete Erfolgswahrscheinlichkeit entsprechend geringer aus [@Pelanek2016; @Abdi2019].
 
@@ -1621,9 +1596,10 @@ Dabei bezeichnet
 
 | Symbol | Bedeutung |
 |----------|----------|
-| $P_{si}$ | Wahrscheinlichkeit einer korrekten Antwort |
-| $\theta_s$ | Fähigkeit des Lernenden |
-| $d_i$ | Schwierigkeit der Aufgabe |
+| $P_{si}$ | erwartete Erfolgswahrscheinlichkeit für Lernenden $s$ und Aufgabe $i$ |
+| $\theta_s$ | Fähigkeit des Lernenden $s$ |
+| $d_i$ | Schwierigkeit der Aufgabe $i$ |
+
 \
 Entscheidend für die berechnete Erfolgswahrscheinlichkeit ist die Differenz $d_i-\theta_s$. Ist die
 Aufgabe im Vergleich zur Fähigkeit schwieriger, wird der Ausdruck
@@ -1635,7 +1611,7 @@ Die ursprüngliche Elo-Formulierung im Schach verwendet statt der natürlichen E
 
 ### Aktualisierung der Bewertungen
 
-Nachdem die erwartete Erfolgswahrscheinlichkeit berechnet wurde, stellt sich die nächste Frage: Wie passt das Elo-Verfahren seine Schätzungen an, nachdem das tatsächliche Ergebnis bekannt ist?
+Nachdem die erwartete Erfolgswahrscheinlichkeit berechnet wurde, stellt sich die nächste Frage: Wie passt das Elo Rating seine Schätzungen an, nachdem das tatsächliche Ergebnis bekannt ist?
 
 Die Grundidee ist einfach: Das System vergleicht zunächst seine Erwartung mit dem tatsächlich beobachteten Ergebnis. Weichen beide voneinander ab, werden die Schätzwerte entsprechend angepasst. Fällt das Ergebnis besser aus als erwartet, wird die Fähigkeit des Lernenden höher und die Schwierigkeit der Aufgabe geringer eingeschätzt. Fällt das Ergebnis dagegen schlechter aus als erwartet, erfolgt die Anpassung in die entgegengesetzte Richtung. Auf diese Weise berücksichtigt das Modell neue Informationen unmittelbar und verbessert seine Schätzungen fortlaufend [@Elo1978; @Pelanek2016].
 
@@ -1669,10 +1645,12 @@ Dabei bezeichnet
 
 | Symbol | Bedeutung |
 |----------|----------|
-| $\theta_s'$ | aktualisierte Fähigkeit des Lernenden |
-| $d_i'$ | aktualisierte Schwierigkeit der Aufgabe |
-| $correct_{si}$ | tatsächliches Ergebnis (0 = falsch, 1 = richtig) |
-| $P_{si}$ | erwartete Erfolgswahrscheinlichkeit |
+| $\theta_s'$ | aktualisierte Fähigkeit des Lernenden $s$ |
+| $\theta_s$ | bisherige Fähigkeit des Lernenden $s$ |
+| $d_i'$ | aktualisierte Schwierigkeit der Aufgabe $i$ |
+| $d_i$ | bisherige Schwierigkeit der Aufgabe $i$ |
+| $correct_{si}$ | tatsächliches Ergebnis von Lernendem $s$ bei Aufgabe $i$ (0 = falsch, 1 = richtig) |
+| $P_{si}$ | erwartete Erfolgswahrscheinlichkeit für Lernenden $s$ und Aufgabe $i$ |
 | $K$ | Anpassungs- bzw. Lernrate |
 
 Zu Beginn werden die Fähigkeit des Lernenden ($\theta_s$) und die Schwierigkeit der Aufgabe ($d_i$) häufig mit dem Startwert 0 initialisiert. Von diesem Ausgangspunkt aus werden beide Werte nach jeder Interaktion schrittweise angepasst [@Pelanek2016].
@@ -1776,13 +1754,13 @@ d_i + K(P_{si}-correct_{si}) \\
 \end{aligned}
 $$
 
-Nach der Aktualisierung wird der Lernende somit etwas stärker und die Aufgabe etwas leichter eingeschätzt als zuvor. Das Elo-Verfahren berücksichtigt dadurch die neue Information, dass ein unerwartet gutes Ergebnis erzielt wurde.
+Nach der Aktualisierung wird der Lernende somit etwas stärker und die Aufgabe etwas leichter eingeschätzt als zuvor. Das Elo Rating berücksichtigt dadurch die neue Information, dass ein unerwartet gutes Ergebnis erzielt wurde.
 
 Je stärker ein tatsächliches Ergebnis von der zuvor berechneten Erwartung abweicht, desto größer fällt die Anpassung der Schätzwerte aus. Überraschende Ergebnisse führen daher zu stärkeren Aktualisierungen als Ergebnisse, die bereits erwartet wurden.
 
-### Interaktive Simulation des Elo-Verfahrens
+### Interaktive Simulation des Elo Ratings
 
-Nachdem die mathematischen Grundlagen und die Aktualisierung der Schätzwerte anhand eines Zahlenbeispiels erläutert wurden, können Sie die Auswirkungen verschiedener Parameter nun selbst untersuchen. Die Simulation ermöglicht es, die zuvor vorgestellten Formeln interaktiv anzuwenden und den Einfluss einzelner Größen auf das Verhalten des Elo-Verfahrens zu beobachten.
+Nachdem die mathematischen Grundlagen und die Aktualisierung der Schätzwerte anhand eines Zahlenbeispiels erläutert wurden, können Sie die Auswirkungen verschiedener Parameter nun selbst untersuchen. Die Simulation ermöglicht es, die zuvor vorgestellten Formeln interaktiv anzuwenden und den Einfluss einzelner Größen auf das Verhalten des Elo Ratings zu beobachten.
 
 Verändern Sie die Fähigkeit des Lernenden ($\theta_s$), die Schwierigkeit der Aufgabe ($d_i$), die Lernrate ($K$) sowie das Ergebnis der Bearbeitung ($correct_{si}$). Beobachten Sie anschließend, wie sich die erwartete Erfolgswahrscheinlichkeit sowie die aktualisierten Schätzwerte verändern.
 
@@ -1825,7 +1803,7 @@ html`<style>
 }
 .elo-math-head {
   align-items: center;
-  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 55%, #f5f3ff 100%);
+  background: #ffffff;
   border-bottom: 1px solid var(--elo-line);
   display: grid;
   gap: 0.85rem;
@@ -1972,16 +1950,16 @@ html`<style>
   color: #334155;
 }
 .elo-math-result-option.correct:has(input:checked) {
-  background: #15803d;
-  border-color: #166534;
-  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.22);
-  color: #ffffff;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  box-shadow: 0 0 0 3px rgba(187, 247, 208, 0.55);
+  color: #166534;
 }
 .elo-math-result-option.incorrect:has(input:checked) {
-  background: #dc2626;
-  border-color: #b91c1c;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.22);
-  color: #ffffff;
+  background: #fff1f2;
+  border-color: #fecdd3;
+  box-shadow: 0 0 0 3px rgba(254, 205, 211, 0.6);
+  color: #9f1239;
 }
 .elo-math-result input {
   accent-color: #475569;
@@ -1995,7 +1973,7 @@ html`<style>
   accent-color: #dc2626;
 }
 .elo-math-result-option:has(input:checked) input {
-  accent-color: #ffffff;
+  accent-color: #475569;
 }
 .elo-math-note {
   background: #eff6ff;
@@ -2055,11 +2033,30 @@ html`<style>
   white-space: normal !important;
   width: 100%;
 }
-.elo-math-update button {
-  background: var(--elo-green) !important;
+.elo-math-sim .elo-math-update button,
+.elo-math-sim .elo-math-update input[type="button"],
+.elo-math-sim .elo-math-update .observablehq button {
+  background: #2563eb !important;
+  border: 1px solid #2563eb !important;
+  color: #ffffff !important;
 }
-.elo-math-reset button {
-  background: #475569 !important;
+.elo-math-sim .elo-math-reset button,
+.elo-math-sim .elo-math-reset input[type="button"],
+.elo-math-sim .elo-math-reset .observablehq button {
+  background: #eff6ff !important;
+  border: 1px solid #bfdbfe !important;
+  color: #1e3a8a !important;
+}
+.elo-math-sim .elo-math-update button:hover,
+.elo-math-sim .elo-math-update input[type="button"]:hover,
+.elo-math-sim .elo-math-update .observablehq button:hover {
+  background: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+.elo-math-sim .elo-math-reset button:hover,
+.elo-math-sim .elo-math-reset input[type="button"]:hover,
+.elo-math-sim .elo-math-reset .observablehq button:hover {
+  background: #dbeafe !important;
 }
 .elo-math-trend {
   background: #f8fafc;
@@ -2098,7 +2095,7 @@ html`<style>
   background: var(--elo-blue);
 }
 .elo-math-dot.difficulty {
-  background: var(--elo-orange);
+  background: #475569;
 }
 .elo-math-trend svg {
   background: #ffffff;
@@ -2367,10 +2364,10 @@ mathTrendChart = model => {
           <text x="${tick.x}" y="360" text-anchor="middle" fill="#64748b" font-size="12">${tick.label}</text>
         `)}
         <text x="338" y="390" text-anchor="middle" fill="#64748b" font-size="12">Update</text>
-        <polyline points="${mathPolyline(difficultyPoints)}" fill="none" stroke="#c2410c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        <polyline points="${mathPolyline(difficultyPoints)}" fill="none" stroke="#475569" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
         <polyline points="${mathPolyline(thetaPoints)}" fill="none" stroke="#2563eb" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></polyline>
         ${difficultyPoints.map((point, index) => svg`
-          <circle cx="${point.x}" cy="${point.y}" r="5.5" fill="#ffffff" stroke="#c2410c" stroke-width="3">
+          <circle cx="${point.x}" cy="${point.y}" r="5.5" fill="#ffffff" stroke="#475569" stroke-width="3">
             <title>dᵢ: ${mathFormat(difficultyValues[index])}</title>
           </circle>
         `)}
@@ -2448,7 +2445,7 @@ html`
   <section class="elo-math-head">
     <div>
       <div class="elo-math-kicker">Interaktive Elo-Simulation</div>
-      <h3>Experimentieren Sie mit den Parametern des Elo-Verfahrens</h3>
+      <h3>Experimentieren Sie mit den Parametern des Elo Ratings</h3>
       <p>
         Verändern Sie die Startwerte, die Lernrate und das Bearbeitungsergebnis. Nach jeder Aktualisierung zeigt die Simulation, wie sich die Fähigkeit des Lernenden und die Schwierigkeit der Aufgabe gemäß den zuvor vorgestellten Formeln verändern.
       </p>
@@ -2516,7 +2513,7 @@ html`
 
 ### Wissensüberprüfung
 
-Beantworten Sie die folgenden Fragen, bevor Sie zur Implementierung des Elo-Verfahrens übergehen. Die Auswertung erscheint, sobald alle Fragen beantwortet wurden.
+Beantworten Sie die folgenden Fragen, bevor Sie zur Implementierung des Elo Ratings übergehen. Wählen Sie jeweils eine Antwort aus und prüfen Sie diese anschließend über den Button. Die Gesamtauswertung erscheint, sobald alle Fragen geprüft wurden.
 
 ::: {.content-visible when-format="pdf"}
 **// Fragen und Antwortoptionen:** Dieser Block definiert die Fragen, Antwortoptionen, korrekten Lösungen und Rückmeldungen.
@@ -2529,7 +2526,7 @@ eloMathQuizQuestions = [
   {
     id: "mq1",
     title: "Frage 1 – Erfolgswahrscheinlichkeit",
-    prompt: "Wovon hängt die erwartete Erfolgswahrscheinlichkeit im Elo-Verfahren hauptsächlich ab?",
+    prompt: "Wovon hängt die erwartete Erfolgswahrscheinlichkeit im Elo Rating hauptsächlich ab?",
     correct: "mq1-c",
     options: [
       {id: "mq1-a", text: "Nur von der Fähigkeit des Lernenden."},
@@ -2578,7 +2575,7 @@ eloMathQuizQuestions = [
 ```
 
 ::: {.content-visible when-format="pdf"}
-**// Eingabeelemente:** Dieser Block erzeugt die Radio-Button-Eingaben für die einzelnen Fragen.
+**// Eingabeelemente:** Dieser Block erzeugt die Radio-Button-Eingaben und einen Prüfen-Button für die einzelnen Fragen.
 :::
 
 ```{ojs}
@@ -2587,6 +2584,8 @@ eloMathQuizQuestions = [
 eloMathQuizInput = question => {
   const form = document.createElement("form")
   form.value = null
+  let selectedAnswer = null
+  const radioInputs = []
 
   const questionText = document.createElement("div")
   questionText.className = "elo-quiz-question"
@@ -2602,15 +2601,50 @@ eloMathQuizInput = question => {
     input.name = `elo-${question.id}`
     input.value = option.id
     text.textContent = option.text
+    radioInputs.push(input)
 
     input.addEventListener("change", () => {
-      form.value = input.value
-      form.dispatchEvent(new Event("input", {bubbles: true}))
+      selectedAnswer = input.value
     })
 
     label.append(input, text)
     form.append(label)
   })
+
+  const checkButton = document.createElement("button")
+  checkButton.type = "button"
+  checkButton.className = "elo-quiz-check"
+  checkButton.textContent = "Antwort prüfen"
+
+  const feedback = document.createElement("div")
+  feedback.className = "elo-quiz-local-feedback pending"
+  feedback.textContent = "Wählen Sie eine Antwort aus und prüfen Sie diese anschließend."
+
+  checkButton.addEventListener("click", () => {
+    if (selectedAnswer === null) {
+      feedback.className = "elo-quiz-local-feedback pending"
+      feedback.textContent = "Wählen Sie zunächst eine Antwort aus."
+      return
+    }
+
+    const isCorrect = selectedAnswer === question.correct
+    const correct = question.options.find(option => option.id === question.correct)
+    form.value = selectedAnswer
+    radioInputs.forEach(input => {
+      input.disabled = true
+    })
+    checkButton.disabled = true
+    checkButton.textContent = "Antwort geprüft"
+
+    feedback.className = `elo-quiz-local-feedback ${isCorrect ? "correct" : "incorrect"}`
+    feedback.innerHTML = isCorrect
+      ? `<strong>Richtig.</strong> Die Antwort ist korrekt.`
+      : `<strong>Noch einmal ansehen.</strong><br>Richtige Antwort: ${correct.text}`
+
+    form.dispatchEvent(new Event("input", {bubbles: true}))
+  })
+
+  form.append(checkButton, feedback)
 
   return form
 }
@@ -2625,7 +2659,7 @@ viewof eloMathQuizQ4 = eloMathQuizInput(eloMathQuizQuestions[3])
 ```
 
 ::: {.content-visible when-format="pdf"}
-**// Auswertung:** Dieser Block sammelt die Antworten, berechnet das Ergebnis und erzeugt Gesamt- und Detailfeedback.
+**// Auswertung:** Dieser Block sammelt die geprüften Antworten, berechnet das Ergebnis und erzeugt Gesamt- und Detailfeedback.
 :::
 
 ```{ojs}
@@ -2677,7 +2711,7 @@ eloMathQuizEvaluations = [
   {
     level: "reached",
     title: "✅ Lernziel erreicht.",
-    text: "Sie haben die zentralen Konzepte der mathematischen Modellierung des Elo-Verfahrens verstanden und können mit der Implementierung fortfahren."
+    text: "Sie haben die zentralen Konzepte der mathematischen Modellierung des Elo Ratings verstanden und können mit der Implementierung fortfahren."
   }
 ]
 eloMathQuizEvaluationBase = eloMathQuizEvaluations[eloMathQuizScore]
@@ -2706,7 +2740,7 @@ html`
     <div class="elo-quiz-card">${viewof eloMathQuizQ4}</div>
   </div>
   ${!eloMathQuizComplete
-    ? html`<div class="elo-quiz-result pending">Beantworten Sie alle vier Fragen, um eine Rückmeldung zu erhalten.</div>`
+    ? html`<div class="elo-quiz-result pending">Prüfen Sie alle vier Fragen, um eine Gesamtrückmeldung zu erhalten.</div>`
     : html`
       <div class="elo-quiz-summary">
         <div class="elo-quiz-score">
@@ -2721,7 +2755,7 @@ html`
             <div>
               <strong>${item.ok ? "✅ Richtig" : "❌ Noch einmal ansehen"}: ${item.title}</strong>
               ${item.ok
-                ? html`<br>Diese Antwort passt zum jeweiligen Lernziel.`
+                ? html`<br>Die Antwort ist korrekt.`
                 : html`<br>Richtige Antwort: ${item.correct}`}
             </div>
           `)}
@@ -2735,31 +2769,31 @@ html`
 ::: {.callout-note title="Weiterer Zugang"}
 Je nach Interesse können Sie das Gelernte nun aus einer anderen Perspektive vertiefen:
 
-* Der konzeptuelle Zugang fasst die Grundidee und typische Einsatzgebiete des Elo-Verfahrens ohne mathematische Herleitungen zusammen. → [Zum konzeptuellen Zugang](#konzeptueller-zugang)
+* Der konzeptuelle Zugang fasst die Grundidee und typische Einsatzgebiete des Elo Ratings ohne mathematische Herleitungen zusammen. → [Zum konzeptuellen Zugang](#konzeptueller-zugang)
 * Der Implementierungszugang zeigt, wie sich die vorgestellten Gleichungen in Python umsetzen lassen. → [Zum Implementierungszugang](#implementierungszugang)
 :::
 
-## Implementierung des Elo-Verfahrens {#implementierungszugang}
+## Implementierung des Elo Ratings {#implementierungszugang}
 
 **Lernziele** 
 
 Nach Abschluss dieses Kapitels können Sie …
 
-* erläutern, wie die zentralen Berechnungsschritte des Elo-Verfahrens in Programmcode umgesetzt werden.
+* erläutern, wie die zentralen Berechnungsschritte des Elo Ratings in Programmcode umgesetzt werden.
 * die Bedeutung der wichtigsten Bestandteile der Implementierung (Variablen, Funktionen und Parameter) erklären.
 * nachvollziehen, wie die erwartete Erfolgswahrscheinlichkeit und die Aktualisierung der Schätzwerte in Python implementiert werden.
 * den Ablauf des Elo-Algorithmus von der Berechnung der Erfolgswahrscheinlichkeit bis zur Aktualisierung der Schätzwerte beschreiben.
-* einfache Python-Codeausschnitte zum Elo-Verfahren lesen, verstehen und vervollständigen.
+* einfache Python-Codeausschnitte zum Elo Rating lesen, verstehen und vervollständigen.
 
-Das Elo-Verfahren basiert auf wenigen mathematischen Berechnungsschritten, mit denen die Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe kontinuierlich geschätzt werden. Damit diese Berechnungen in einem adaptiven Lernsystem automatisch nach jeder Bearbeitung durchgeführt werden können, müssen sie in einen Algorithmus übertragen werden.
+Das Elo Rating basiert auf wenigen mathematischen Berechnungsschritten, mit denen die Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe kontinuierlich geschätzt werden. Damit diese Berechnungen in einem adaptiven Lernsystem automatisch nach jeder Bearbeitung durchgeführt werden können, müssen sie in einen Algorithmus übertragen werden.
 
-In diesem Kapitel wird das Elo-Verfahren exemplarisch in der Programmiersprache Python umgesetzt. Ziel ist nicht die Entwicklung eines vollständigen adaptiven Lernsystems, sondern das Verständnis, wie sich die zentralen Berechnungsschritte des Elo-Verfahrens in Programmcode übersetzen lassen. Dabei wird schrittweise gezeigt, wie aus einzelnen Variablen, Funktionen und Berechnungen eine vollständige Implementierung entsteht.
+In diesem Kapitel wird das Elo Rating exemplarisch in der Programmiersprache Python umgesetzt. Ziel ist nicht die Entwicklung eines vollständigen adaptiven Lernsystems, sondern das Verständnis, wie sich die zentralen Berechnungsschritte des Elo Ratings in Programmcode übersetzen lassen. Dabei wird schrittweise gezeigt, wie aus einzelnen Variablen, Funktionen und Berechnungen eine vollständige Implementierung entsteht.
 
 Grundlegende Programmierkenntnisse in Python sind hilfreich, aber nicht zwingend erforderlich. Alle benötigten Codebeispiele werden erläutert und bauen systematisch aufeinander auf.
 
 ### Repräsentation von Lernenden und Aufgaben
 
-Bevor das Elo-Verfahren implementiert werden kann, muss zunächst festgelegt werden, wie die benötigten Informationen im Programm gespeichert werden. Für die grundlegende Implementierung reichen zwei numerische Werte aus: die geschätzte Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe. Beide Werte verändern sich im Verlauf der Bearbeitung und bilden die Grundlage aller weiteren Berechnungen.
+Bevor das Elo Rating implementiert werden kann, muss zunächst festgelegt werden, wie die benötigten Informationen im Programm gespeichert werden. Für die grundlegende Implementierung reichen zwei numerische Werte aus: die geschätzte Fähigkeit eines Lernenden und die Schwierigkeit einer Aufgabe. Beide Werte verändern sich im Verlauf der Bearbeitung und bilden die Grundlage aller weiteren Berechnungen.
 
 In Python können diese Informationen zunächst als einfache Variablen gespeichert werden:
 
@@ -2768,7 +2802,7 @@ theta = 0.5      # Fähigkeit des Lernenden
 difficulty = 1.5 # Schwierigkeit der Aufgabe
 ```
 
-Die Variable theta speichert also die aktuelle Fähigkeit des Lernenden, während difficulty die Schwierigkeit der betrachteten Aufgabe repräsentiert. Diese Werte entsprechen den mathematischen Größen $\theta_s$ und $d_i$, die im Elo-Verfahren verwendet werden.
+Die Variable theta speichert also die aktuelle Fähigkeit des Lernenden, während difficulty die Schwierigkeit der betrachteten Aufgabe repräsentiert. Diese Werte entsprechen den mathematischen Größen $\theta_s$ und $d_i$, die im Elo Rating verwendet werden.
 
 ### Berechnung der erwarteten Erfolgswahrscheinlichkeit
 
@@ -2781,6 +2815,15 @@ P_{si}
 =
 \frac{1}{1+e^{d_i-\theta_s}}
 $$
+
+
+Dabei bezeichnet
+
+| Symbol | Bedeutung |
+|----------|----------|
+| $P_{si}$ | erwartete Erfolgswahrscheinlichkeit für Lernenden $s$ und Aufgabe $i$ |
+| $\theta_s$ | Fähigkeit des Lernenden $s$ |
+| $d_i$ | Schwierigkeit der Aufgabe $i$ |
 
 Diese Formel lässt sich in Python nahezu direkt umsetzen. Übertragen Sie die Formel in Python. Ergänzen Sie dazu den Ausdruck hinter `return`. Falls Sie Unterstützung benötigen, können Sie die Hinweise nacheinander aufdecken. Erst nach dem letzten Hinweis wird die Lösung angeboten.
 
@@ -2854,7 +2897,7 @@ const probabilityExercise = html`
   padding: 0.55rem 0.75rem;
 }
 .python-return-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .python-return-reset {
@@ -3117,7 +3160,7 @@ Das System erwartet in diesem Fall also, dass der Lernende die Aufgabe mit einer
 
 ### Aktualisierung der Bewertungen
 
-Nachdem die erwartete Erfolgswahrscheinlichkeit berechnet wurde, folgt der zweite Schritt des Elo-Verfahrens: die Aktualisierung der Fähigkeit des Lernenden und der Schwierigkeit der bearbeiteten Aufgabe. Die zugrunde liegenden Gleichungen lassen sich nahezu direkt in Python übertragen.
+Nachdem die erwartete Erfolgswahrscheinlichkeit berechnet wurde, folgt der zweite Schritt des Elo Ratings: die Aktualisierung der Fähigkeit des Lernenden und der Schwierigkeit der bearbeiteten Aufgabe. Die zugrunde liegenden Gleichungen lassen sich nahezu direkt in Python übertragen.
 
 Die Aktualisierung kann in Python wie folgt implementiert werden:
 
@@ -3199,7 +3242,7 @@ const updateProbabilityExercise = html`
   padding: 0.55rem 0.75rem;
 }
 .update-probability-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .update-probability-reset {
@@ -3512,7 +3555,7 @@ Zu Beginn der Funktion wird zunächst die erwartete Erfolgswahrscheinlichkeit be
 
 ### Durchführung einer Aktualisierung
 
-Nachdem sowohl die Berechnung der erwarteten Erfolgswahrscheinlichkeit als auch die Aktualisierung implementiert wurden, können beide Funktionen nun gemeinsam verwendet werden. Dadurch lässt sich ein vollständiger Aktualisierungsschritt des Elo-Verfahrens mit wenigen Codezeilen ausführen.
+Nachdem sowohl die Berechnung der erwarteten Erfolgswahrscheinlichkeit als auch die Aktualisierung implementiert wurden, können beide Funktionen nun gemeinsam verwendet werden. Dadurch lässt sich ein vollständiger Aktualisierungsschritt des Elo Ratings mit wenigen Codezeilen ausführen.
 
 Im folgenden Beispiel wird angenommen, dass ein Lernender die betrachtete Aufgabe korrekt beantwortet. Das Ergebnis wird daher mit result = 1 codiert. Eine falsche Antwort würde entsprechend durch result = 0 dargestellt.
 
@@ -3597,7 +3640,7 @@ const runUpdateExercise = html`
 }
 .run-update-check,
 .run-output-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .run-update-reset {
@@ -3989,7 +4032,7 @@ return runUpdateExercise
 }
 ```
 
-Mit wenigen Codezeilen lässt sich somit ein vollständiger Aktualisierungsschritt des Elo-Verfahrens durchführen. Nach jeder bearbeiteten Aufgabe werden die Fähigkeit des Lernenden und die Schwierigkeit der Aufgabe aktualisiert und können unmittelbar für die nächste Bearbeitung verwendet werden.
+Mit wenigen Codezeilen lässt sich somit ein vollständiger Aktualisierungsschritt des Elo Ratings durchführen. Nach jeder bearbeiteten Aufgabe werden die Fähigkeit des Lernenden und die Schwierigkeit der Aufgabe aktualisiert und können unmittelbar für die nächste Bearbeitung verwendet werden.
 
 ### Zusammenspiel der einzelnen Schritte
 
@@ -4005,37 +4048,84 @@ Der vollständige Elo-Algorithmus besteht somit aus einer wiederholten Folge von
 
 Durch die wiederholte Anwendung dieser Schritte entsteht ein dynamisches Modell des Lernenden, das sich kontinuierlich an neue Beobachtungen anpasst.
 
-Die vorgestellte Implementierung bildet das Standard-Elo-Verfahren ab. In modernen adaptiven Lernsystemen werden jedoch häufig Erweiterungen eingesetzt, um beispielsweise Unsicherheiten, Bearbeitungszeiten oder mehrere Wissenskomponenten zu berücksichtigen. Diese Erweiterungen sowie die Grenzen des Standardmodells werden im anschließenden Vertiefungsabschnitt vorgestellt.
+#### Vollständige Python-Implementierung
+
+In den vorherigen Abschnitten wurden die einzelnen Bestandteile des Elo Ratings schrittweise entwickelt. Der folgende Codeblock fasst diese Bestandteile zu einer vollständigen, lauffähigen Python-Implementierung zusammen.
+
+```python
+import math
+
+
+def probability(theta, difficulty):
+    """Berechnet die erwartete Erfolgswahrscheinlichkeit."""
+    return 1 / (1 + math.exp(difficulty - theta))
+
+
+def update(theta, difficulty, result, k=0.1):
+    """Aktualisiert Fähigkeit und Aufgabenschwierigkeit."""
+
+    p = probability(theta, difficulty)
+
+    theta = theta + k * (result - p)
+    difficulty = difficulty + k * (p - result)
+
+    return theta, difficulty
+
+
+# Startwerte
+theta = 0.5
+difficulty = 1.5
+
+# Ergebnis der Bearbeitung
+# 1 = richtig, 0 = falsch
+result = 1
+
+# Aktualisierung durchführen
+theta, difficulty = update(
+    theta,
+    difficulty,
+    result,
+    k=0.1
+)
+
+# Aktualisierte Werte ausgeben
+print("Neue Fähigkeit:", round(theta, 3))
+print("Neue Schwierigkeit:", round(difficulty, 3))
+```
+
+Die Implementierung fasst die zuvor entwickelten Bestandteile des Standard Elo Ratings zu einem vollständigen Python-Programm zusammen. Sie kann direkt ausgeführt und als Ausgangspunkt für eigene Experimente oder Erweiterungen verwendet werden.
+
+Die vorgestellte Implementierung bildet das Standard Elo Rating ab. In modernen adaptiven Lernsystemen werden jedoch häufig Erweiterungen eingesetzt, um beispielsweise Unsicherheiten, Bearbeitungszeiten oder mehrere Wissenskomponenten zu berücksichtigen. Diese Erweiterungen sowie die Grenzen des Standardmodells werden im anschließenden Vertiefungsabschnitt vorgestellt.
 
 ::: {.callout-note title="Weiterer Zugang"}
 Möchten Sie das Verfahren aus einer anderen Perspektive betrachten?
 
-* Der konzeptuelle Zugang erläutert Motivation, Grundidee und typische Anwendungsgebiete des Elo-Verfahrens. → [Zum konzeptuellen Zugang](#konzeptueller-zugang)
-* Der formale Zugang erklärt die mathematischen Grundlagen und den Aktualisierungsmechanismus des Elo-Verfahrens. → [Zum formalen Zugang](#formaler-zugang)
+* Der konzeptuelle Zugang erläutert Motivation, Grundidee und typische Anwendungsgebiete des Elo Ratings. → [Zum konzeptuellen Zugang](#konzeptueller-zugang)
+* Der formale Zugang erklärt die mathematischen Grundlagen und den Aktualisierungsmechanismus des Elo Ratings. → [Zum formalen Zugang](#formaler-zugang)
 :::
 
-### Grenzen und Erweiterungen des Elo-Verfahrens
+## Grenzen und Erweiterungen des Elo Ratings
 
 **Lernziele dieses Abschnitts**
 
 Nach diesem Abschnitt können Sie
 
-- die wichtigsten Grenzen des Standard-Elo-Verfahrens erläutern,
-- erklären, weshalb verschiedene Erweiterungen des Elo-Verfahrens entwickelt wurden,
+- die wichtigsten Grenzen des Standard Elo Ratings erläutern,
+- erklären, weshalb verschiedene Erweiterungen des Elo Ratings entwickelt wurden,
 - beschreiben, wie ausgewählte Erweiterungen zusätzliche Informationen wie Unsicherheit, Teilpunkte, Bearbeitungszeiten oder mehrere Wissenskomponenten berücksichtigen,
-- die grundlegenden Unterschiede zwischen dem Standard-Elo-Verfahren und seinen Erweiterungen erläutern.
+- die grundlegenden Unterschiede zwischen dem Standard Elo Rating und seinen Erweiterungen erläutern.
 
-#### Grenzen des Standard-Elo-Verfahrens
+### Grenzen des Standard Elo Ratings
 
-Das Elo-Verfahren bietet eine vergleichsweise einfache und effiziente Möglichkeit zur Modellierung von Lernenden und Aufgaben. Insbesondere die kontinuierliche Aktualisierung nach jeder Interaktion sowie die geringe Anzahl benötigter Parameter machen das Verfahren für adaptive Lernsysteme attraktiv [@Pelanek2016]. Dennoch weist das Standard-Elo-Verfahren mehrere Einschränkungen auf, die seine Aussagekraft in komplexen Bildungsszenarien begrenzen können.
+Das Elo Rating bietet eine vergleichsweise einfache und effiziente Möglichkeit zur Modellierung von Lernenden und Aufgaben. Insbesondere die kontinuierliche Aktualisierung nach jeder Interaktion sowie die geringe Anzahl benötigter Parameter machen das Verfahren für adaptive Lernsysteme attraktiv [@Pelanek2016]. Dennoch weist das Standard Elo Rating mehrere Einschränkungen auf, die seine Aussagekraft in komplexen Bildungsszenarien begrenzen können.
 
 Eine erste Einschränkung besteht darin, dass die Fähigkeit eines Lernenden durch einen einzigen Fähigkeitswert beschrieben wird. Das Verfahren geht somit implizit davon aus, dass sich der Wissensstand einer Person durch eine einzige Dimension repräsentieren lässt. In realen Lernumgebungen setzt sich Wissen jedoch häufig aus mehreren Teilgebieten zusammen. Ein Lernender kann beispielsweise in einem Themenbereich sehr gute Kenntnisse besitzen, während gleichzeitig Defizite in anderen Bereichen bestehen. Solche Unterschiede können durch einen einzelnen Elo-Wert nur eingeschränkt abgebildet werden [@Pelanek2016; @Abdi2019].
 
-Darüber hinaus verwendet das Standard-Elo-Verfahren einen konstanten Aktualisierungsparameter $K$. Die Wahl dieses Parameters beeinflusst das Verhalten des Modells maßgeblich. Kleine Werte führen zu einer langsamen Anpassung der Schätzwerte, während große Werte zwar schneller auf neue Beobachtungen reagieren, jedoch zu instabilen Schätzungen führen können. Die Verwendung eines festen Parameters stellt daher einen Kompromiss zwischen Stabilität und Anpassungsgeschwindigkeit dar [@Pelanek2016; @Vermeiren2026].
+Darüber hinaus verwendet das Standard Elo Rating einen konstanten Aktualisierungsparameter $K$. Die Wahl dieses Parameters beeinflusst das Verhalten des Modells maßgeblich. Kleine Werte führen zu einer langsamen Anpassung der Schätzwerte, während große Werte zwar schneller auf neue Beobachtungen reagieren, jedoch zu instabilen Schätzungen führen können. Die Verwendung eines festen Parameters stellt daher einen Kompromiss zwischen Stabilität und Anpassungsgeschwindigkeit dar [@Pelanek2016; @Vermeiren2026].
 
-Eine weitere Einschränkung besteht darin, dass das Standard-Elo-Modell keine Unsicherheit der Schätzwerte berücksichtigt. Neue Lernende und Aufgaben werden mit derselben Aktualisierungsstärke behandelt wie Objekte, für die bereits viele Beobachtungen vorliegen. Intuitiv erscheint dies problematisch, da die Schätzungen bei wenigen verfügbaren Daten deutlich unsicherer sind als nach einer großen Anzahl von Interaktionen [@Pelanek2016].
+Eine weitere Einschränkung besteht darin, dass das Standard Elo-Modell keine Unsicherheit der Schätzwerte berücksichtigt. Neue Lernende und Aufgaben werden mit derselben Aktualisierungsstärke behandelt wie Objekte, für die bereits viele Beobachtungen vorliegen. Intuitiv erscheint dies problematisch, da die Schätzungen bei wenigen verfügbaren Daten deutlich unsicherer sind als nach einer großen Anzahl von Interaktionen [@Pelanek2016].
 
-Schließlich basiert das Standard-Elo-Verfahren in seiner einfachsten Form auf binären Ergebnissen. Antworten werden lediglich als korrekt oder inkorrekt betrachtet. In realen Bildungssystemen treten jedoch häufig komplexere Situationen auf, beispielsweise Multiple-Choice-Aufgaben mit Ratewahrscheinlichkeit, Teilpunktebewertungen, Hinweissysteme oder die Berücksichtigung von Bearbeitungszeiten. Diese Informationen können durch das Grundmodell nur eingeschränkt genutzt werden [@Pelanek2016; @Abdi2019].
+Schließlich basiert das Standard Elo Rating in seiner einfachsten Form auf binären Ergebnissen. Antworten werden lediglich als korrekt oder inkorrekt betrachtet. In realen Bildungssystemen treten jedoch häufig komplexere Situationen auf, beispielsweise Multiple-Choice-Aufgaben mit Ratewahrscheinlichkeit, Teilpunktebewertungen, Hinweissysteme oder die Berücksichtigung von Bearbeitungszeiten. Diese Informationen können durch das Grundmodell nur eingeschränkt genutzt werden [@Pelanek2016; @Abdi2019].
 
 ::: {.content-visible when-format="pdf"}
 **// Reflexionsfrage:** Dieser Block erzeugt die Checkbox-Aufgabe, wertet die Auswahl aus und zeigt eine passende Rückmeldung an.
@@ -4096,7 +4186,7 @@ const eloLimitsReflection = html`
   padding: 0.55rem 0.75rem;
 }
 .elo-limits-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .elo-limits-reset {
@@ -4124,7 +4214,7 @@ const eloLimitsReflection = html`
 </style>
 <div class="elo-limits-reflection">
   <h4>Reflexionsfrage</h4>
-  <p>Welche der folgenden Situationen kann das Standard-Elo-Verfahren nicht oder nur eingeschränkt abbilden?</p>
+  <p>Welche der folgenden Situationen kann das Standard Elo Rating nicht oder nur eingeschränkt abbilden?</p>
   <div class="elo-limits-options"></div>
   <div class="elo-limits-actions">
     <button class="elo-limits-check" type="button">Antwort prüfen</button>
@@ -4172,11 +4262,11 @@ checkButton.addEventListener("click", () => {
   }
 
   if (selected.length === limitsOptions.length) {
-    setLimitsFeedback("Richtig. Alle vier Situationen sind Grenzen des Standard-Elo-Verfahrens.", "correct")
+    setLimitsFeedback("Richtig. Alle vier Situationen sind Grenzen des Standard Elo Ratings.", "correct")
     return
   }
 
-  setLimitsFeedback("Noch nicht vollständig. Das Standard-Elo-Verfahren stößt in mehreren der genannten Situationen an Grenzen.", "retry")
+  setLimitsFeedback("Noch nicht vollständig. Das Standard Elo Rating stößt in mehreren der genannten Situationen an Grenzen.", "retry")
 })
 
 resetButton.addEventListener("click", () => {
@@ -4190,20 +4280,22 @@ return eloLimitsReflection
 }
 ```
 
-Aus diesen Gründen wurden verschiedene Erweiterungen des Elo-Verfahrens entwickelt, die versuchen, einzelne Schwächen des Standardmodells zu adressieren. Im folgenden Abschnitt wird zunächst die Verwendung von Unsicherheitsfunktionen als Alternative zu einem konstanten Aktualisierungsparameter betrachtet.
+Aus diesen Gründen wurden verschiedene Erweiterungen des Elo Ratings entwickelt, die versuchen, einzelne Schwächen des Standardmodells zu adressieren. Im folgenden Abschnitt wird zunächst die Verwendung von Unsicherheitsfunktionen als Alternative zu einem konstanten Aktualisierungsparameter betrachtet.
 
-#### Unsicherheitsfunktionen
+### Unsicherheitsfunktionen
 
-Im Standard-Elo-Verfahren wird die Stärke der Aktualisierung durch den konstanten Parameter $K$ bestimmt. Dieser Parameter beeinflusst, wie stark neue Beobachtungen die Bewertungen verändern. Die Wahl eines geeigneten Wertes stellt dabei einen Kompromiss dar: Kleine Werte führen zu stabilen, aber langsamen Anpassungen, während große Werte schnelle Reaktionen ermöglichen, jedoch zu stärkeren Schwankungen der Schätzwerte führen können.
+Im Standard Elo Rating wird die Stärke der Aktualisierung durch den konstanten Parameter $K$ bestimmt. Dieser Parameter beeinflusst, wie stark neue Beobachtungen die Bewertungen verändern. Die Wahl eines geeigneten Wertes stellt dabei einen Kompromiss dar: Kleine Werte führen zu stabilen, aber langsamen Anpassungen, während große Werte schnelle Reaktionen ermöglichen, jedoch zu stärkeren Schwankungen der Schätzwerte führen können.
 Eine wesentliche Einschränkung eines konstanten Aktualisierungsparameters besteht darin, dass die Unsicherheit der Schätzwerte nicht berücksichtigt wird. Zu Beginn liegen für einen Lernenden oder eine Aufgabe nur wenige Informationen vor. Die Schätzungen sind daher zunächst mit einer hohen Unsicherheit verbunden. Mit zunehmender Anzahl beobachteter Interaktionen steigt dagegen das Vertrauen in die geschätzten Werte [@Pelanek2016].
 
-Aus diesem Grund ersetzen viele Erweiterungen des Elo-Verfahrens den konstanten Aktualisierungsparameter $K$ durch eine Unsicherheitsfunktion. Die Grundidee besteht darin, die Stärke der Aktualisierung von der Anzahl bereits beobachteter Interaktionen abhängig zu machen. Bei wenigen verfügbaren Daten fallen die Aktualisierungen zunächst groß aus, sodass das Modell schnell auf neue Informationen reagieren und sich rasch dem tatsächlichen Fähigkeits- oder Schwierigkeitswert annähern kann. Mit zunehmender Anzahl beobachteter Interaktionen werden die Aktualisierungsschritte schrittweise kleiner, wodurch die Schätzwerte zunehmend stabil werden [@Pelanek2016].
+Aus diesem Grund ersetzen viele Erweiterungen des Elo Ratings den konstanten Aktualisierungsparameter $K$ durch eine Unsicherheitsfunktion. Die Grundidee besteht darin, die Stärke der Aktualisierung von der Anzahl bereits beobachteter Interaktionen abhängig zu machen. Bei wenigen verfügbaren Daten fallen die Aktualisierungen zunächst groß aus, sodass das Modell schnell auf neue Informationen reagieren und sich rasch dem tatsächlichen Fähigkeits- oder Schwierigkeitswert annähern kann. Mit zunehmender Anzahl beobachteter Interaktionen werden die Aktualisierungsschritte schrittweise kleiner, wodurch die Schätzwerte zunehmend stabil werden [@Pelanek2016].
 Anschaulich entspricht dieses Vorgehen dem intuitiven Umgang mit Unsicherheit. Bei einem neu registrierten Lernenden liegen zunächst kaum Informationen über dessen Leistungsstand vor. Bereits wenige Antworten können daher einen erheblichen Einfluss auf die Schätzung haben. Nach einer großen Anzahl bearbeiteter Aufgaben erscheint eine einzelne zusätzliche Beobachtung dagegen deutlich weniger aussagekräftig.
 
-Die Verwendung von Unsicherheitsfunktionen stellt somit eine vergleichsweise einfache Erweiterung des Elo-Verfahrens dar, die insbesondere in frühen Phasen der Schätzung eine schnellere Anpassung ermöglicht und gleichzeitig langfristig stabilere Bewertungen erzeugt.
+Die Verwendung von Unsicherheitsfunktionen stellt somit eine vergleichsweise einfache Erweiterung des Elo Ratings dar, die insbesondere in frühen Phasen der Schätzung eine schnellere Anpassung ermöglicht und gleichzeitig langfristig stabilere Bewertungen erzeugt.
 
 Die folgende Simulation veranschaulicht diesen Zusammenhang anhand einer vereinfachten Schätzung einer einzelnen Aufgabenschwierigkeit. Verglichen werden zwei konstante Aktualisierungsparameter ($K = 0{,}1$ und $K = 0{,}5$) sowie die von Pelánek vorgeschlagene Unsicherheitsfunktion
 $U(n)=\frac{4}{1+0{,}5\,n}$ [@Pelanek2016]. Da für alle Verfahren dieselben simulierten Antworten verwendet werden, lassen sich Unterschiede im Schätzverlauf ausschließlich auf die jeweilige Aktualisierungsstrategie zurückführen. Es wird deutlich, dass große konstante Aktualisierungsparameter zwar eine schnelle Anpassung ermöglichen, jedoch zu stärkeren Schwankungen führen. Kleine konstante Werte erzeugen dagegen stabilere, aber langsamere Schätzungen. Die Unsicherheitsfunktion verbindet beide Eigenschaften, indem sie zu Beginn größere und im weiteren Verlauf zunehmend kleinere Aktualisierungsschritte verwendet.
+
+Dabei bezeichnet $U(n)$ die Aktualisierungsstärke in Abhängigkeit von der Anzahl der bereits beobachteten Antworten $n$.
 
 ::: {.content-visible when-format="pdf"}
 **// Simulation und Visualisierung:** Dieser Block erzeugt simulierte Antwortdaten, berechnet die Schätzverläufe, zeichnet die Diagramme und steuert Slider sowie Simulationsbutton.
@@ -4314,7 +4406,7 @@ const uncertaintyContainer = html`
   font-weight: 800;
 }
 .uncertainty-slider-row input[type="range"] {
-  accent-color: #16a34a;
+  accent-color: #2563eb;
   width: 100%;
 }
 .uncertainty-actions {
@@ -4324,7 +4416,7 @@ const uncertaintyContainer = html`
   gap: 0.65rem;
 }
 .uncertainty-actions button {
-  background: #15803d;
+  background: #2563eb;
   border: 0;
   border-radius: 8px;
   color: #ffffff;
@@ -4342,10 +4434,10 @@ const uncertaintyContainer = html`
   font-weight: 700;
 }
 .uncertainty-value {
-  background: #ecfdf5;
-  border: 1px solid #86efac;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 8px;
-  color: #166534;
+  color: #1e3a8a;
   display: grid;
   gap: 0.18rem;
   font-weight: 800;
@@ -4431,7 +4523,8 @@ const uncertaintyContainer = html`
 </style>
 <div class="uncertainty-visualization">
   <h4>Vergleich verschiedener Aktualisierungsstrategien</h4>
-  <p>Die folgende Visualisierung zeigt eine vereinfachte Simulation der Schätzung einer einzelnen Aufgabenschwierigkeit. Der tatsächliche Schwierigkeitswert beträgt <code>d<sub>true</sub> = 0</code>, die Schätzung wird mit <code>d&#770; = -2</code> initialisiert. Für alle drei Verfahren werden dieselben 200 simulierten Antworten verwendet, sodass Unterschiede ausschließlich auf die jeweilige Aktualisierungsstrategie zurückzuführen sind. Verwenden Sie den Schieberegler oder den Button, um zu beobachten, wie sich die Schätzwerte mit zunehmender Anzahl beobachteter Antworten entwickeln.</p>
+  <p>Die folgende Visualisierung zeigt eine vereinfachte Simulation der Schätzung einer einzelnen Aufgabenschwierigkeit. Der tatsächliche Schwierigkeitswert beträgt <code>d<sub>true</sub> = 0</code>, die Schätzung wird mit<br>
+  <code>d&#770; = -2</code> initialisiert. Für alle drei Verfahren werden dieselben 200 simulierten Antworten verwendet, sodass Unterschiede ausschließlich auf die jeweilige Aktualisierungsstrategie zurückzuführen sind. Verwenden Sie den Schieberegler oder den Button, um zu beobachten, wie sich die Schätzwerte mit zunehmender Anzahl beobachteter Antworten entwickeln.</p>
 
   <div class="uncertainty-controls">
     <div class="uncertainty-slider-row">
@@ -4447,8 +4540,8 @@ const uncertaintyContainer = html`
 
   <div class="uncertainty-legend">
     <span><i style="background:#2563eb;"></i>K = 0.1</span>
-    <span><i style="background:#dc2626;"></i>K = 0.5</span>
-    <span><i style="background:#16a34a;"></i>U(n) = 4 / (1 + 0.5 n)</span>
+    <span><i style="background:#475569;"></i>K = 0.5</span>
+    <span><i style="background:#0f766e;"></i>U(n) = 4 / (1 + 0.5 n)</span>
     <span><i style="background:repeating-linear-gradient(90deg,#334155 0 5px,transparent 5px 9px);"></i>wahrer Schwierigkeitswert</span>
   </div>
   <div class="uncertainty-plot-grid">
@@ -4534,7 +4627,7 @@ const renderUncertaintyPlot = () => {
       ),
       Plot.line(
         visiblePoints(fixedK05),
-        {x: "n", y: "estimate", stroke: "#dc2626", strokeWidth: 2}
+        {x: "n", y: "estimate", stroke: "#475569", strokeWidth: 2}
       ),
       Plot.dot(markerFor(fixedK01), {
         x: "n",
@@ -4547,7 +4640,7 @@ const renderUncertaintyPlot = () => {
       Plot.dot(markerFor(fixedK05), {
         x: "n",
         y: "estimate",
-        fill: "#dc2626",
+        fill: "#475569",
         stroke: "#ffffff",
         strokeWidth: 1.5,
         r: 4.5
@@ -4562,12 +4655,12 @@ const renderUncertaintyPlot = () => {
       }),
       Plot.line(
         visiblePoints(uncertaintyEstimate),
-        {x: "n", y: "estimate", stroke: "#16a34a", strokeWidth: 2.4}
+        {x: "n", y: "estimate", stroke: "#0f766e", strokeWidth: 2.4}
       ),
       Plot.dot(markerFor(uncertaintyEstimate), {
         x: "n",
         y: "estimate",
-        fill: "#16a34a",
+        fill: "#0f766e",
         stroke: "#ffffff",
         strokeWidth: 1.5,
         r: 5
@@ -4622,13 +4715,13 @@ Zu Beginn sind die Aktualisierungen der Unsicherheitsfunktion deutlich größer 
 
 Neuere Arbeiten schlagen adaptive Aktualisierungsstrategien vor, bei denen die Lernrate nicht mehr ausschließlich durch eine feste oder beobachtungsbasierte Unsicherheitsfunktion bestimmt wird, sondern zusätzlich die Dynamik der geschätzten Fähigkeit berücksichtigt. Ziel ist es, stabile Schätzungen mit einer schnellen Reaktion auf tatsächliche Kompetenzänderungen zu verbinden. [@Vermeiren2026].
 
-#### Multiple-Choice-Aufgaben und Teilpunkte
+### Multiple-Choice-Aufgaben und Teilpunkte
 
-Eine weitere Einschränkung des Standard-Elo-Verfahrens besteht darin, dass Antworten in ihrer einfachsten Form ausschließlich als korrekt oder inkorrekt bewertet werden. Die Erfolgsvariable nimmt somit lediglich die Werte 0 oder 1 an. Diese Annahme ist für viele Anwendungsszenarien ausreichend, bildet jedoch zahlreiche Situationen realer Lernumgebungen nur unzureichend ab. In adaptiven Lernsystemen kommen häufig Multiple-Choice-Aufgaben, Aufgaben mit Teilpunkten oder Lernumgebungen mit Hinweissystemen zum Einsatz. In solchen Fällen liefern Lerninteraktionen oftmals mehr Informationen als eine reine Richtig-Falsch-Bewertung erfassen kann [@Pelanek2016].
+Eine weitere Einschränkung des Standard Elo Ratings besteht darin, dass Antworten in ihrer einfachsten Form ausschließlich als korrekt oder inkorrekt bewertet werden. Die Erfolgsvariable nimmt somit lediglich die Werte 0 oder 1 an. Diese Annahme ist für viele Anwendungsszenarien ausreichend, bildet jedoch zahlreiche Situationen realer Lernumgebungen nur unzureichend ab. In adaptiven Lernsystemen kommen häufig Multiple-Choice-Aufgaben, Aufgaben mit Teilpunkten oder Lernumgebungen mit Hinweissystemen zum Einsatz. In solchen Fällen liefern Lerninteraktionen oftmals mehr Informationen als eine reine Richtig-Falsch-Bewertung erfassen kann [@Pelanek2016].
 
-Ein Beispiel hierfür sind Multiple-Choice-Aufgaben. Bei diesen Aufgaben besteht grundsätzlich die Möglichkeit, dass eine korrekte Antwort durch Raten zustande kommt. Bei vier Antwortmöglichkeiten liegt die Wahrscheinlichkeit einer zufällig richtigen Antwort bereits bei 25 %. Das Standard-Elo-Verfahren behandelt jedoch jede korrekte Antwort gleich und unterscheidet nicht zwischen tatsächlich vorhandenem Wissen und einem zufälligen Treffer. Dadurch kann insbesondere bei kurzen Tests oder wenigen Beobachtungen eine Überschätzung der Fähigkeit auftreten [@Pelanek2016; @Papousek2014].
+Ein Beispiel hierfür sind Multiple-Choice-Aufgaben. Bei diesen Aufgaben besteht grundsätzlich die Möglichkeit, dass eine korrekte Antwort durch Raten zustande kommt. Bei vier Antwortmöglichkeiten liegt die Wahrscheinlichkeit einer zufällig richtigen Antwort bereits bei 25 %. Das Standard Elo Rating behandelt jedoch jede korrekte Antwort gleich und unterscheidet nicht zwischen tatsächlich vorhandenem Wissen und einem zufälligen Treffer. Dadurch kann insbesondere bei kurzen Tests oder wenigen Beobachtungen eine Überschätzung der Fähigkeit auftreten [@Pelanek2016; @Papousek2014].
 
-Pelánek beschreibt eine einfache Erweiterung des Elo-Verfahrens zur Berücksichtigung von Ratewahrscheinlichkeiten bei Multiple-Choice-Aufgaben. Hierzu wird die Berechnung der erwarteten Erfolgswahrscheinlichkeit angepasst. Für eine Aufgabe mit $k$ Antwortmöglichkeiten ergibt sich die Wahrscheinlichkeit einer korrekten Antwort zu
+Pelánek beschreibt eine einfache Erweiterung des Elo Ratings zur Berücksichtigung von Ratewahrscheinlichkeiten bei Multiple-Choice-Aufgaben. Hierzu wird die Berechnung der erwarteten Erfolgswahrscheinlichkeit angepasst. Für eine Aufgabe mit $k$ Antwortmöglichkeiten ergibt sich die Wahrscheinlichkeit einer korrekten Antwort zu
 
 $$
 P(\text{korrekt})
@@ -4640,12 +4733,12 @@ P(\text{korrekt})
 \tag{5}
 $$
 
-Der erste Term berücksichtigt die Wahrscheinlichkeit eines zufälligen Treffers, während der zweite Term den eigentlichen Einfluss von Fähigkeit und Aufgabenschwierigkeit beschreibt [@Pelanek2016]. Dadurch wird die Erfolgswahrscheinlichkeit insbesondere bei sehr schwierigen Aufgaben realistischer modelliert.
+Dabei bezeichnet $P(\text{korrekt})$ die erwartete Wahrscheinlichkeit einer korrekten Antwort, $k$ die Anzahl der Antwortmöglichkeiten, $\theta$ die Fähigkeit des Lernenden und $d$ die Schwierigkeit der Aufgabe. Der erste Term berücksichtigt die Wahrscheinlichkeit eines zufälligen Treffers, während der zweite Term den eigentlichen Einfluss von Fähigkeit und Aufgabenschwierigkeit beschreibt [@Pelanek2016]. Dadurch wird die Erfolgswahrscheinlichkeit insbesondere bei sehr schwierigen Aufgaben realistischer modelliert.
 
-Die folgende interaktive Simulation veranschaulicht diesen Zusammenhang. Durch das Ein- und Ausschalten der Berücksichtigung der Ratewahrscheinlichkeit lässt sich direkt beobachten, wie sich die geschätzte Erfolgswahrscheinlichkeit im Vergleich zum Standard-Elo-Verfahren verändert.
+Die folgende interaktive Simulation veranschaulicht diesen Zusammenhang. Durch das Ein- und Ausschalten der Berücksichtigung der Ratewahrscheinlichkeit lässt sich direkt beobachten, wie sich die geschätzte Erfolgswahrscheinlichkeit im Vergleich zum Standard Elo Rating verändert.
 
 ::: {.content-visible when-format="pdf"}
-**// MC-Vergleich:** Dieser Block erzeugt Beispielaufgabe, Slider, Schalter, Wahrscheinlichkeitsanzeige und die dynamische Gegenüberstellung von Standard-Elo und MC-Erweiterung.
+**// MC-Vergleich:** Dieser Block erzeugt Beispielaufgabe, Slider, Schalter, Wahrscheinlichkeitsanzeige und die dynamische Gegenüberstellung von Standard Elo und MC-Erweiterung.
 :::
 
 ```{ojs}
@@ -5007,7 +5100,7 @@ const updateMcGuessDemo = () => {
   rateStatus.style.background = includeGuessing ? "#dcfce7" : "#f1f5f9"
   rateStatus.style.borderColor = includeGuessing ? "#86efac" : "#cbd5e1"
   rateStatus.style.color = includeGuessing ? "#166534" : "#475569"
-  resultTitle.textContent = includeGuessing ? "MC-Erweiterung" : "Standard-Elo"
+  resultTitle.textContent = includeGuessing ? "MC-Erweiterung" : "Standard Elo"
   resultNote.textContent = includeGuessing
     ? "Erfolgswahrscheinlichkeit mit Rateanteil bei vier Antworten"
     : "Erfolgswahrscheinlichkeit ohne Berücksichtigung des Ratens"
@@ -5031,21 +5124,21 @@ return mcGuessContainer
 
 Die Simulation verdeutlicht, dass die Berücksichtigung der Ratewahrscheinlichkeit insbesondere bei schwierigen Aufgaben zu einer höheren Grundwahrscheinlichkeit führt und dadurch zufällige Treffer explizit in die Modellierung einbezieht.
 
-Neben Ratewahrscheinlichkeiten stellen Teilpunkte eine weitere Herausforderung für das Standard-Elo-Verfahren dar. Viele Aufgaben liefern nicht nur die Information, ob eine Lösung richtig oder falsch ist, sondern erlauben eine abgestufte Bewertung. Dies betrifft beispielsweise Programmieraufgaben, mathematische Aufgaben mit mehreren Zwischenschritten oder komplexe Problemlöseaufgaben. Ein Lernender kann dabei einen Teil der Aufgabe erfolgreich bearbeiten, ohne die vollständige Lösung zu erreichen.
-Da das Elo-Verfahren ursprünglich nicht auf binäre Ergebnisse beschränkt ist, können solche Teilbewertungen vergleichsweise einfach integriert werden. Anstelle der Werte 0 oder 1 wird die Erfolgsvariable als kontinuierlicher Wert zwischen 0 und 1 interpretiert. Eine Aufgabe, bei der 75 % der möglichen Punkte erreicht werden, kann beispielsweise mit einem Erfolgswert von
+Neben Ratewahrscheinlichkeiten stellen Teilpunkte eine weitere Herausforderung für das Standard Elo Rating dar. Viele Aufgaben liefern nicht nur die Information, ob eine Lösung richtig oder falsch ist, sondern erlauben eine abgestufte Bewertung. Dies betrifft beispielsweise Programmieraufgaben, mathematische Aufgaben mit mehreren Zwischenschritten oder komplexe Problemlöseaufgaben. Ein Lernender kann dabei einen Teil der Aufgabe erfolgreich bearbeiten, ohne die vollständige Lösung zu erreichen.
+Da das Elo Rating ursprünglich nicht auf binäre Ergebnisse beschränkt ist, können solche Teilbewertungen vergleichsweise einfach integriert werden. Anstelle der Werte 0 oder 1 wird die Erfolgsvariable als kontinuierlicher Wert zwischen 0 und 1 interpretiert. Eine Aufgabe, bei der 75 % der möglichen Punkte erreicht werden, kann beispielsweise mit einem Erfolgswert von
 
 $$
 S = 0.75
 $$
 
-in die Aktualisierung eingehen. Die grundlegende Struktur der Elo-Gleichungen bleibt dabei unverändert. Lediglich die Definition des beobachteten Ergebnisses wird erweitert [@Pelanek2016].
+in die Aktualisierung eingehen. Dabei steht $S$ für den beobachteten Erfolgswert der Lerninteraktion. Die grundlegende Struktur der Elo-Gleichungen bleibt dabei unverändert. Lediglich die Definition des beobachteten Ergebnisses wird erweitert [@Pelanek2016].
 
 Ein ähnlicher Ansatz kann bei der Verwendung von Hinweissystemen eingesetzt werden. Viele intelligente Tutorensysteme erlauben es Lernenden, während der Bearbeitung zusätzliche Hinweise anzufordern. Eine korrekte Lösung nach mehreren Hilfestellungen besitzt jedoch eine andere Aussagekraft als eine vollständig selbstständig gefundene Lösung. Deshalb können korrekte Antworten abhängig von der Anzahl verwendeter Hinweise mit reduzierten Erfolgswerten bewertet werden [@Pelanek2016]. Neuere Arbeiten zeigen ebenfalls, dass die gemeinsame Berücksichtigung von Antwortkorrektheit und Hint-Nutzung zu einer differenzierteren Modellierung der Fähigkeit beitragen kann [@Bolsinova2022]. Eine vollständig selbstständig gelöste Aufgabe könnte beispielsweise den Wert 1 erhalten, während eine korrekte Lösung nach mehreren Hinweisen lediglich mit einem geringeren Wert in die Aktualisierung eingeht [@Pelanek2016].
 
 Die folgende Simulation zeigt beispielhaft, wie Teilpunkte und die Nutzung von Hinweisen zu einem kontinuierlichen Erfolgswert zwischen 0 und 1 zusammengeführt werden können. Die verwendete Gewichtung der Hinweise dient ausschließlich der didaktischen Veranschaulichung.
 
 ::: {.content-visible when-format="pdf"}
-**// Erfolgswert aus Lerninteraktion:** Dieser Block erzeugt Slider, Kästchenanzeige, Erfolgswertberechnung und Vergleich mit dem binären Standard-Elo.
+**// Erfolgswert aus Lerninteraktion:** Dieser Block erzeugt Slider, Kästchenanzeige, Erfolgswertberechnung und Vergleich mit dem binären Standard Elo.
 :::
 
 ```{ojs}
@@ -5137,9 +5230,9 @@ const successValueContainer = html`
   justify-content: center;
 }
 .success-box.filled {
-  background: #dcfce7;
-  border-color: #86efac;
-  color: #15803d;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e3a8a;
 }
 .success-metric {
   background: #eff6ff;
@@ -5150,11 +5243,11 @@ const successValueContainer = html`
   padding: 0.65rem 0.75rem;
 }
 .success-result-card {
-  background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
-  border-color: #86efac;
+  background: #ffffff;
+  border-color: #d8e0ea;
 }
 .success-result-label {
-  color: #166534;
+  color: #1e3a8a;
   font-size: 0.82rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -5173,7 +5266,7 @@ const successValueContainer = html`
   overflow: hidden;
 }
 .success-bar-fill {
-  background: linear-gradient(90deg, #38bdf8, #2563eb, #16a34a);
+  background: #2563eb;
   border-radius: 999px;
   height: 100%;
   transition: width 180ms ease;
@@ -5290,7 +5383,7 @@ const successValueContainer = html`
 </style>
 <div class="success-value-demo">
   <h4>Wie entsteht ein Erfolgswert?</h4>
-  <p>Das Elo-Verfahren kann statt eines reinen Richtig-Falsch-Ergebnisses auch einen kontinuierlichen Erfolgswert verwenden. Verändern Sie Punkte und Hinweise, um zu sehen, wie daraus ein Wert zwischen 0 und 1 entsteht.</p>
+  <p>Das Elo Rating kann statt eines reinen Richtig-Falsch-Ergebnisses auch einen kontinuierlichen Erfolgswert verwenden. Verändern Sie Punkte und Hinweise, um zu sehen, wie daraus ein Wert zwischen 0 und 1 entsteht.</p>
 
   <div class="success-grid">
     <div class="success-card">
@@ -5318,7 +5411,7 @@ const successValueContainer = html`
     </div>
 
     <div class="success-card success-result-card">
-      <div class="success-result-label">Vom Elo-Verfahren verwendeter Erfolgswert</div>
+      <div class="success-result-label">Vom Elo Rating verwendeter Erfolgswert</div>
       <div class="success-result-value">S = <span class="success-final-output">0,50</span></div>
       <div class="success-bar"><div class="success-bar-fill"></div></div>
 
@@ -5335,12 +5428,12 @@ const successValueContainer = html`
 
   <div class="success-compare-grid">
     <div class="success-compare-card">
-      <h5>Standard-Elo</h5>
+      <h5>Standard Elo</h5>
       <div class="success-standard-options">
         <div class="success-standard-option correct"><span>✓ richtig</span><strong>S = 1</strong></div>
         <div class="success-standard-option incorrect"><span>✗ falsch</span><strong>S = 0</strong></div>
       </div>
-      <div class="success-standard-hint">Zwischenwerte wie S = 0,50 können im Standard-Elo nicht direkt dargestellt werden.</div>
+      <div class="success-standard-hint">Zwischenwerte wie S = 0,50 können im Standard Elo nicht direkt dargestellt werden.</div>
     </div>
   </div>
 
@@ -5413,15 +5506,15 @@ return successValueContainer
 }
 ```
 
-Die Simulation verdeutlicht, dass kontinuierliche Erfolgswerte deutlich mehr Informationen über eine Lerninteraktion enthalten können als eine reine Richtig-Falsch-Bewertung. Die beschriebenen Erweiterungen zeigen somit, dass das Elo-Verfahren deutlich flexibler eingesetzt werden kann, als die binäre Grundform vermuten lässt. Durch die Berücksichtigung von Ratewahrscheinlichkeiten, Teilpunkten und Hinweisen können zusätzliche Informationen aus Lerninteraktionen genutzt werden, ohne die grundlegende Struktur des Verfahrens verändern zu müssen.
+Die Simulation verdeutlicht, dass kontinuierliche Erfolgswerte deutlich mehr Informationen über eine Lerninteraktion enthalten können als eine reine Richtig-Falsch-Bewertung. Die beschriebenen Erweiterungen zeigen somit, dass das Elo Rating deutlich flexibler eingesetzt werden kann, als die binäre Grundform vermuten lässt. Durch die Berücksichtigung von Ratewahrscheinlichkeiten, Teilpunkten und Hinweisen können zusätzliche Informationen aus Lerninteraktionen genutzt werden, ohne die grundlegende Struktur des Verfahrens verändern zu müssen.
 
-Die beschriebenen Erweiterungen zeigen, dass das Elo-Verfahren deutlich flexibler eingesetzt werden kann, als die binäre Grundform vermuten lässt. Durch die Berücksichtigung von Ratewahrscheinlichkeiten, Teilpunkten und Hinweisen können zusätzliche Informationen aus Lerninteraktionen genutzt werden, ohne die grundlegende Struktur des Verfahrens verändern zu müssen. Dennoch beziehen sich diese Erweiterungen weiterhin ausschließlich auf das Antwortergebnis selbst. Weitere Informationen über den Lösungsprozess, beispielsweise die benötigte Bearbeitungszeit, bleiben unberücksichtigt. Aus diesem Grund wurden zusätzliche Elo-Varianten entwickelt, die auch zeitbezogene Informationen in die Modellierung einbeziehen.
+Die beschriebenen Erweiterungen zeigen, dass das Elo Rating deutlich flexibler eingesetzt werden kann, als die binäre Grundform vermuten lässt. Durch die Berücksichtigung von Ratewahrscheinlichkeiten, Teilpunkten und Hinweisen können zusätzliche Informationen aus Lerninteraktionen genutzt werden, ohne die grundlegende Struktur des Verfahrens verändern zu müssen. Dennoch beziehen sich diese Erweiterungen weiterhin ausschließlich auf das Antwortergebnis selbst. Weitere Informationen über den Lösungsprozess, beispielsweise die benötigte Bearbeitungszeit, bleiben unberücksichtigt. Aus diesem Grund wurden zusätzliche Elo-Varianten entwickelt, die auch zeitbezogene Informationen in die Modellierung einbeziehen.
 
-#### Berücksichtigung von Bearbeitungszeiten
+### Berücksichtigung von Bearbeitungszeiten
 
-Die bisher betrachteten Erweiterungen des Elo-Verfahrens beziehen sich ausschließlich auf das Ergebnis einer Aufgabe. Dabei wird bewertet, ob eine Antwort korrekt oder inkorrekt ist beziehungsweise welcher Teil einer Aufgabe erfolgreich gelöst wurde. Informationen über den eigentlichen Lösungsprozess bleiben jedoch unberücksichtigt. Insbesondere die Bearbeitungszeit einer Aufgabe kann zusätzliche Hinweise auf den Wissensstand eines Lernenden liefern und stellt daher eine potenziell wertvolle Informationsquelle für adaptive Lernsysteme dar [@Pelanek2016; @Klinkenberg2011].
+Die bisher betrachteten Erweiterungen des Elo Ratings beziehen sich ausschließlich auf das Ergebnis einer Aufgabe. Dabei wird bewertet, ob eine Antwort korrekt oder inkorrekt ist beziehungsweise welcher Teil einer Aufgabe erfolgreich gelöst wurde. Informationen über den eigentlichen Lösungsprozess bleiben jedoch unberücksichtigt. Insbesondere die Bearbeitungszeit einer Aufgabe kann zusätzliche Hinweise auf den Wissensstand eines Lernenden liefern und stellt daher eine potenziell wertvolle Informationsquelle für adaptive Lernsysteme dar [@Pelanek2016; @Klinkenberg2011].
 
-Betrachtet man zwei Lernende, die dieselbe Aufgabe korrekt beantworten, erscheint eine identische Bewertung nicht immer angemessen. Ein Lernender kann die Lösung innerhalb weniger Sekunden finden, während ein anderer deutlich mehr Zeit benötigt. Obwohl beide Antworten korrekt sind, deutet die längere Bearbeitungszeit möglicherweise auf Unsicherheit, langsameres Abrufen von Wissen oder einen höheren kognitiven Aufwand hin. Umgekehrt können sehr schnelle Fehlantworten auf unüberlegtes Raten hindeuten. Das Standard-Elo-Verfahren berücksichtigt solche Unterschiede nicht, da ausschließlich die Korrektheit der Antwort in die Aktualisierung eingeht [@Pelanek2016].
+Betrachtet man zwei Lernende, die dieselbe Aufgabe korrekt beantworten, erscheint eine identische Bewertung nicht immer angemessen. Ein Lernender kann die Lösung innerhalb weniger Sekunden finden, während ein anderer deutlich mehr Zeit benötigt. Obwohl beide Antworten korrekt sind, deutet die längere Bearbeitungszeit möglicherweise auf Unsicherheit, langsameres Abrufen von Wissen oder einen höheren kognitiven Aufwand hin. Umgekehrt können sehr schnelle Fehlantworten auf unüberlegtes Raten hindeuten. Das Standard Elo Rating berücksichtigt solche Unterschiede nicht, da ausschließlich die Korrektheit der Antwort in die Aktualisierung eingeht [@Pelanek2016].
 
 Die folgende Simulation verdeutlicht diesen Sachverhalt anhand zweier Lernender, die dieselbe Aufgabe korrekt lösen, sich jedoch deutlich in ihrer Bearbeitungszeit unterscheiden. Durch Variation der vom System erwarteten Bearbeitungszeit lässt sich nachvollziehen, wie sich unterschiedliche Zeitabweichungen auf die Richtung der Fähigkeitsaktualisierung auswirken.
 
@@ -5751,11 +5844,11 @@ return timeDemoContainer
 
 Zur besseren Verständlichkeit verwendet die Simulation Bearbeitungszeiten in Sekunden. Im mathematischen Modell wird hingegen der Logarithmus der Bearbeitungszeit betrachtet, wodurch sich die meist log-normal verteilten Bearbeitungszeiten besser modellieren lassen [@Pelanek2016].
 
-Wie die Simulation zeigt, liefert die Bearbeitungszeit zusätzliche Informationen, obwohl beide Lernenden dieselbe Aufgabe korrekt gelöst haben. Um diese Informationen systematisch nutzen zu können, wurden verschiedene Erweiterungen des Elo-Verfahrens entwickelt. Ein grundlegender Ansatz besteht darin, die Bearbeitungszeit selbst als Leistungsmaß zu verwenden.
+Wie die Simulation zeigt, liefert die Bearbeitungszeit zusätzliche Informationen, obwohl beide Lernenden dieselbe Aufgabe korrekt gelöst haben. Um diese Informationen systematisch nutzen zu können, wurden verschiedene Erweiterungen des Elo Ratings entwickelt. Ein grundlegender Ansatz besteht darin, die Bearbeitungszeit selbst als Leistungsmaß zu verwenden.
 
 Dies eignet sich insbesondere für Aufgabentypen, bei denen die Lösung grundsätzlich eindeutig überprüfbar ist und die benötigte Zeit den entscheidenden Leistungsunterschied darstellt. Beispiele hierfür sind Sudoku-Rätsel oder Programmieraufgaben, bei denen die Zeit bis zur korrekten Lösung betrachtet wird [@Pelanek2016].
 
-Analog zum klassischen Elo-Verfahren besitzt jeder Lernende einen Fähigkeitsparameter $\theta_s$ und jede Aufgabe einen Schwierigkeitsparameter $d_p$. Anstelle einer Erfolgswahrscheinlichkeit wird jedoch die erwartete logarithmierte Bearbeitungszeit modelliert [@Pelanek2016]:
+Analog zum klassischen Elo Rating besitzt jeder Lernende einen Fähigkeitsparameter $\theta_s$ und jede Aufgabe einen Schwierigkeitsparameter $d_p$. Anstelle einer Erfolgswahrscheinlichkeit wird jedoch die erwartete logarithmierte Bearbeitungszeit modelliert [@Pelanek2016]:
 
 $$
 E(t \mid s,p)=d_p-\theta_s
@@ -5764,9 +5857,9 @@ $$
 
 Formal wird dabei nicht die Bearbeitungszeit selbst, sondern ihre logarithmierte Form betrachtet. Der Grund hierfür ist, dass Bearbeitungszeiten typischerweise annähernd log-normal verteilt sind und sich dadurch besser modellieren lassen [@Pelanek2016]. 
 
-Der in der Simulation dargestellte Vorhersagefehler veranschaulicht das Grundprinzip des Zeit-Elo-Verfahrens. Im mathematischen Modell ergibt er sich aus der Differenz zwischen der erwarteten logarithmierten Bearbeitungszeit $E(t \mid s,p)$ und der beobachteten logarithmierten Bearbeitungszeit $t_{sp}$. Diese Differenz bildet die Grundlage für die Aktualisierung der Fähigkeits- und Schwierigkeitsparameter gemäß den Gleichungen (7) und (8).
+Der in der Simulation dargestellte Vorhersagefehler veranschaulicht das Grundprinzip des Zeit-Elo Ratings. Im mathematischen Modell ergibt er sich aus der Differenz zwischen der erwarteten logarithmierten Bearbeitungszeit $E(t \mid s,p)$ und der beobachteten logarithmierten Bearbeitungszeit $t_{sp}$. Diese Differenz bildet die Grundlage für die Aktualisierung der Fähigkeits- und Schwierigkeitsparameter gemäß den Gleichungen (7) und (8).
 
-Nachdem die tatsächliche Bearbeitungszeit $t_{sp}$ beobachtet wurde, können die Parameter ähnlich wie im klassischen Elo-Verfahren aktualisiert werden [@Pelanek2016]:
+Nachdem die tatsächliche Bearbeitungszeit $t_{sp}$ beobachtet wurde, können die Parameter ähnlich wie im klassischen Elo Rating aktualisiert werden [@Pelanek2016]:
 
 $$
 \theta_{s,\text{neu}}
@@ -5786,21 +5879,33 @@ K\bigl(t_{sp}-E(t \mid s,p)\bigr)
 \tag{8}
 $$
 
+Dabei bezeichnet
+
+| Symbol | Bedeutung |
+|----------|----------|
+| $E(t \mid s,p)$ | erwartete logarithmierte Bearbeitungszeit von Lernendem $s$ bei Aufgabe $p$ |
+| $t_{sp}$ | beobachtete logarithmierte Bearbeitungszeit von Lernendem $s$ bei Aufgabe $p$ |
+| $\theta_{s,\text{alt}}$ | bisherige Fähigkeit des Lernenden $s$ |
+| $\theta_{s,\text{neu}}$ | aktualisierte Fähigkeit des Lernenden $s$ |
+| $d_{p,\text{alt}}$ | bisherige Schwierigkeit der Aufgabe $p$ |
+| $d_{p,\text{neu}}$ | aktualisierte Schwierigkeit der Aufgabe $p$ |
+| $K$ | Anpassungs- bzw. Lernrate |
+
 Bearbeitet ein Lernender eine Aufgabe schneller als vom Modell erwartet, erhöht sich seine geschätzte Fähigkeit. Gleichzeitig sinkt die geschätzte Schwierigkeit der Aufgabe. Bei längeren Bearbeitungszeiten erfolgt die Aktualisierung entsprechend in die entgegengesetzte Richtung. Das Verfahren nutzt somit dieselbe Grundidee wie das klassische Elo-Modell, ersetzt jedoch die Antwortkorrektheit durch die Bearbeitungszeit als beobachtete Leistungsgröße [@Pelanek2016].
 
 In vielen Anwendungen erweist sich jedoch die alleinige Betrachtung der Bearbeitungszeit als unzureichend. Häufig liefern sowohl die Korrektheit einer Antwort als auch die benötigte Bearbeitungszeit relevante Informationen über den Lernprozess. Aus diesem Grund wurden Modelle entwickelt, die beide Informationsquellen gemeinsam berücksichtigen. Ein bekanntes Beispiel ist die sogenannte „high speed high stakes“-Regel [@Klinkenberg2011, **S. 1816**]. Dabei wird die Bewertung einer Antwort nicht nur von ihrer Korrektheit, sondern zusätzlich von der Bearbeitungszeit beeinflusst. Schnelle Antworten besitzen einen stärkeren Einfluss auf die Bewertung, während der Einfluss mit zunehmender Bearbeitungsdauer abnimmt [@Klinkenberg2011].
 
 Der Nutzen solcher Erweiterungen hängt jedoch stark vom jeweiligen Anwendungskontext ab. In Lernsystemen, die Zeitlimits oder sichtbare Zeitinformationen verwenden, kann die Bearbeitungszeit ein aussagekräftiger Leistungsindikator sein. In anderen Anwendungen wird die Bearbeitungszeit zwar erfasst, den Lernenden jedoch nicht explizit angezeigt. In diesen Fällen kann sie ebenfalls zusätzliche Informationen liefern, erfordert jedoch angepasste Bewertungsverfahren [@Pelanek2016].
 
-Die Berücksichtigung von Bearbeitungszeiten erweitert das Elo-Verfahren somit um eine zusätzliche Dimension der Leistungsbewertung. Anstatt ausschließlich das Ergebnis einer Aufgabe zu betrachten, können nun auch Informationen über den Lösungsprozess in die Modellierung einfließen. Dennoch bleibt die Fähigkeit eines Lernenden weiterhin durch einen einzelnen Wert beschrieben. In vielen Lerngebieten reicht eine solche eindimensionale Darstellung jedoch nicht aus, da Wissen aus mehreren Teilkompetenzen besteht. Aus diesem Grund wurden mehrdimensionale Erweiterungen entwickelt, die mehrere Wissenskomponenten gleichzeitig modellieren.
+Die Berücksichtigung von Bearbeitungszeiten erweitert das Elo Rating somit um eine zusätzliche Dimension der Leistungsbewertung. Anstatt ausschließlich das Ergebnis einer Aufgabe zu betrachten, können nun auch Informationen über den Lösungsprozess in die Modellierung einfließen. Dennoch bleibt die Fähigkeit eines Lernenden weiterhin durch einen einzelnen Wert beschrieben. In vielen Lerngebieten reicht eine solche eindimensionale Darstellung jedoch nicht aus, da Wissen aus mehreren Teilkompetenzen besteht. Aus diesem Grund wurden mehrdimensionale Erweiterungen entwickelt, die mehrere Wissenskomponenten gleichzeitig modellieren.
 
-#### Multivariate Elo-Modelle
+### Multivariate Elo-Modelle
 
-Die bisher betrachteten Erweiterungen des Elo-Verfahrens verändern vor allem die Art und Weise, wie Informationen aus Lerninteraktionen verarbeitet werden. Unsicherheitsfunktionen, Teilpunkte oder Bearbeitungszeiten können die Schätzung von Fähigkeiten verbessern, ändern jedoch nichts an einer grundlegenden Annahme des Standard-Elo-Modells: Die Fähigkeit eines Lernenden wird durch einen einzigen Wert beschrieben.
+Die bisher betrachteten Erweiterungen des Elo Ratings verändern vor allem die Art und Weise, wie Informationen aus Lerninteraktionen verarbeitet werden. Unsicherheitsfunktionen, Teilpunkte oder Bearbeitungszeiten können die Schätzung von Fähigkeiten verbessern, ändern jedoch nichts an einer grundlegenden Annahme des Standard Elo-Modells: Die Fähigkeit eines Lernenden wird durch einen einzigen Wert beschrieben.
 
 In vielen Lerngebieten erweist sich diese Annahme als problematisch. Wissen besteht häufig aus mehreren Teilkompetenzen, die unterschiedlich stark ausgeprägt sein können. Ein Lernender kann beispielsweise sehr gute Kenntnisse in Algebra besitzen, gleichzeitig jedoch Schwierigkeiten in der Geometrie haben. Ein einzelner Fähigkeitswert kann solche Unterschiede nur eingeschränkt erfassen. Werden alle Leistungen auf einer gemeinsamen Skala zusammengefasst, gehen Informationen über die Struktur des Wissens teilweise verloren [@Pelanek2016].
 
-Aus diesem Grund wurden multivariate Erweiterungen des Elo-Verfahrens entwickelt. Ein früher Vertreter multivariater Elo-Modelle ist der Multivariate Elo-type Algorithm (META) von Doebler et al. Im Gegensatz zum klassischen Elo-Verfahren wird dabei nicht nur ein einzelner Fähigkeitswert, sondern mehrere miteinander zusammenhängende Fähigkeitsdimensionen gleichzeitig modelliert. Dieses Grundprinzip wurde später von Pelánek auf adaptive Lernsysteme übertragen, indem die Kompetenz eines Lernenden durch mehrere Wissenskomponenten beschrieben wird. Jeder dieser Parameter repräsentiert einen bestimmten Wissensbereich oder eine einzelne Kompetenz. Im Bereich der Mathematik könnten dies beispielsweise Bruchrechnung, Polynome oder trigonometrische Funktionen sein [@Doebler2014; @Pelanek2016].
+Aus diesem Grund wurden multivariate Erweiterungen des Elo Ratings entwickelt. Ein früher Vertreter multivariater Elo-Modelle ist der Multivariate Elo-type Algorithm (META) von Doebler et al. Im Gegensatz zum klassischen Elo Rating wird dabei nicht nur ein einzelner Fähigkeitswert, sondern mehrere miteinander zusammenhängende Fähigkeitsdimensionen gleichzeitig modelliert. Dieses Grundprinzip wurde später von Pelánek auf adaptive Lernsysteme übertragen, indem die Kompetenz eines Lernenden durch mehrere Wissenskomponenten beschrieben wird. Jeder dieser Parameter repräsentiert einen bestimmten Wissensbereich oder eine einzelne Kompetenz. Im Bereich der Mathematik könnten dies beispielsweise Bruchrechnung, Polynome oder trigonometrische Funktionen sein [@Doebler2014; @Pelanek2016].
 
 Ein wesentlicher Gedanke multivariater Modelle besteht darin, dass verschiedene Wissenskomponenten korreliert sein können. Kenntnisse in einem Themengebiet können daher Rückschlüsse auf Fähigkeiten in anderen Bereichen zulassen. Antworten auf Aufgaben liefern somit nicht nur Informationen über das unmittelbar geprüfte Konzept, sondern unter Umständen auch über verwandte Wissensbereiche [@Doebler2014; @Pelanek2016].
 
@@ -6052,7 +6157,7 @@ const multivariateDemoContainer = html`
   width: 100%;
 }
 .multi-elo-arrow-line {
-  background: linear-gradient(90deg, #2563eb, #16a34a);
+  background: #64748b;
   border-radius: 999px;
   height: 0.35rem;
   min-width: 0.6rem;
@@ -6061,7 +6166,7 @@ const multivariateDemoContainer = html`
 }
 .multi-elo-arrow-head {
   border-bottom: 0.55rem solid transparent;
-  border-left: 0.75rem solid #16a34a;
+  border-left: 0.75rem solid #64748b;
   border-top: 0.55rem solid transparent;
   transition: opacity 180ms ease;
 }
@@ -6269,19 +6374,19 @@ correct - P(correct = 1)
 \tag{9}
 $$
 
-Dabei bezeichnet $\theta_{sj}$ die Fähigkeit des Lernenden $s$ im Wissensbereich $j$. Der Faktor $c_{ij}$ beschreibt die Korrelation zwischen den Wissenskomponenten $i$ und $j$. Eine korrekte oder inkorrekte Antwort auf eine Aufgabe des Konzepts $i$ beeinflusst somit nicht nur die Schätzung für dieses Konzept selbst, sondern gegebenenfalls auch die Bewertungen verwandter Wissensbereiche. Für die direkt bearbeitete Wissenskomponente gilt $c_{ii}=1$, sodass der vollständige Aktualisierungsschritt übernommen wird. [@Pelanek2016].
+Dabei bezeichnet $\theta_{sj}$ die Fähigkeit des Lernenden $s$ im Wissensbereich $j$. Der Faktor $c_{ij}$ beschreibt die Korrelation zwischen den Wissenskomponenten $i$ und $j$. Der Ausdruck $correct$ steht für das beobachtete Ergebnis der bearbeiteten Aufgabe, während $P(correct = 1)$ die erwartete Wahrscheinlichkeit einer korrekten Antwort bezeichnet. Der Parameter $K$ bestimmt die Stärke der Aktualisierung. Eine korrekte oder inkorrekte Antwort auf eine Aufgabe des Konzepts $i$ beeinflusst somit nicht nur die Schätzung für dieses Konzept selbst, sondern gegebenenfalls auch die Bewertungen verwandter Wissensbereiche. Für die direkt bearbeitete Wissenskomponente gilt $c_{ii}=1$, sodass der vollständige Aktualisierungsschritt übernommen wird. [@Pelanek2016].
 
-Anschaulich bedeutet dies, dass Lernfortschritte in einem Themengebiet Hinweise auf den Wissensstand in verwandten Bereichen liefern können. Beherrscht ein Lernender beispielsweise grundlegende algebraische Verfahren, lässt dies häufig auch Rückschlüsse auf Kompetenzen in verwandten mathematischen Themen zu. Multivariate Elo-Modelle nutzen solche Zusammenhänge, um differenziertere Fähigkeitsprofile zu erzeugen als das eindimensionale Standard-Elo-Verfahren.
+Anschaulich bedeutet dies, dass Lernfortschritte in einem Themengebiet Hinweise auf den Wissensstand in verwandten Bereichen liefern können. Beherrscht ein Lernender beispielsweise grundlegende algebraische Verfahren, lässt dies häufig auch Rückschlüsse auf Kompetenzen in verwandten mathematischen Themen zu. Multivariate Elo-Modelle nutzen solche Zusammenhänge, um differenziertere Fähigkeitsprofile zu erzeugen als das eindimensionale Standard Elo Rating.
 
 Der zusätzliche Informationsgewinn geht jedoch mit einer höheren Modellkomplexität einher. Neben den einzelnen Fähigkeitswerten müssen nun auch die Beziehungen zwischen den Wissenskomponenten modelliert werden. Zudem setzt der Ansatz voraus, dass Aufgaben bestimmten Wissensbereichen zugeordnet werden können und geeignete Informationen über deren Zusammenhänge vorliegen [@Pelanek2016].
 
-Simulationen von Doebler et al. zeigen, dass der Einbezug korrelierter Merkmale im META gegenüber mehreren unabhängigen univariaten Elo-Algorithmen zu einer effizienteren Schätzung führen kann [@Doebler2014].  Auch aktuelle Arbeiten unterstreichen die praktische Relevanz multivariater Elo-Modelle. So passen Kandemir et al. ein mehrdimensionales Elo-Verfahren an die Daten einer medizinischen Lernplattform an, deren Aufgaben mehreren Wissenskomponenten zugeordnet sind. Die Autoren heben hervor, dass das Verfahren die Schätzung kompetenzbezogener Fähigkeitswerte unterstützt und damit für adaptive Lernumgebungen mit mehreren Wissensbereichen geeignet ist [@Kandemir2024].  
+Simulationen von Doebler et al. zeigen, dass der Einbezug korrelierter Merkmale im META gegenüber mehreren unabhängigen univariaten Elo-Algorithmen zu einer effizienteren Schätzung führen kann [@Doebler2014].  Auch aktuelle Arbeiten unterstreichen die praktische Relevanz multivariater Elo-Modelle. So passen Kandemir et al. ein mehrdimensionales Elo Rating an die Daten einer medizinischen Lernplattform an, deren Aufgaben mehreren Wissenskomponenten zugeordnet sind. Die Autoren heben hervor, dass das Verfahren die Schätzung kompetenzbezogener Fähigkeitswerte unterstützt und damit für adaptive Lernumgebungen mit mehreren Wissensbereichen geeignet ist [@Kandemir2024].  
 
 Multivariate Elo-Modelle stellen damit einen wichtigen Schritt von einer eindimensionalen Leistungsbewertung hin zu einer strukturierten Repräsentation von Wissen dar.
 
-#### Erweiterung durch Lernmodellierung (PFAE)
+### Erweiterung durch Lernmodellierung (PFAE)
 
-Die bisher betrachteten Erweiterungen des Elo-Verfahrens verbessern vor allem die Schätzung des aktuellen Wissensstands von Lernenden. Dabei bleibt jedoch eine grundlegende Annahme des klassischen Elo-Modells bestehen: Antworten werden ausschließlich als Beobachtungen bereits vorhandenen Wissens interpretiert. Eine korrekte Antwort liefert Hinweise auf eine hohe Fähigkeit, während eine falsche Antwort auf Wissensdefizite hindeutet.
+Die bisher betrachteten Erweiterungen des Elo Ratings verbessern vor allem die Schätzung des aktuellen Wissensstands von Lernenden. Dabei bleibt jedoch eine grundlegende Annahme des klassischen Elo-Modells bestehen: Antworten werden ausschließlich als Beobachtungen bereits vorhandenen Wissens interpretiert. Eine korrekte Antwort liefert Hinweise auf eine hohe Fähigkeit, während eine falsche Antwort auf Wissensdefizite hindeutet.
 
 In Bildungsszenarien greift diese Sichtweise jedoch häufig zu kurz. Die Bearbeitung einer Aufgabe dient nicht nur der Messung von Wissen, sondern stellt zugleich eine Lerngelegenheit dar. Lernende können bereits durch die Auseinandersetzung mit einer Aufgabe neue Kenntnisse erwerben oder bestehendes Wissen festigen. Eine Antwort liefert daher nicht nur Informationen über den aktuellen Wissensstand, sondern kann selbst einen Lernprozess auslösen [@Papousek2014; @Pelanek2016].
 
@@ -6380,6 +6485,11 @@ const pfaeDemoContainer = html`
   display: grid;
   gap: 0.45rem;
   padding: 0.65rem;
+  transition: opacity 180ms ease, background 180ms ease;
+}
+.pfae-slider-row.inactive {
+  background: #f1f5f9;
+  opacity: 0.52;
 }
 .pfae-slider-row label {
   align-items: center;
@@ -6390,10 +6500,10 @@ const pfaeDemoContainer = html`
   justify-content: space-between;
 }
 .pfae-slider-row output {
-  background: #eef2ff;
-  border: 1px solid #c7d2fe;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 999px;
-  color: #3730a3;
+  color: #1e3a8a;
   font-weight: 900;
   min-width: 4rem;
   padding: 0.12rem 0.5rem;
@@ -6402,6 +6512,9 @@ const pfaeDemoContainer = html`
 .pfae-slider-row input[type="range"] {
   accent-color: #2563eb;
   width: 100%;
+}
+.pfae-slider-row input[type="range"]:disabled {
+  cursor: not-allowed;
 }
 .pfae-probability-note {
   background: #eff6ff;
@@ -6472,7 +6585,7 @@ const pfaeDemoContainer = html`
   overflow: hidden;
 }
 .pfae-bar-fill {
-  background: linear-gradient(90deg, #2563eb, #16a34a);
+  background: #2563eb;
   border-radius: 999px;
   height: 100%;
   transition: width 180ms ease;
@@ -6497,7 +6610,7 @@ const pfaeDemoContainer = html`
 </style>
 <div class="pfae-demo">
   <h4>Wie verändert PFAE die Fähigkeitsschätzung?</h4>
-  <p>Lisa bearbeitet eine Aufgabe. Wählen Sie aus, ob ihre Antwort korrekt oder inkorrekt war, und verändern Sie die Lernraten für beide Fälle. Beobachten Sie, wie sich die Fähigkeitsschätzung von Lisa nach der Lerninteraktion verändert und vergleichen Sie die Auswirkungen beider Antwortmöglichkeiten.</p>
+  <p>Lisa bearbeitet eine Aufgabe. Wählen Sie aus, ob ihre Antwort korrekt oder inkorrekt war, und verändern Sie die jeweils aktive Lernrate. Beobachten Sie, wie sich die Fähigkeitsschätzung von Lisa nach der Lerninteraktion verändert und vergleichen Sie die Auswirkungen beider Antwortmöglichkeiten.</p>
 
   <div class="pfae-grid">
     <div class="pfae-card">
@@ -6514,14 +6627,14 @@ const pfaeDemoContainer = html`
       </div>
 
       <div class="pfae-slider-group">
-        <div class="pfae-slider-row">
+        <div class="pfae-slider-row pfae-gamma-row">
           <label>
             <span>Lernrate γ bei korrekter Antwort</span>
             <output class="pfae-gamma-output">0,25</output>
           </label>
           <input class="pfae-gamma-slider" type="range" min="0" max="0.5" step="0.01" value="0.25">
         </div>
-        <div class="pfae-slider-row">
+        <div class="pfae-slider-row pfae-delta-row">
           <label>
             <span>Lernrate δ bei inkorrekter Antwort</span>
             <output class="pfae-delta-rate-output">0,10</output>
@@ -6552,6 +6665,8 @@ const pfaeAnswerInputs = Array.from(pfaeDemoContainer.querySelectorAll(".pfae-an
 const pfaeAnswerLabels = Array.from(pfaeDemoContainer.querySelectorAll(".pfae-answer"))
 const pfaeGammaSlider = pfaeDemoContainer.querySelector(".pfae-gamma-slider")
 const pfaeDeltaSlider = pfaeDemoContainer.querySelector(".pfae-delta-slider")
+const pfaeGammaRow = pfaeDemoContainer.querySelector(".pfae-gamma-row")
+const pfaeDeltaRow = pfaeDemoContainer.querySelector(".pfae-delta-row")
 const pfaeGammaOutput = pfaeDemoContainer.querySelector(".pfae-gamma-output")
 const pfaeDeltaRateOutput = pfaeDemoContainer.querySelector(".pfae-delta-rate-output")
 const pfaeAfterOutput = pfaeDemoContainer.querySelector(".pfae-after-output")
@@ -6567,9 +6682,10 @@ const formatPfaeNumber = value =>
 
 const updatePfaeDemo = () => {
   const selectedAnswer = pfaeAnswerInputs.find(input => input.checked)?.value ?? "correct"
+  const isCorrectAnswer = selectedAnswer === "correct"
   const gamma = Number(pfaeGammaSlider.value)
   const delta = Number(pfaeDeltaSlider.value)
-  const change = selectedAnswer === "correct"
+  const change = isCorrectAnswer
     ? gamma * (1 - pfaeExpectedSuccess)
     : delta * pfaeExpectedSuccess
   const thetaAfter = pfaeThetaBefore + change
@@ -6579,12 +6695,16 @@ const updatePfaeDemo = () => {
     label.classList.toggle("active", input.checked)
   })
 
+  pfaeGammaSlider.disabled = !isCorrectAnswer
+  pfaeDeltaSlider.disabled = isCorrectAnswer
+  pfaeGammaRow.classList.toggle("inactive", !isCorrectAnswer)
+  pfaeDeltaRow.classList.toggle("inactive", isCorrectAnswer)
   pfaeGammaOutput.value = formatPfaeNumber(gamma)
   pfaeDeltaRateOutput.value = formatPfaeNumber(delta)
   pfaeAfterOutput.textContent = formatPfaeNumber(thetaAfter)
   pfaeChangeOutput.textContent = `+${formatPfaeNumber(change)}`
   pfaeBarFill.style.width = `${Math.min(100, thetaAfter * 100)}%`
-  pfaeMessage.textContent = selectedAnswer === "correct"
+  pfaeMessage.textContent = isCorrectAnswer
     ? "Bei einer korrekten Antwort steigt die Fähigkeitsschätzung von Lisa entsprechend der Lernrate γ."
     : "Auch eine inkorrekte Antwort kann in PFAE zu einem Anstieg von Lisas Fähigkeitsschätzung führen, wenn die Bearbeitung als Lerngelegenheit modelliert wird."
 }
@@ -6598,7 +6718,7 @@ return pfaeDemoContainer
 }
 ```
 
-Wie die Simulation zeigt, hängt die Aktualisierung der Fähigkeitsschätzung nicht allein davon ab, ob eine Antwort richtig oder falsch war. Entscheidend ist vielmehr, mit welcher Lernrate beide Fälle gewichtet werden. Um dieses Verhalten abzubilden, schlagen Papoušek et al. sowie Pelánek eine Erweiterung des Elo-Verfahrens vor, die als Performance Factor Analysis Extended Elo (PFAE) bezeichnet wird. Die Grundidee besteht darin, korrekte und inkorrekte Antworten unterschiedlich zu behandeln. Während das klassische Elo-Verfahren für beide Fälle denselben Aktualisierungsmechanismus verwendet, nutzt PFAE getrennte Lernraten für erfolgreiche und nicht erfolgreiche Bearbeitungen [@Papousek2014; @Pelanek2015; @Pelanek2016].
+Wie die Simulation zeigt, hängt die Aktualisierung der Fähigkeitsschätzung nicht allein davon ab, ob eine Antwort richtig oder falsch war. Entscheidend ist vielmehr, mit welcher Lernrate beide Fälle gewichtet werden. Um dieses Verhalten abzubilden, schlagen Papoušek et al. sowie Pelánek eine Erweiterung des Elo Ratings vor, die als Performance Factor Analysis Extended Elo (PFAE) bezeichnet wird. Die Grundidee besteht darin, korrekte und inkorrekte Antworten unterschiedlich zu behandeln. Während das klassische Elo Rating für beide Fälle denselben Aktualisierungsmechanismus verwendet, nutzt PFAE getrennte Lernraten für erfolgreiche und nicht erfolgreiche Bearbeitungen [@Papousek2014; @Pelanek2015; @Pelanek2016].
 
 Die Aktualisierung erfolgt dabei nach den folgenden Regeln [@Pelanek2016]:
 
@@ -6613,11 +6733,11 @@ $$
 \end{cases}
 $$
 
-Dabei beschreiben $\gamma$ und $\delta$ unterschiedliche Lernraten für korrekte beziehungsweise inkorrekte Antworten. Die Parameter erlauben es, den erwarteten Wissenszuwachs abhängig vom Ergebnis einer Aufgabe unterschiedlich zu modellieren [@Pelanek2016].
+Dabei bezeichnet $\theta_{si,\text{alt}}$ die bisherige Fähigkeit des Lernenden $s$ für Aufgabe beziehungsweise Wissenskomponente $i$, während $\theta_{si,\text{neu}}$ den aktualisierten Wert beschreibt. Der Term $P_i$ steht für die erwartete Erfolgswahrscheinlichkeit der Aufgabe. Die Parameter $\gamma$ und $\delta$ beschreiben unterschiedliche Lernraten für korrekte beziehungsweise inkorrekte Antworten. Dadurch kann der erwartete Wissenszuwachs abhängig vom Ergebnis einer Aufgabe unterschiedlich modelliert werden [@Pelanek2016].
 
 Die Motivation hinter diesem Ansatz liegt in der Beobachtung, dass Lernende auch aus Fehlern lernen können. Eine inkorrekte Antwort muss daher nicht zwangsläufig zu einer Verringerung der geschätzten Fähigkeit führen. Stattdessen kann sie als Hinweis darauf interpretiert werden, dass während der Bearbeitung ein Lernprozess stattgefunden hat. Das Modell versucht somit nicht nur den aktuellen Wissensstand abzuschätzen, sondern berücksichtigt zusätzlich mögliche Wissenszuwächse durch die Interaktion mit Lernaufgaben [@Pelanek2016].
 
-Während das ursprüngliche Elo-Verfahren primär der Leistungsbewertung dient, rückt bei PFAE zunehmend die Modellierung von Lernprozessen in den Mittelpunkt. Die Erweiterung verdeutlicht damit eine zentrale Entwicklung adaptiver Lernsysteme: den Übergang von der reinen Wissensschätzung hin zur expliziten Modellierung individueller Lernverläufe [@Pelanek2016].
+Während das ursprüngliche Elo Rating primär der Leistungsbewertung dient, rückt bei PFAE zunehmend die Modellierung von Lernprozessen in den Mittelpunkt. Die Erweiterung verdeutlicht damit eine zentrale Entwicklung adaptiver Lernsysteme: den Übergang von der reinen Wissensschätzung hin zur expliziten Modellierung individueller Lernverläufe [@Pelanek2016].
 
 # Literatur
 

@@ -1,6 +1,6 @@
-# Interaktive Simulation: Elo-Parameter
+# Interaktive Simulation des Elo Ratings
 
-Diese Datei enthält den OJS-Quellcode der formalen Elo-Simulation mit Startwerten, Lernrate, Ergebniswahl und Verlaufsgrafik.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. CSS-Definitionen
 
@@ -35,7 +35,7 @@ html`<style>
 }
 .elo-math-head {
   align-items: center;
-  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 55%, #f5f3ff 100%);
+  background: #ffffff;
   border-bottom: 1px solid var(--elo-line);
   display: grid;
   gap: 0.85rem;
@@ -182,16 +182,16 @@ html`<style>
   color: #334155;
 }
 .elo-math-result-option.correct:has(input:checked) {
-  background: #15803d;
-  border-color: #166534;
-  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.22);
-  color: #ffffff;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  box-shadow: 0 0 0 3px rgba(187, 247, 208, 0.55);
+  color: #166534;
 }
 .elo-math-result-option.incorrect:has(input:checked) {
-  background: #dc2626;
-  border-color: #b91c1c;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.22);
-  color: #ffffff;
+  background: #fff1f2;
+  border-color: #fecdd3;
+  box-shadow: 0 0 0 3px rgba(254, 205, 211, 0.6);
+  color: #9f1239;
 }
 .elo-math-result input {
   accent-color: #475569;
@@ -205,7 +205,7 @@ html`<style>
   accent-color: #dc2626;
 }
 .elo-math-result-option:has(input:checked) input {
-  accent-color: #ffffff;
+  accent-color: #475569;
 }
 .elo-math-note {
   background: #eff6ff;
@@ -265,11 +265,30 @@ html`<style>
   white-space: normal !important;
   width: 100%;
 }
-.elo-math-update button {
-  background: var(--elo-green) !important;
+.elo-math-sim .elo-math-update button,
+.elo-math-sim .elo-math-update input[type="button"],
+.elo-math-sim .elo-math-update .observablehq button {
+  background: #2563eb !important;
+  border: 1px solid #2563eb !important;
+  color: #ffffff !important;
 }
-.elo-math-reset button {
-  background: #475569 !important;
+.elo-math-sim .elo-math-reset button,
+.elo-math-sim .elo-math-reset input[type="button"],
+.elo-math-sim .elo-math-reset .observablehq button {
+  background: #eff6ff !important;
+  border: 1px solid #bfdbfe !important;
+  color: #1e3a8a !important;
+}
+.elo-math-sim .elo-math-update button:hover,
+.elo-math-sim .elo-math-update input[type="button"]:hover,
+.elo-math-sim .elo-math-update .observablehq button:hover {
+  background: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+.elo-math-sim .elo-math-reset button:hover,
+.elo-math-sim .elo-math-reset input[type="button"]:hover,
+.elo-math-sim .elo-math-reset .observablehq button:hover {
+  background: #dbeafe !important;
 }
 .elo-math-trend {
   background: #f8fafc;
@@ -308,7 +327,7 @@ html`<style>
   background: var(--elo-blue);
 }
 .elo-math-dot.difficulty {
-  background: var(--elo-orange);
+  background: #475569;
 }
 .elo-math-trend svg {
   background: #ffffff;
@@ -577,10 +596,10 @@ mathTrendChart = model => {
           <text x="${tick.x}" y="360" text-anchor="middle" fill="#64748b" font-size="12">${tick.label}</text>
         `)}
         <text x="338" y="390" text-anchor="middle" fill="#64748b" font-size="12">Update</text>
-        <polyline points="${mathPolyline(difficultyPoints)}" fill="none" stroke="#c2410c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        <polyline points="${mathPolyline(difficultyPoints)}" fill="none" stroke="#475569" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
         <polyline points="${mathPolyline(thetaPoints)}" fill="none" stroke="#2563eb" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></polyline>
         ${difficultyPoints.map((point, index) => svg`
-          <circle cx="${point.x}" cy="${point.y}" r="5.5" fill="#ffffff" stroke="#c2410c" stroke-width="3">
+          <circle cx="${point.x}" cy="${point.y}" r="5.5" fill="#ffffff" stroke="#475569" stroke-width="3">
             <title>dᵢ: ${mathFormat(difficultyValues[index])}</title>
           </circle>
         `)}
@@ -658,7 +677,7 @@ html`
   <section class="elo-math-head">
     <div>
       <div class="elo-math-kicker">Interaktive Elo-Simulation</div>
-      <h3>Experimentieren Sie mit den Parametern des Elo-Verfahrens</h3>
+      <h3>Experimentieren Sie mit den Parametern des Elo Ratings</h3>
       <p>
         Verändern Sie die Startwerte, die Lernrate und das Bearbeitungsergebnis. Nach jeder Aktualisierung zeigt die Simulation, wie sich die Fähigkeit des Lernenden und die Schwierigkeit der Aufgabe gemäß den zuvor vorgestellten Formeln verändern.
       </p>

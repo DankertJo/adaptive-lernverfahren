@@ -1,6 +1,6 @@
 # Interaktivität: Bearbeitungszeit
 
-Diese Datei enthält den OJS-Quellcode der Interaktivität zur Auswirkung von Bearbeitungszeiten auf Fähigkeitsschätzungen.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Bearbeitungszeit vergleichen
 

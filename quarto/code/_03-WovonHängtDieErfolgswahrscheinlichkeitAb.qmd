@@ -1,6 +1,6 @@
 # Interaktivität: Wovon hängt die Erfolgswahrscheinlichkeit ab?
 
-Diese Datei enthält den OJS-Quellcode der vorbereitenden Simulation zur Erfolgswahrscheinlichkeit vor der mathematischen Formel.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. CSS-Definitionen
 
@@ -30,7 +30,7 @@ html`<style>
   box-sizing: border-box;
 }
 .elo-expect-head {
-  background: linear-gradient(135deg, #ffffff 0%, #eef5ff 58%, #f5f3ff 100%);
+  background: #ffffff;
   border-bottom: 1px solid var(--expect-line);
   padding: 1rem 1.1rem;
 }
@@ -116,7 +116,7 @@ html`<style>
   overflow: hidden;
 }
 .elo-expect-fill {
-  background: linear-gradient(90deg, #38bdf8, #2563eb, #15803d);
+  background: #2563eb;
   border-radius: 999px;
   height: 100%;
   transition: width 180ms ease;

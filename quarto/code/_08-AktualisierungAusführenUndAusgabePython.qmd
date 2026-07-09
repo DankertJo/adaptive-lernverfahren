@@ -1,6 +1,6 @@
-# Programmieraufgabe: Aktualisierung ausführen und Ausgabe bestimmen
+# Code-Aufgabe: Aktualisierung ausführen und Ausgabe bestimmen
 
-Diese Datei enthält den OJS-Quellcode der interaktiven Codeergänzung zum Aufruf der Update-Funktion und zur anschließenden Ausgabeprüfung.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Codeergänzung und Ausgabeprüfung
 
@@ -83,7 +83,7 @@ const runUpdateExercise = html`
 }
 .run-update-check,
 .run-output-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .run-update-reset {

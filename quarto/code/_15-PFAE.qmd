@@ -1,6 +1,6 @@
 # Interaktivität: PFAE
 
-Diese Datei enthält den OJS-Quellcode der Interaktivität zur PFAE-Erweiterung mit getrennten Lernraten für korrekte und inkorrekte Antworten.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. PFAE-Aktualisierung
 
@@ -95,6 +95,11 @@ const pfaeDemoContainer = html`
   display: grid;
   gap: 0.45rem;
   padding: 0.65rem;
+  transition: opacity 180ms ease, background 180ms ease;
+}
+.pfae-slider-row.inactive {
+  background: #f1f5f9;
+  opacity: 0.52;
 }
 .pfae-slider-row label {
   align-items: center;
@@ -105,10 +110,10 @@ const pfaeDemoContainer = html`
   justify-content: space-between;
 }
 .pfae-slider-row output {
-  background: #eef2ff;
-  border: 1px solid #c7d2fe;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 999px;
-  color: #3730a3;
+  color: #1e3a8a;
   font-weight: 900;
   min-width: 4rem;
   padding: 0.12rem 0.5rem;
@@ -117,6 +122,9 @@ const pfaeDemoContainer = html`
 .pfae-slider-row input[type="range"] {
   accent-color: #2563eb;
   width: 100%;
+}
+.pfae-slider-row input[type="range"]:disabled {
+  cursor: not-allowed;
 }
 .pfae-probability-note {
   background: #eff6ff;
@@ -187,7 +195,7 @@ const pfaeDemoContainer = html`
   overflow: hidden;
 }
 .pfae-bar-fill {
-  background: linear-gradient(90deg, #2563eb, #16a34a);
+  background: #2563eb;
   border-radius: 999px;
   height: 100%;
   transition: width 180ms ease;
@@ -212,7 +220,7 @@ const pfaeDemoContainer = html`
 </style>
 <div class="pfae-demo">
   <h4>Wie verändert PFAE die Fähigkeitsschätzung?</h4>
-  <p>Lisa bearbeitet eine Aufgabe. Wählen Sie aus, ob ihre Antwort korrekt oder inkorrekt war, und verändern Sie die Lernraten für beide Fälle. Beobachten Sie, wie sich die Fähigkeitsschätzung von Lisa nach der Lerninteraktion verändert und vergleichen Sie die Auswirkungen beider Antwortmöglichkeiten.</p>
+  <p>Lisa bearbeitet eine Aufgabe. Wählen Sie aus, ob ihre Antwort korrekt oder inkorrekt war, und verändern Sie die jeweils aktive Lernrate. Beobachten Sie, wie sich die Fähigkeitsschätzung von Lisa nach der Lerninteraktion verändert und vergleichen Sie die Auswirkungen beider Antwortmöglichkeiten.</p>
 
   <div class="pfae-grid">
     <div class="pfae-card">
@@ -229,14 +237,14 @@ const pfaeDemoContainer = html`
       </div>
 
       <div class="pfae-slider-group">
-        <div class="pfae-slider-row">
+        <div class="pfae-slider-row pfae-gamma-row">
           <label>
             <span>Lernrate γ bei korrekter Antwort</span>
             <output class="pfae-gamma-output">0,25</output>
           </label>
           <input class="pfae-gamma-slider" type="range" min="0" max="0.5" step="0.01" value="0.25">
         </div>
-        <div class="pfae-slider-row">
+        <div class="pfae-slider-row pfae-delta-row">
           <label>
             <span>Lernrate δ bei inkorrekter Antwort</span>
             <output class="pfae-delta-rate-output">0,10</output>
@@ -267,6 +275,8 @@ const pfaeAnswerInputs = Array.from(pfaeDemoContainer.querySelectorAll(".pfae-an
 const pfaeAnswerLabels = Array.from(pfaeDemoContainer.querySelectorAll(".pfae-answer"))
 const pfaeGammaSlider = pfaeDemoContainer.querySelector(".pfae-gamma-slider")
 const pfaeDeltaSlider = pfaeDemoContainer.querySelector(".pfae-delta-slider")
+const pfaeGammaRow = pfaeDemoContainer.querySelector(".pfae-gamma-row")
+const pfaeDeltaRow = pfaeDemoContainer.querySelector(".pfae-delta-row")
 const pfaeGammaOutput = pfaeDemoContainer.querySelector(".pfae-gamma-output")
 const pfaeDeltaRateOutput = pfaeDemoContainer.querySelector(".pfae-delta-rate-output")
 const pfaeAfterOutput = pfaeDemoContainer.querySelector(".pfae-after-output")
@@ -282,9 +292,10 @@ const formatPfaeNumber = value =>
 
 const updatePfaeDemo = () => {
   const selectedAnswer = pfaeAnswerInputs.find(input => input.checked)?.value ?? "correct"
+  const isCorrectAnswer = selectedAnswer === "correct"
   const gamma = Number(pfaeGammaSlider.value)
   const delta = Number(pfaeDeltaSlider.value)
-  const change = selectedAnswer === "correct"
+  const change = isCorrectAnswer
     ? gamma * (1 - pfaeExpectedSuccess)
     : delta * pfaeExpectedSuccess
   const thetaAfter = pfaeThetaBefore + change
@@ -294,12 +305,16 @@ const updatePfaeDemo = () => {
     label.classList.toggle("active", input.checked)
   })
 
+  pfaeGammaSlider.disabled = !isCorrectAnswer
+  pfaeDeltaSlider.disabled = isCorrectAnswer
+  pfaeGammaRow.classList.toggle("inactive", !isCorrectAnswer)
+  pfaeDeltaRow.classList.toggle("inactive", isCorrectAnswer)
   pfaeGammaOutput.value = formatPfaeNumber(gamma)
   pfaeDeltaRateOutput.value = formatPfaeNumber(delta)
   pfaeAfterOutput.textContent = formatPfaeNumber(thetaAfter)
   pfaeChangeOutput.textContent = `+${formatPfaeNumber(change)}`
   pfaeBarFill.style.width = `${Math.min(100, thetaAfter * 100)}%`
-  pfaeMessage.textContent = selectedAnswer === "correct"
+  pfaeMessage.textContent = isCorrectAnswer
     ? "Bei einer korrekten Antwort steigt die Fähigkeitsschätzung von Lisa entsprechend der Lernrate γ."
     : "Auch eine inkorrekte Antwort kann in PFAE zu einem Anstieg von Lisas Fähigkeitsschätzung führen, wenn die Bearbeitung als Lerngelegenheit modelliert wird."
 }

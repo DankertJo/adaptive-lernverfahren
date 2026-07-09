@@ -1,6 +1,6 @@
-# Programmieraufgabe: Aktualisierung in Python
+# Code-Aufgabe: Aktualisierung in Python
 
-Diese Datei enthält den OJS-Quellcode der interaktiven Codeergänzung zur Berechnung von p innerhalb der Update-Funktion.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Codeergänzung mit Hinweisen
 
@@ -80,7 +80,7 @@ const updateProbabilityExercise = html`
   padding: 0.55rem 0.75rem;
 }
 .update-probability-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .update-probability-reset {

@@ -1,6 +1,6 @@
-# Programmieraufgabe: Wahrscheinlichkeit in Python
+# Code-Aufgabe: Wahrscheinlichkeit in Python
 
-Diese Datei enthält den OJS-Quellcode der interaktiven Codeergänzung zur Python-Funktion für die erwartete Erfolgswahrscheinlichkeit.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Codeergänzung mit Hinweisen
 
@@ -72,7 +72,7 @@ const probabilityExercise = html`
   padding: 0.55rem 0.75rem;
 }
 .python-return-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .python-return-reset {

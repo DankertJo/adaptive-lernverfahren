@@ -1,10 +1,10 @@
 # Interaktivität: Teilpunkte und Hinweise
 
-Diese Datei enthält den OJS-Quellcode der Interaktivität zur Bildung eines kontinuierlichen Erfolgswerts aus Teilpunkten und Hinweisen.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Erfolgswert aus Lerninteraktion
 
-Dieser Block erzeugt Slider, Kästchenanzeige, Erfolgswertberechnung und Vergleich mit dem binären Standard-Elo.
+Dieser Block erzeugt Slider, Kästchenanzeige, Erfolgswertberechnung und Vergleich mit dem binären Standard Elo.
 
 ```{ojs}
 //| echo: false
@@ -95,9 +95,9 @@ const successValueContainer = html`
   justify-content: center;
 }
 .success-box.filled {
-  background: #dcfce7;
-  border-color: #86efac;
-  color: #15803d;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e3a8a;
 }
 .success-metric {
   background: #eff6ff;
@@ -108,11 +108,11 @@ const successValueContainer = html`
   padding: 0.65rem 0.75rem;
 }
 .success-result-card {
-  background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
-  border-color: #86efac;
+  background: #ffffff;
+  border-color: #d8e0ea;
 }
 .success-result-label {
-  color: #166534;
+  color: #1e3a8a;
   font-size: 0.82rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -131,7 +131,7 @@ const successValueContainer = html`
   overflow: hidden;
 }
 .success-bar-fill {
-  background: linear-gradient(90deg, #38bdf8, #2563eb, #16a34a);
+  background: #2563eb;
   border-radius: 999px;
   height: 100%;
   transition: width 180ms ease;
@@ -248,7 +248,7 @@ const successValueContainer = html`
 </style>
 <div class="success-value-demo">
   <h4>Wie entsteht ein Erfolgswert?</h4>
-  <p>Das Elo-Verfahren kann statt eines reinen Richtig-Falsch-Ergebnisses auch einen kontinuierlichen Erfolgswert verwenden. Verändern Sie Punkte und Hinweise, um zu sehen, wie daraus ein Wert zwischen 0 und 1 entsteht.</p>
+  <p>Das Elo Rating kann statt eines reinen Richtig-Falsch-Ergebnisses auch einen kontinuierlichen Erfolgswert verwenden. Verändern Sie Punkte und Hinweise, um zu sehen, wie daraus ein Wert zwischen 0 und 1 entsteht.</p>
 
   <div class="success-grid">
     <div class="success-card">
@@ -276,7 +276,7 @@ const successValueContainer = html`
     </div>
 
     <div class="success-card success-result-card">
-      <div class="success-result-label">Vom Elo-Verfahren verwendeter Erfolgswert</div>
+      <div class="success-result-label">Vom Elo Rating verwendeter Erfolgswert</div>
       <div class="success-result-value">S = <span class="success-final-output">0,50</span></div>
       <div class="success-bar"><div class="success-bar-fill"></div></div>
 
@@ -293,12 +293,12 @@ const successValueContainer = html`
 
   <div class="success-compare-grid">
     <div class="success-compare-card">
-      <h5>Standard-Elo</h5>
+      <h5>Standard Elo</h5>
       <div class="success-standard-options">
         <div class="success-standard-option correct"><span>✓ richtig</span><strong>S = 1</strong></div>
         <div class="success-standard-option incorrect"><span>✗ falsch</span><strong>S = 0</strong></div>
       </div>
-      <div class="success-standard-hint">Zwischenwerte wie S = 0,50 können im Standard-Elo nicht direkt dargestellt werden.</div>
+      <div class="success-standard-hint">Zwischenwerte wie S = 0,50 können im Standard Elo nicht direkt dargestellt werden.</div>
     </div>
   </div>
 

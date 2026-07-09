@@ -1,6 +1,6 @@
-# Reflexionsfrage: Grenzen des Standard-Elo-Verfahrens
+# Reflexionsfrage: Grenzen des Standard Elo Ratings
 
-Diese Datei enthält den OJS-Quellcode der Reflexionsfrage zu Situationen, die das Standard-Elo-Verfahren nur eingeschränkt abbilden kann.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Reflexionsfrage
 
@@ -61,7 +61,7 @@ const eloLimitsReflection = html`
   padding: 0.55rem 0.75rem;
 }
 .elo-limits-check {
-  background: #15803d;
+  background: #2563eb;
   color: #ffffff;
 }
 .elo-limits-reset {
@@ -89,7 +89,7 @@ const eloLimitsReflection = html`
 </style>
 <div class="elo-limits-reflection">
   <h4>Reflexionsfrage</h4>
-  <p>Welche der folgenden Situationen kann das Standard-Elo-Verfahren nicht oder nur eingeschränkt abbilden?</p>
+  <p>Welche der folgenden Situationen kann das Standard Elo Rating nicht oder nur eingeschränkt abbilden?</p>
   <div class="elo-limits-options"></div>
   <div class="elo-limits-actions">
     <button class="elo-limits-check" type="button">Antwort prüfen</button>
@@ -137,11 +137,11 @@ checkButton.addEventListener("click", () => {
   }
 
   if (selected.length === limitsOptions.length) {
-    setLimitsFeedback("Richtig. Alle vier Situationen sind Grenzen des Standard-Elo-Verfahrens.", "correct")
+    setLimitsFeedback("Richtig. Alle vier Situationen sind Grenzen des Standard Elo Ratings.", "correct")
     return
   }
 
-  setLimitsFeedback("Noch nicht vollständig. Das Standard-Elo-Verfahren stößt in mehreren der genannten Situationen an Grenzen.", "retry")
+  setLimitsFeedback("Noch nicht vollständig. Das Standard Elo Rating stößt in mehreren der genannten Situationen an Grenzen.", "retry")
 })
 
 resetButton.addEventListener("click", () => {

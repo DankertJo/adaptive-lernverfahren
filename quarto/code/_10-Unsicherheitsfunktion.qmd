@@ -1,6 +1,6 @@
-# Simulation: Unsicherheitsfunktion
+# Interaktivität: Unsicherheitsfunktion
 
-Diese Datei enthält den OJS-Quellcode der Simulation zum Vergleich fester Aktualisierungsparameter mit einer Unsicherheitsfunktion.
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
 
 ## 1. Simulation und Visualisierung
 
@@ -111,7 +111,7 @@ const uncertaintyContainer = html`
   font-weight: 800;
 }
 .uncertainty-slider-row input[type="range"] {
-  accent-color: #16a34a;
+  accent-color: #2563eb;
   width: 100%;
 }
 .uncertainty-actions {
@@ -121,7 +121,7 @@ const uncertaintyContainer = html`
   gap: 0.65rem;
 }
 .uncertainty-actions button {
-  background: #15803d;
+  background: #2563eb;
   border: 0;
   border-radius: 8px;
   color: #ffffff;
@@ -139,10 +139,10 @@ const uncertaintyContainer = html`
   font-weight: 700;
 }
 .uncertainty-value {
-  background: #ecfdf5;
-  border: 1px solid #86efac;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 8px;
-  color: #166534;
+  color: #1e3a8a;
   display: grid;
   gap: 0.18rem;
   font-weight: 800;
@@ -228,7 +228,8 @@ const uncertaintyContainer = html`
 </style>
 <div class="uncertainty-visualization">
   <h4>Vergleich verschiedener Aktualisierungsstrategien</h4>
-  <p>Die folgende Visualisierung zeigt eine vereinfachte Simulation der Schätzung einer einzelnen Aufgabenschwierigkeit. Der tatsächliche Schwierigkeitswert beträgt <code>d<sub>true</sub> = 0</code>, die Schätzung wird mit <code>d&#770; = -2</code> initialisiert. Für alle drei Verfahren werden dieselben 200 simulierten Antworten verwendet, sodass Unterschiede ausschließlich auf die jeweilige Aktualisierungsstrategie zurückzuführen sind. Verwenden Sie den Schieberegler oder den Button, um zu beobachten, wie sich die Schätzwerte mit zunehmender Anzahl beobachteter Antworten entwickeln.</p>
+  <p>Die folgende Visualisierung zeigt eine vereinfachte Simulation der Schätzung einer einzelnen Aufgabenschwierigkeit. Der tatsächliche Schwierigkeitswert beträgt <code>d<sub>true</sub> = 0</code>, die Schätzung wird mit<br>
+  <code>d&#770; = -2</code> initialisiert. Für alle drei Verfahren werden dieselben 200 simulierten Antworten verwendet, sodass Unterschiede ausschließlich auf die jeweilige Aktualisierungsstrategie zurückzuführen sind. Verwenden Sie den Schieberegler oder den Button, um zu beobachten, wie sich die Schätzwerte mit zunehmender Anzahl beobachteter Antworten entwickeln.</p>
 
   <div class="uncertainty-controls">
     <div class="uncertainty-slider-row">
@@ -244,8 +245,8 @@ const uncertaintyContainer = html`
 
   <div class="uncertainty-legend">
     <span><i style="background:#2563eb;"></i>K = 0.1</span>
-    <span><i style="background:#dc2626;"></i>K = 0.5</span>
-    <span><i style="background:#16a34a;"></i>U(n) = 4 / (1 + 0.5 n)</span>
+    <span><i style="background:#475569;"></i>K = 0.5</span>
+    <span><i style="background:#0f766e;"></i>U(n) = 4 / (1 + 0.5 n)</span>
     <span><i style="background:repeating-linear-gradient(90deg,#334155 0 5px,transparent 5px 9px);"></i>wahrer Schwierigkeitswert</span>
   </div>
   <div class="uncertainty-plot-grid">
@@ -331,7 +332,7 @@ const renderUncertaintyPlot = () => {
       ),
       Plot.line(
         visiblePoints(fixedK05),
-        {x: "n", y: "estimate", stroke: "#dc2626", strokeWidth: 2}
+        {x: "n", y: "estimate", stroke: "#475569", strokeWidth: 2}
       ),
       Plot.dot(markerFor(fixedK01), {
         x: "n",
@@ -344,7 +345,7 @@ const renderUncertaintyPlot = () => {
       Plot.dot(markerFor(fixedK05), {
         x: "n",
         y: "estimate",
-        fill: "#dc2626",
+        fill: "#475569",
         stroke: "#ffffff",
         strokeWidth: 1.5,
         r: 4.5
@@ -359,12 +360,12 @@ const renderUncertaintyPlot = () => {
       }),
       Plot.line(
         visiblePoints(uncertaintyEstimate),
-        {x: "n", y: "estimate", stroke: "#16a34a", strokeWidth: 2.4}
+        {x: "n", y: "estimate", stroke: "#0f766e", strokeWidth: 2.4}
       ),
       Plot.dot(markerFor(uncertaintyEstimate), {
         x: "n",
         y: "estimate",
-        fill: "#16a34a",
+        fill: "#0f766e",
         stroke: "#ffffff",
         strokeWidth: 1.5,
         r: 5
