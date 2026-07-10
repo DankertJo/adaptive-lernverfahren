@@ -150,6 +150,20 @@ html`<style>
   border-radius: 6px;
   padding: 0.55rem 0.65rem;
 }
+.elo-quiz-reset-area {
+  border-top: 1px solid #d8e0ea;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+}
+.elo-quiz-reset-all {
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 7px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.55rem 0.8rem;
+}
 </style>`
 ```
 
@@ -270,6 +284,20 @@ eloQuizInput = question => {
   feedback.className = "elo-quiz-local-feedback pending"
   feedback.textContent = "Wählen Sie eine Antwort aus und prüfen Sie diese anschließend."
 
+  form.resetQuestion = () => {
+    selectedAnswer = null
+    form.value = null
+    radioInputs.forEach(input => {
+      input.checked = false
+      input.disabled = false
+    })
+    checkButton.disabled = false
+    checkButton.textContent = "Antwort prüfen"
+    feedback.className = "elo-quiz-local-feedback pending"
+    feedback.textContent = "Wählen Sie eine Antwort aus und prüfen Sie diese anschließend."
+    form.dispatchEvent(new Event("input", {bubbles: true}))
+  }
+
   checkButton.addEventListener("click", () => {
     if (selectedAnswer === null) {
       feedback.className = "elo-quiz-local-feedback pending"
@@ -373,7 +401,8 @@ Dieser Block setzt die Fragen und Rückmeldungen zur sichtbaren Quizoberfläche 
 ```{ojs}
 //| echo: false
 
-html`
+{
+const eloQuizContainer = html`
 <div class="elo-quiz">
   <h4>Kurzer Selbsttest</h4>
   <div class="elo-quiz-grid">
@@ -406,6 +435,20 @@ html`
         </div>
       </div>
     `}
+  <div class="elo-quiz-reset-area">
+    <button class="elo-quiz-reset-all" type="button">Selbsttest erneut versuchen</button>
+  </div>
 </div>
 `
+
+const resetAllButton = eloQuizContainer.querySelector(".elo-quiz-reset-all")
+resetAllButton.addEventListener("click", () => {
+  [viewof eloQuizQ1, viewof eloQuizQ2, viewof eloQuizQ3, viewof eloQuizQ4, viewof eloQuizQ5]
+    .forEach(questionForm => {
+      if (typeof questionForm.resetQuestion === "function") questionForm.resetQuestion()
+    })
+})
+
+return eloQuizContainer
+}
 ```

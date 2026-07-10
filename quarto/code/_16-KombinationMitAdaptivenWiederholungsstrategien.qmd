@@ -1,0 +1,527 @@
+# Interaktivität: Kombination mit adaptiven Wiederholungsstrategien
+
+Diese Datei enthält den aus der Lernressource ausgelagerten Observable-JavaScript-(OJS)-Quellcode. Der Code entspricht dem aktuellen Stand aus `quarto/umsetzung.qmd`.
+
+## 1. Elo Rating und Memory Cycle
+
+Dieser Block erzeugt Antwortauswahl, Elo-Aktualisierung, Bearbeitungshistorie und die didaktische Zeitachsen-Darstellung des Memory Cycles nach Yang et al. (2022).
+
+```{ojs}
+//| echo: false
+
+{
+// CSS: Gestaltung der Simulation im Stil der bestehenden Lernressource.
+const memoryCycleDemo = html`
+<style>
+.memory-cycle-demo {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  color: #172033;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem;
+}
+.memory-cycle-demo * {
+  box-sizing: border-box;
+}
+.memory-cycle-demo h4 {
+  margin: 0 0 0.35rem;
+}
+.memory-cycle-demo p {
+  color: #475569;
+  margin: 0;
+}
+.memory-cycle-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0.9rem;
+}
+.memory-card {
+  background: #ffffff;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 0.85rem;
+}
+.memory-card h5 {
+  color: #1e293b;
+  font-size: 1rem;
+  margin: 0 0 0.65rem;
+}
+.memory-step {
+  color: #2563eb;
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+.memory-answer-options {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0.65rem;
+}
+.memory-answer {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 0.7rem;
+}
+.memory-answer input {
+  accent-color: #2563eb;
+}
+.memory-answer.active.correct {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+.memory-answer.active.incorrect {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #9f1239;
+}
+.memory-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+.memory-run,
+.memory-reset {
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 850;
+  padding: 0.55rem 0.8rem;
+}
+.memory-run {
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  color: #ffffff;
+}
+.memory-reset {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+.memory-values {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.memory-value-box {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 0.7rem;
+}
+.memory-value-title {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 850;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+.memory-flow {
+  align-items: center;
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+  text-align: center;
+}
+.memory-flow strong {
+  color: #0f172a;
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  font-weight: 950;
+}
+.memory-flow span {
+  color: #64748b;
+  font-weight: 850;
+}
+.memory-history {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.memory-count {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 0.7rem;
+}
+.memory-count span {
+  color: #64748b;
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+.memory-count strong {
+  color: #0f172a;
+  display: block;
+  font-size: 1.55rem;
+  font-weight: 950;
+  margin-top: 0.2rem;
+}
+.memory-cycle-value {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  color: #1e3a8a;
+  font-weight: 850;
+  padding: 0.65rem 0.75rem;
+}
+.memory-cycle-value strong {
+  color: #0f172a;
+  display: block;
+  font-size: clamp(1.55rem, 4vw, 2.15rem);
+  font-weight: 950;
+  line-height: 1.05;
+  margin-top: 0.2rem;
+}
+.memory-timeline {
+  margin-top: 0.9rem;
+}
+.memory-track {
+  background: #e2e8f0;
+  border-radius: 999px;
+  height: 0.65rem;
+  position: relative;
+}
+.memory-marker {
+  background: #2563eb;
+  border: 3px solid #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+  height: 1.25rem;
+  left: 0%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 220ms ease;
+  width: 1.25rem;
+}
+.memory-ticks {
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 800;
+  height: 1.25rem;
+  margin-top: 0.55rem;
+  position: relative;
+}
+.memory-ticks span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.memory-ticks span:first-child {
+  transform: none;
+}
+.memory-ticks span:last-child {
+  transform: translateX(-100%);
+}
+.memory-explanation {
+  background: #f8fafc;
+  border: 1px solid #d8e0ea;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  color: #334155;
+  font-weight: 800;
+  line-height: 1.45;
+  margin-top: 0.85rem;
+  padding: 0.7rem 0.8rem;
+}
+.memory-note {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-left: 4px solid #f97316;
+  border-radius: 8px;
+  color: #7c2d12;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin-top: 0.85rem;
+  padding: 0.65rem 0.75rem;
+}
+@media (max-width: 850px) {
+  .memory-cycle-grid,
+  .memory-values,
+  .memory-history,
+  .memory-answer-options {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<!-- HTML: Sichtbare Struktur der vier Schritte. -->
+<div class="memory-cycle-demo">
+  <h4>Elo Rating und adaptive Wiederholung verbinden</h4>
+  <p>Lisa bearbeitet wiederholt dieselbe Aufgabe. Nach jeder Antwort werden zuerst Fähigkeit und Aufgabenschwierigkeit aktualisiert. Anschließend berechnet das System den Memory Cycle und leitet daraus ab, wann die Aufgabe wieder empfohlen werden sollte.</p>
+
+  <div class="memory-cycle-grid">
+    <div class="memory-card">
+      <span class="memory-step">Schritt 1</span>
+      <h5>Antwort auswählen</h5>
+      <p>Wählen Sie aus, ob Lisa die Aufgabe richtig oder falsch beantwortet hat.</p>
+      <div class="memory-answer-options">
+        <label class="memory-answer correct active">
+          <input type="radio" name="memory-answer" value="correct" checked>
+          <strong>✓ richtig</strong>
+        </label>
+        <label class="memory-answer incorrect">
+          <input type="radio" name="memory-answer" value="incorrect">
+          <strong>✗ falsch</strong>
+        </label>
+      </div>
+      <div class="memory-actions">
+        <button class="memory-run" type="button">Bearbeitung durchführen</button>
+        <button class="memory-reset" type="button">Zurücksetzen</button>
+      </div>
+    </div>
+
+    <div class="memory-card">
+      <span class="memory-step">Schritt 2</span>
+      <h5>Aktualisierung durch das Elo Rating</h5>
+      <div class="memory-values">
+        <div class="memory-value-box">
+          <div class="memory-value-title">Geschätzte Fähigkeit</div>
+          <div class="memory-flow">
+            <span>vorher</span>
+            <strong class="memory-theta-before">2,00</strong>
+            <span>↓</span>
+            <span>nachher</span>
+            <strong class="memory-theta-after">2,00</strong>
+          </div>
+        </div>
+        <div class="memory-value-box">
+          <div class="memory-value-title">Aufgabenschwierigkeit</div>
+          <div class="memory-flow">
+            <span>vorher</span>
+            <strong class="memory-difficulty-before">2,00</strong>
+            <span>↓</span>
+            <span>nachher</span>
+            <strong class="memory-difficulty-after">2,00</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="memory-card">
+      <span class="memory-step">Schritt 3</span>
+      <h5>Bearbeitungshistorie</h5>
+      <div class="memory-history" style="margin-top:0.65rem;">
+        <div class="memory-count"><span>Richtige Antworten</span><strong class="memory-correct-count">0</strong></div>
+        <div class="memory-count"><span>Falsche Antworten</span><strong class="memory-wrong-count">0</strong></div>
+      </div>
+    </div>
+
+    <div class="memory-card">
+      <span class="memory-step">Schritt 4</span>
+      <h5>Memory Cycle und nächste Wiederholung</h5>
+      <div class="memory-cycle-value">
+        Empfohlene nächste Wiederholung
+        <strong class="memory-cycle-output">in 1 Tag</strong>
+      </div>
+      <div class="memory-timeline">
+        <div class="memory-track"><div class="memory-marker"></div></div>
+        <div class="memory-ticks">
+          <span style="left: 0%;">Heute</span>
+          <span style="left: 25%;">1 Tag</span>
+          <span style="left: 50%;">3 Tage</span>
+          <span style="left: 75%;">7 Tage</span>
+          <span style="left: 100%;">14 Tage</span>
+        </div>
+      </div>
+      <div class="memory-explanation"></div>
+    </div>
+  </div>
+
+  <div class="memory-note">
+    Hinweis: Yang et al. berechnen einen numerischen Memory-Cycle-Wert, jedoch keinen festen Kalendertag für die nächste Wiederholung. In dieser Lernressource wird der berechnete Memory-Cycle-Wert daher ausschließlich zur didaktischen Veranschaulichung auf einer Zeitachse interpretiert. Die dargestellte Wiederholungsempfehlung stellt somit eine vereinfachte Visualisierung und keinen Bestandteil des Originalmodells dar.
+  </div>
+</div>
+`
+
+// JavaScript: Zustand, Formeln nach Yang et al. (2022) und Aktualisierung der Anzeige.
+const initialMemoryState = {
+  theta: 2,
+  difficulty: 2,
+  memoryCycle: 1,
+  correctCount: 0,
+  wrongCount: 0,
+  lastAnswer: "none",
+  lastBefore: {theta: 2, difficulty: 2, memoryCycle: 1},
+  lastAfter: {theta: 2, difficulty: 2, memoryCycle: 1},
+  lastK: 1
+}
+
+let memoryState = JSON.parse(JSON.stringify(initialMemoryState))
+
+const answerInputs = Array.from(memoryCycleDemo.querySelectorAll('input[name="memory-answer"]'))
+const answerLabels = Array.from(memoryCycleDemo.querySelectorAll(".memory-answer"))
+const runButton = memoryCycleDemo.querySelector(".memory-run")
+const resetButton = memoryCycleDemo.querySelector(".memory-reset")
+const thetaBeforeOutput = memoryCycleDemo.querySelector(".memory-theta-before")
+const thetaAfterOutput = memoryCycleDemo.querySelector(".memory-theta-after")
+const difficultyBeforeOutput = memoryCycleDemo.querySelector(".memory-difficulty-before")
+const difficultyAfterOutput = memoryCycleDemo.querySelector(".memory-difficulty-after")
+const correctCountOutput = memoryCycleDemo.querySelector(".memory-correct-count")
+const wrongCountOutput = memoryCycleDemo.querySelector(".memory-wrong-count")
+const cycleOutput = memoryCycleDemo.querySelector(".memory-cycle-output")
+const marker = memoryCycleDemo.querySelector(".memory-marker")
+const explanation = memoryCycleDemo.querySelector(".memory-explanation")
+
+const formatMemoryNumber = value => value.toFixed(2).replace(".", ",")
+const EPSILON = 0.0001
+const MAX_TIMELINE_DAYS = 14
+
+const interpretedDays = memoryCycle =>
+  Math.max(0, Math.min(MAX_TIMELINE_DAYS, Math.round(memoryCycle)))
+
+const timelinePositionForDays = days => {
+  const milestones = [
+    {day: 0, position: 0},
+    {day: 1, position: 25},
+    {day: 3, position: 50},
+    {day: 7, position: 75},
+    {day: 14, position: 100}
+  ]
+
+  if (days <= milestones[0].day) return milestones[0].position
+  if (days >= milestones[milestones.length - 1].day) return milestones[milestones.length - 1].position
+
+  for (let index = 0; index < milestones.length - 1; index += 1) {
+    const start = milestones[index]
+    const end = milestones[index + 1]
+    if (days >= start.day && days <= end.day) {
+      const segmentProgress = (days - start.day) / (end.day - start.day)
+      return start.position + segmentProgress * (end.position - start.position)
+    }
+  }
+
+  return 100
+}
+
+const formatMemoryDays = memoryCycle => {
+  const days = interpretedDays(memoryCycle)
+  if (days === 0) return "heute"
+  if (days === 1) return "in 1 Tag"
+  return `in ${days} Tagen`
+}
+
+const fibonacci = n => {
+  if (n <= 0) return 0
+  if (n <= 2) return 1
+  let previous = 1
+  let current = 1
+  for (let index = 3; index <= n; index += 1) {
+    const next = previous + current
+    previous = current
+    current = next
+  }
+  return current
+}
+
+const probabilityCorrect = (theta, difficulty) =>
+  1 / (1 + Math.exp(-(theta - difficulty)))
+
+const uncertaintyK = attempts =>
+  1 / (1 + 0.05 * attempts)
+
+const selectedAnswer = () =>
+  answerInputs.find(input => input.checked)?.value ?? "correct"
+
+const memoryExplanation = state => {
+  if (state.lastAnswer === "none") {
+    return "Führen Sie eine Bearbeitung durch, um zu sehen, wie Elo Rating und Memory Cycle zusammenwirken."
+  }
+
+  if (state.lastAnswer === "correct") {
+    return "Lisa beantwortet die Aufgabe korrekt. Dadurch steigt ihre Fähigkeitsschätzung. Gleichzeitig verlängert sich der Memory Cycle, sodass die Aufgabe erst später erneut empfohlen wird."
+  }
+
+  return "Lisa beantwortet die Aufgabe falsch. Dadurch sinkt der Memory Cycle und die Aufgabe wird früher erneut empfohlen."
+}
+
+const updateAnswerStyles = () => {
+  answerLabels.forEach(label => {
+    const input = label.querySelector("input")
+    label.classList.toggle("active", input.checked)
+  })
+}
+
+const renderMemoryState = () => {
+  updateAnswerStyles()
+  thetaBeforeOutput.textContent = formatMemoryNumber(memoryState.lastBefore.theta)
+  thetaAfterOutput.textContent = formatMemoryNumber(memoryState.lastAfter.theta)
+  difficultyBeforeOutput.textContent = formatMemoryNumber(memoryState.lastBefore.difficulty)
+  difficultyAfterOutput.textContent = formatMemoryNumber(memoryState.lastAfter.difficulty)
+  correctCountOutput.textContent = memoryState.correctCount
+  wrongCountOutput.textContent = memoryState.wrongCount
+  cycleOutput.textContent = formatMemoryDays(memoryState.memoryCycle)
+
+  const visualDays = interpretedDays(memoryState.memoryCycle)
+  marker.style.left = `${timelinePositionForDays(visualDays)}%`
+  explanation.textContent = memoryExplanation(memoryState)
+}
+
+const performMemoryUpdate = () => {
+  const answer = selectedAnswer()
+  const correct = answer === "correct" ? 1 : 0
+  const attemptsBefore = memoryState.correctCount + memoryState.wrongCount
+  const k = uncertaintyK(attemptsBefore)
+  const p = probabilityCorrect(memoryState.theta, memoryState.difficulty)
+
+  const thetaBefore = memoryState.theta
+  const difficultyBefore = memoryState.difficulty
+  const memoryBefore = memoryState.memoryCycle
+
+  const thetaAfter = thetaBefore + k * (correct - p)
+  const difficultyAfter = difficultyBefore + k * (p - correct)
+  const correctCountAfter = memoryState.correctCount + (correct === 1 ? 1 : 0)
+  const wrongCountAfter = memoryState.wrongCount + (correct === 0 ? 1 : 0)
+
+  // Memory-Cycle-Aktualisierung nach Yang et al. (2022), Gleichung (3).
+  const thetaValue = Math.max(thetaAfter, EPSILON)
+  const difficultyValue = Math.max(difficultyAfter, EPSILON)
+  const fibonacciCorrect = fibonacci(correctCountAfter)
+  const fibonacciWrong = fibonacci(wrongCountAfter)
+  const memoryAfter = correct === 1
+    ? memoryBefore + (thetaValue / difficultyValue) * fibonacciCorrect
+    : Math.max(0, memoryBefore - (difficultyValue / thetaValue) * fibonacciWrong)
+
+  memoryState = {
+    theta: thetaAfter,
+    difficulty: difficultyAfter,
+    memoryCycle: memoryAfter,
+    correctCount: correctCountAfter,
+    wrongCount: wrongCountAfter,
+    lastAnswer: answer,
+    lastBefore: {theta: thetaBefore, difficulty: difficultyBefore, memoryCycle: memoryBefore},
+    lastAfter: {theta: thetaAfter, difficulty: difficultyAfter, memoryCycle: memoryAfter},
+    lastK: k
+  }
+
+  renderMemoryState()
+}
+
+answerInputs.forEach(input => input.addEventListener("change", updateAnswerStyles))
+runButton.addEventListener("click", performMemoryUpdate)
+resetButton.addEventListener("click", () => {
+  memoryState = JSON.parse(JSON.stringify(initialMemoryState))
+  answerInputs.forEach(input => {
+    input.checked = input.value === "correct"
+  })
+  renderMemoryState()
+})
+
+renderMemoryState()
+
+return memoryCycleDemo
+}
+```

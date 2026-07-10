@@ -107,6 +107,20 @@ eloMathQuizInput = question => {
   feedback.className = "elo-quiz-local-feedback pending"
   feedback.textContent = "Wählen Sie eine Antwort aus und prüfen Sie diese anschließend."
 
+  form.resetQuestion = () => {
+    selectedAnswer = null
+    form.value = null
+    radioInputs.forEach(input => {
+      input.checked = false
+      input.disabled = false
+    })
+    checkButton.disabled = false
+    checkButton.textContent = "Antwort prüfen"
+    feedback.className = "elo-quiz-local-feedback pending"
+    feedback.textContent = "Wählen Sie eine Antwort aus und prüfen Sie diese anschließend."
+    form.dispatchEvent(new Event("input", {bubbles: true}))
+  }
+
   checkButton.addEventListener("click", () => {
     if (selectedAnswer === null) {
       feedback.className = "elo-quiz-local-feedback pending"
@@ -217,7 +231,8 @@ Dieser Block setzt Fragen und Rückmeldungen zur sichtbaren Quizoberfläche zusa
 ```{ojs}
 //| echo: false
 
-html`
+{
+const eloMathQuizContainer = html`
 <div class="elo-quiz">
   <h4>Kurzer Selbsttest</h4>
   <div class="elo-quiz-grid">
@@ -249,6 +264,20 @@ html`
         </div>
       </div>
     `}
+  <div class="elo-quiz-reset-area">
+    <button class="elo-quiz-reset-all" type="button">Selbsttest erneut versuchen</button>
+  </div>
 </div>
 `
+
+const resetAllButton = eloMathQuizContainer.querySelector(".elo-quiz-reset-all")
+resetAllButton.addEventListener("click", () => {
+  [viewof eloMathQuizQ1, viewof eloMathQuizQ2, viewof eloMathQuizQ3, viewof eloMathQuizQ4]
+    .forEach(questionForm => {
+      if (typeof questionForm.resetQuestion === "function") questionForm.resetQuestion()
+    })
+})
+
+return eloMathQuizContainer
+}
 ```
