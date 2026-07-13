@@ -7380,6 +7380,14 @@ Anschaulich bedeutet dies, dass Aufgaben, die ein Lernender wiederholt korrekt b
 
 Im Unterschied zum klassischen Elo Rating erweitert dieser Ansatz die Wissensschätzung um eine adaptive Wiederholungsplanung. Während das Elo Rating beschreibt, wie gut ein Lernender eine Aufgabe beherrscht, dient der Memory Cycle dazu, wann diese Aufgabe erneut bearbeitet werden sollte. Beide Verfahren übernehmen somit unterschiedliche Aufgaben innerhalb eines adaptiven Lernsystems und können miteinander kombiniert werden [@Yang2022].
 
+## Feedback zur Lernressource
+
+Wenn Sie die Lernressource bearbeitet haben, können Sie über den folgenden Fragebogen Rückmeldung geben. Die Antworten helfen dabei, die Verständlichkeit, Gestaltung und Nutzbarkeit der Lernressource zu bewerten und weiterzuentwickeln.
+
+Die Teilnahme ist freiwillig und anonym.
+
+[Zum Fragebogen](https://umfrage.fernuni-hagen.de/455125?lang=de)
+
 # Literatur
 
 ::: {#refs}
